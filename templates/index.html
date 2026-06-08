@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>{{ app_name }}</h1>
+    <p class="subtitle">{{ app_description }} &middot; v{{ app_version }}</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Charger les exports EKDI</h2>
+      <div class="grid">
+        <label>Export EKDI &mdash; annee a verifier (N)
+          <input type="file" id="fileNew" accept=".xlsx">
+        </label>
+        <label>Export EKDI &mdash; annee precedente (N-1)
+          <input type="file" id="fileOld" accept=".xlsx">
+        </label>
+        <label>Date d'effet (01.08)
+          <input type="date" id="refDate" value="2026-08-01">
+        </label>
+      </div>
+      <p class="hint">Les operandes en <code>_P</code> (part fixe a echoir) sont automatiquement compares a la date d'effet moins un mois (01.07).</p>
+      <button id="btnRun">Lancer la reconciliation</button>
+      <span id="status" class="status"></span>
+    </section>
+
+    <section class="card" id="summary" style="display:none">
+      <h2>2. Synthese</h2>
+      <div class="counts">
+        <span class="chip chip-changed">Modifiees : <b id="cChanged">0</b></span>
+        <span class="chip chip-new">Nouvelles : <b id="cNew">0</b></span>
+        <span class="chip chip-removed">Supprimees : <b id="cRemoved">0</b></span>
+        <span class="chip chip-unchanged">Inchangees : <b id="cUnchanged">0</b></span>
+        <span class="chip chip-aberrant">Alertes &gt;20% : <b id="cAberrant">0</b></span>
+      </div>
+      <div class="filters">
+        <label><input type="checkbox" class="fStatus" value="changed" checked> Modifiees</label>
+        <label><input type="checkbox" class="fStatus" value="new" checked> Nouvelles</label>
+        <label><input type="checkbox" class="fStatus" value="removed" checked> Supprimees</label>
+        <label><input type="checkbox" class="fStatus" value="unchanged"> Inchangees</label>
+        <label class="sep"><input type="checkbox" id="fAberrant"> Alertes uniquement</label>
+        <button id="btnExport" class="secondary">Exporter les ecarts (.xlsx)</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th>Tarif</th><th>GrpValFix</th><th>Operande</th>
+              <th class="num">Valeur N-1</th><th class="num">Valeur N</th>
+              <th class="num">Evolution</th><th>Valide du</th><th>Statut</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
