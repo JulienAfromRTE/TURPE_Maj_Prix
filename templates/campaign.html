@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }} &middot; Campagne</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body data-campaign-id="{{ campaign_id }}">
+  <header>
+    <div class="head-row">
+      <div>
+        <h1 id="campTitle">Campagne</h1>
+        <p class="subtitle"><a href="{{ url_for('index') }}" class="link-inv">&larr; Portail</a> &middot; <span id="campMeta"></span></p>
+      </div>
+      <div class="user-box">
+        <span class="user-label">Utilisateur</span>
+        <span id="userName" class="user-name">&mdash;</span>
+        <button id="btnChangeUser" class="link">changer</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Stepper workflow -->
+    <section class="card">
+      <div class="stepper" id="stepper">
+        {% for key, label in workflow_steps %}
+        <button class="step" data-step="{{ key }}">
+          <span class="step-num">{{ loop.index }}</span>
+          <span class="step-label">{{ label }}</span>
+        </button>
+        {% endfor %}
+        <button class="step" data-step="audit">
+          <span class="step-num">&#9776;</span>
+          <span class="step-label">Journal &amp; vérifs</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Etape 1 : PDF CRE -->
+    <section class="card step-panel" data-panel="pdf">
+      <h2>1. Délibérations CRE</h2>
+      <p class="hint">Déposez les deux PDF de la délibération CRE. Ils sont stockés sur le serveur et retéléchargeables à tout moment.</p>
+      <div class="grid2">
+        <div class="upload-slot">
+          <h4>Délibération CRE HTB</h4>
+          <input type="file" data-kind="cre_pdf_1" accept=".pdf,.xlsx">
+        </div>
+        <div class="upload-slot">
+          <h4>Délibération CRE HTA</h4>
+          <input type="file" data-kind="cre_pdf_2" accept=".pdf,.xlsx">
+        </div>
+      </div>
+      <h4>Fichiers déposés</h4>
+      <table class="files-table"><thead>
+        <tr><th>Type</th><th>Nom</th><th>Taille</th><th>Déposé par</th><th>Le</th><th></th></tr>
+      </thead><tbody id="filesBody"></tbody></table>
+      <div class="step-foot">
+        <button class="advance" data-next="grid">Passer à la saisie &rarr;</button>
+      </div>
+    </section>
+
+    <!-- Etape 2 : grille -->
+    <section class="card step-panel wide" data-panel="grid" style="display:none">
+      <div class="card-head">
+        <h2>2. Saisie de la grille tarifaire</h2>
+        <div class="head-actions">
+          <input type="text" id="gridFilter" placeholder="Filtrer (opérande, clé, tarif...)">
+          <label class="inline-check"><input type="checkbox" id="gridOnlyEmpty"> À saisir uniquement</label>
+          <label class="inline-check"><input type="checkbox" id="gridOnlyTodo"> Non validées</label>
+          <button id="btnSaveGrid">Enregistrer</button>
+          <button id="btnExportGrid" class="secondary">Exporter .xlsx</button>
+        </div>
+      </div>
+      <p class="hint">Colonne <b id="newColLabel">nouvelle valeur</b> à saisir. L'évolution est calculée vs la dernière valeur connue ; au-delà de &plusmn;20 % une alerte s'affiche. Cochez <b>Validée</b> après contrôle, cliquez une ligne pour ses captures CRE et son historique. <span id="gridProgress" class="pill"></span></p>
+      <div class="years-bar" id="yearsBar">
+        <span class="years-label">Années affichées :</span>
+        <span id="yearsToggles" class="years-toggles"></span>
+        <button id="btnYearsAll" class="link">tout</button>
+        <button id="btnYearsNone" class="link">aucune</button>
+      </div>
+      <div class="table-wrap tall">
+        <table id="gridTable">
+          <thead><tr id="gridHead"></tr></thead>
+          <tbody id="gridBody"></tbody>
+        </table>
+      </div>
+      <div class="step-foot">
+        <span id="gridStatus" class="status"></span>
+        <button class="advance" data-next="verif">Passer à la vérification &rarr;</button>
+      </div>
+    </section>
+
+    <!-- Etape 3 : verification EKDI / EA09 -->
+    <section class="card step-panel" data-panel="verif" style="display:none">
+      <h2>3. Vérification post-injection (EKDI / EA09)</h2>
+      <p class="hint">Après injection dans SAP, déposez un extract pour le confronter automatiquement aux valeurs saisies dans la grille. Appariement sur (GrpValFix, Opérande) sinon Opérande seul.</p>
+      <div class="grid2">
+        <div class="upload-slot">
+          <h4>Extract EKDI</h4>
+          <input type="file" id="cmpEkdi" accept=".xlsx">
+          <button class="secondary cmp-btn" data-kind="ekdi" data-input="cmpEkdi">Comparer l'EKDI</button>
+        </div>
+        <div class="upload-slot">
+          <h4>Extract EA09</h4>
+          <input type="file" id="cmpEa09" accept=".xlsx">
+          <button class="secondary cmp-btn" data-kind="ea09" data-input="cmpEa09">Comparer l'EA09</button>
+        </div>
+      </div>
+      <div id="cmpSummary" class="counts" style="display:none">
+        <span class="chip chip-new">Conformes : <b id="cmpOk">0</b></span>
+        <span class="chip chip-changed">Écarts : <b id="cmpDiff">0</b></span>
+        <span class="chip chip-removed">Absents de l'extract : <b id="cmpMissing">0</b></span>
+        <span class="chip">Ambigus : <b id="cmpAmbig">0</b></span>
+      </div>
+      <div class="table-wrap">
+        <table id="cmpTable">
+          <thead><tr>
+            <th>Section</th><th>Tarif</th><th>Opérande</th><th>Clé</th>
+            <th class="num">Saisi</th><th class="num">Extract</th><th>Appariement</th><th>Statut</th>
+          </tr></thead>
+          <tbody id="cmpBody"></tbody>
+        </table>
+      </div>
+      <div class="step-foot">
+        <button class="advance" data-status="injecte">Marquer &laquo; injecté SAP &raquo;</button>
+        <button class="advance" data-status="cloture">Clôturer la campagne</button>
+      </div>
+    </section>
+
+    <!-- Journal & verifications -->
+    <section class="card step-panel" data-panel="audit" style="display:none">
+      <h2>Vérifications &amp; journal</h2>
+      <div class="grid2">
+        <div>
+          <h4>Validations métier</h4>
+          {% for key, label in verif_roles %}
+          <div class="verif-form" data-role="{{ key }}">
+            <span class="verif-role">{{ label }}</span>
+            <input type="text" class="verif-comment" placeholder="Commentaire (optionnel)">
+            <button class="verif-ok" data-verdict="ok">Valider</button>
+            <button class="verif-ko secondary" data-verdict="ko">Rejeter</button>
+          </div>
+          {% endfor %}
+          <ul id="verifList" class="verif-list"></ul>
+        </div>
+        <div>
+          <h4>Journal des actions</h4>
+          <ul id="auditList" class="audit-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal identite -->
+  <div id="userModal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h3>Qui êtes-vous ?</h3>
+      <p class="hint">Votre nom et votre profil sont associés à chaque action pour la traçabilité.</p>
+      <input type="text" id="userInput" placeholder="Prenom Nom">
+      <label class="profile-label">Profil
+        <select id="userProfile">
+          <option value="" disabled selected>Choisir un profil…</option>
+          <option value="TMA">TMA</option>
+          <option value="Chef de projet DSIT">Chef de projet DSIT</option>
+        </select>
+      </label>
+      <div class="modal-actions"><button id="btnSaveUser">Valider</button></div>
+    </div>
+  </div>
+
+  <!-- Modal detail ligne : captures CRE + historique des modifications -->
+  <div id="rowModal" class="modal" style="display:none">
+    <div class="modal-box modal-wide">
+      <div class="modal-head">
+        <h3 id="rowModalTitle">Détail de la ligne</h3>
+        <button id="rowModalClose" class="link">fermer</button>
+      </div>
+      <div class="row-id-blocks">
+        <div class="row-id-block block-tarif">
+          <span class="row-id-label">Tarif</span>
+          <span class="row-id-val" id="rowModalTarif"></span>
+          <input type="text" class="row-id-input" id="rowEditTarif" style="display:none">
+        </div>
+        <div class="row-id-block block-operande">
+          <span class="row-id-label">Opérande</span>
+          <span class="row-id-val" id="rowModalOperande"></span>
+          <input type="text" class="row-id-input" id="rowEditOperande" style="display:none">
+        </div>
+        <div class="row-id-block block-cle">
+          <span class="row-id-label">Clé</span>
+          <span class="row-id-val" id="rowModalCle"></span>
+          <input type="text" class="row-id-input" id="rowEditCle" style="display:none">
+        </div>
+        <div class="row-id-actions">
+          <button id="rowIdEdit" class="btn-edit" type="button">&#9999;&#65039; Modifier</button>
+          <button id="rowIdSave" class="btn-id-save" type="button" style="display:none">Enregistrer</button>
+          <button id="rowIdCancel" class="link" type="button" style="display:none">annuler</button>
+        </div>
+      </div>
+      <p class="hint" id="rowModalMeta"></p>
+      <p class="hint" id="rowIdStatus" style="margin-top:-6px"></p>
+
+      <div class="row-value-box">
+        <label for="rowModalValue">Valeur saisie (&euro;)</label>
+        <input type="text" id="rowModalValue" placeholder="Aucune valeur saisie" readonly>
+        <span id="rowModalEvol" class="row-value-evol"></span>
+        <button id="rowModalEdit" class="btn-edit" type="button">&#9999;&#65039; Modifier</button>
+        <button id="rowModalSave">Enregistrer</button>
+        <span id="rowModalSaveStatus" class="hint"></span>
+      </div>
+
+      <h4>Captures CRE (délibération)</h4>
+      <p class="hint">Rattachez les captures du tableau CRE correspondant à cette clé de prix (comme l'onglet 1 du fichier de suivi).</p>
+      <div class="row-upload">
+        <input type="file" id="rowImgInput" accept="image/*">
+        <input type="text" id="rowImgCaption" placeholder="Légende (ex: délibération HTA, p.12)">
+        <button id="rowImgUpload">Ajouter la capture</button>
+      </div>
+      <p class="hint">Astuce : collez directement une capture d'écran avec Ctrl-V (Cmd-V sur Mac).</p>
+      <div id="rowGallery" class="row-gallery"></div>
+
+      <h4>Historique des modifications</h4>
+      <ul id="rowHistory" class="audit-list"></ul>
+
+      <h4>Commentaires</h4>
+      <div class="row-value-box">
+        <textarea id="rowModalComment" rows="3" placeholder="Note libre sur cette clé (ex: écart expliqué, source, point de vigilance)"></textarea>
+        <div>
+          <button id="rowModalCommentSave">Ajouter le commentaire</button>
+          <span id="rowModalCommentStatus" class="hint"></span>
+        </div>
+      </div>
+      <ul id="rowComments" class="comment-list"></ul>
+    </div>
+  </div>
+
+  <!-- Visionneuse plein ecran d'une capture -->
+  <div id="imgViewer" class="modal" style="display:none">
+    <div class="img-viewer-inner">
+      <button id="imgViewerClose" class="link">fermer</button>
+      <img id="imgViewerImg" alt="capture CRE">
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='common.js') }}"></script>
+  <script src="{{ url_for('static', filename='campaign.js') }}"></script>
+</body>
+</html>

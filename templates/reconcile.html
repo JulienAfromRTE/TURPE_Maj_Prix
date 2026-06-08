@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }} &middot; Réconciliation EKDI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>{{ app_name }} &middot; Réconciliation EKDI N/N-1</h1>
+    <p class="subtitle"><a href="{{ url_for('index') }}" class="link-inv">&larr; Portail</a> &middot; Comparaison de deux exports EKDI &middot; v{{ app_version }}</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Charger les exports EKDI</h2>
+      <div class="grid">
+        <label>Export EKDI &mdash; année à vérifier (N)
+          <input type="file" id="fileNew" accept=".xlsx">
+        </label>
+        <label>Export EKDI &mdash; année précédente (N-1)
+          <input type="file" id="fileOld" accept=".xlsx">
+        </label>
+        <label>Date d'effet (01.08)
+          <input type="date" id="refDate" value="2026-08-01">
+        </label>
+      </div>
+      <p class="hint">Les opérandes en <code>_P</code> (part fixe à échoir) sont automatiquement comparés à la date d'effet moins un mois (01.07).</p>
+      <button id="btnRun">Lancer la réconciliation</button>
+      <span id="status" class="status"></span>
+    </section>
+
+    <section class="card" id="summary" style="display:none">
+      <h2>2. Synthèse</h2>
+      <div class="counts">
+        <span class="chip chip-changed">Modifiées : <b id="cChanged">0</b></span>
+        <span class="chip chip-new">Nouvelles : <b id="cNew">0</b></span>
+        <span class="chip chip-removed">Supprimées : <b id="cRemoved">0</b></span>
+        <span class="chip chip-unchanged">Inchangées : <b id="cUnchanged">0</b></span>
+        <span class="chip chip-aberrant">Alertes &gt;20% : <b id="cAberrant">0</b></span>
+      </div>
+      <div class="filters">
+        <label><input type="checkbox" class="fStatus" value="changed" checked> Modifiées</label>
+        <label><input type="checkbox" class="fStatus" value="new" checked> Nouvelles</label>
+        <label><input type="checkbox" class="fStatus" value="removed" checked> Supprimées</label>
+        <label><input type="checkbox" class="fStatus" value="unchanged"> Inchangées</label>
+        <label class="sep"><input type="checkbox" id="fAberrant"> Alertes uniquement</label>
+        <button id="btnExport" class="secondary">Exporter les écarts (.xlsx)</button>
+      </div>
+      <div class="table-wrap">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th>Tarif</th><th>GrpValFix</th><th>Opérande</th>
+              <th class="num">Valeur N-1</th><th class="num">Valeur N</th>
+              <th class="num">Évolution</th><th>Valide du</th><th>Statut</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

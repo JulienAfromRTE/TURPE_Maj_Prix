@@ -1,0 +1,4783 @@
+{
+  "source": "MAJ_Tarifaire__Aout_2025_23072025.xlsx",
+  "sheet": "2.Mise à jour et vérif PROD",
+  "rows": [
+    {
+      "order": 1,
+      "section": "Composante de gestion",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "HTB_FRGST",
+      "history": {
+        "08.2021": 9404.04,
+        "08.2022": 9403.08,
+        "08.2023": 10032.24,
+        "11.2024": 10532.52,
+        "02.2025": 11545.32,
+        "08.2025": 11545.32
+      }
+    },
+    {
+      "order": 2,
+      "section": "Composante de gestion",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "HTB_FRGST",
+      "history": {
+        "08.2021": 9404.04,
+        "08.2022": 9403.08,
+        "08.2023": 10032.24,
+        "11.2024": 10532.52,
+        "02.2025": 11545.32,
+        "08.2025": 11545.32
+      }
+    },
+    {
+      "order": 3,
+      "section": "Composante de gestion",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "HTB_FRGST",
+      "history": {
+        "08.2021": 9404.04,
+        "08.2022": 9403.08,
+        "08.2023": 10032.24,
+        "11.2024": 10532.52,
+        "02.2025": 11545.32,
+        "08.2025": 11545.32
+      }
+    },
+    {
+      "order": 4,
+      "section": "Composante de gestion",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "HTA_FRGST",
+      "history": {
+        "08.2021": 425.64,
+        "08.2022": 433.8,
+        "08.2023": 459.48,
+        "11.2024": 481.68,
+        "02.2025": 504.84,
+        "08.2025": 499.8
+      }
+    },
+    {
+      "order": 5,
+      "section": "Composante de gestion",
+      "tarif_label": "Prod",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "PRODHTB_FG",
+      "history": {
+        "08.2021": 9404.04,
+        "08.2022": 9403.08,
+        "08.2023": 10032.24,
+        "11.2024": 10532.52,
+        "02.2025": 11545.32,
+        "08.2025": 11545.32
+      }
+    },
+    {
+      "order": 6,
+      "section": "Composante de gestion",
+      "tarif_label": "Prod",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_FR_GST",
+      "cle": "PRODHTA_FG",
+      "history": {
+        "08.2021": 425.64,
+        "08.2022": 433.8,
+        "08.2023": 459.48,
+        "11.2024": 481.68,
+        "02.2025": 504.84,
+        "08.2025": 499.8
+      }
+    },
+    {
+      "order": 7,
+      "section": "Composante de Comptage",
+      "tarif_label": "RTE_HTB_Courbe",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_CPT",
+      "cle": "CPT_RTE_B",
+      "history": {
+        "08.2021": 3095.28,
+        "08.2022": 3094.92,
+        "08.2023": 3302.04,
+        "11.2024": 3466.68,
+        "02.2025": 3800.04,
+        "08.2025": 3800.04
+      }
+    },
+    {
+      "order": 8,
+      "section": "Composante de Comptage",
+      "tarif_label": "RTE_HTA_Courbe",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_CPT",
+      "cle": "CPT_RTE_AC",
+      "history": {
+        "08.2021": 312.12,
+        "08.2022": 319.2,
+        "08.2023": 339.96,
+        "11.2024": 356.28,
+        "02.2025": 383.76,
+        "08.2025": 376.39
+      }
+    },
+    {
+      "order": 9,
+      "section": "Composante de Comptage",
+      "tarif_label": "Client_HTB_Courbe",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_CPT_PR",
+      "cle": "CPT_CLI_B",
+      "history": {
+        "08.2021": 555.72,
+        "08.2022": 555.72,
+        "08.2023": 592.8,
+        "11.2024": 622.44,
+        "02.2025": 682.2,
+        "08.2025": 682.2
+      }
+    },
+    {
+      "order": 10,
+      "section": "Composante de Comptage",
+      "tarif_label": "Client_HTA_Courbe",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_CPT_PR",
+      "cle": "CPT_CLI_AC",
+      "history": {
+        "08.2021": 312.12,
+        "08.2022": 319.2,
+        "08.2023": 339.96,
+        "11.2024": 356.28,
+        "02.2025": 383.76,
+        "08.2025": 376.39
+      }
+    },
+    {
+      "order": 11,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "PX_HTB3EA",
+      "history": {
+        "08.2021": 0.0033,
+        "08.2022": 0.0033,
+        "08.2023": 0.0035,
+        "11.2024": 0.0037,
+        "02.2025": 0.0041,
+        "08.2025": 0.00041
+      }
+    },
+    {
+      "order": 12,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_CUB2",
+      "history": {
+        "08.2021": 0.0129,
+        "08.2022": 0.0117,
+        "08.2023": 0.0111,
+        "11.2024": 0.0101,
+        "02.2025": 0.0111,
+        "08.2025": 0.0119
+      }
+    },
+    {
+      "order": 13,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_CUB2",
+      "history": {
+        "08.2021": 0.0088,
+        "08.2022": 0.0085,
+        "08.2023": 0.009,
+        "11.2024": 0.0091,
+        "02.2025": 0.01,
+        "08.2025": 0.0107
+      }
+    },
+    {
+      "order": 14,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_CUB2",
+      "history": {
+        "08.2021": 0.0085,
+        "08.2022": 0.008,
+        "08.2023": 0.0081,
+        "11.2024": 0.008,
+        "02.2025": 0.0088,
+        "08.2025": 0.0087
+      }
+    },
+    {
+      "order": 15,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_CUB2",
+      "history": {
+        "08.2021": 0.0067,
+        "08.2022": 0.0063,
+        "08.2023": 0.0063,
+        "11.2024": 0.0062,
+        "02.2025": 0.0068,
+        "08.2025": 0.0065
+      }
+    },
+    {
+      "order": 16,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_CUB2",
+      "history": {
+        "08.2021": 0.0054,
+        "08.2022": 0.005,
+        "08.2023": 0.0051,
+        "11.2024": 0.005,
+        "02.2025": 0.0055,
+        "08.2025": 0.0052
+      }
+    },
+    {
+      "order": 17,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_MUB2",
+      "history": {
+        "08.2021": 0.0109,
+        "08.2022": 0.0098,
+        "08.2023": 0.009300000000000001,
+        "11.2024": 0.0085,
+        "02.2025": 0.0093,
+        "08.2025": 0.0098
+      }
+    },
+    {
+      "order": 18,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_MUB2",
+      "history": {
+        "08.2021": 0.0085,
+        "08.2022": 0.008,
+        "08.2023": 0.0081,
+        "11.2024": 0.0079,
+        "02.2025": 0.0087,
+        "08.2025": 0.0092
+      }
+    },
+    {
+      "order": 19,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_MUB2",
+      "history": {
+        "08.2021": 0.0065,
+        "08.2022": 0.0064,
+        "08.2023": 0.0068,
+        "11.2024": 0.0070999999999999995,
+        "02.2025": 0.0078,
+        "08.2025": 0.0079
+      }
+    },
+    {
+      "order": 20,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_MUB2",
+      "history": {
+        "08.2021": 0.0051,
+        "08.2022": 0.0051,
+        "08.2023": 0.0054,
+        "11.2024": 0.0058,
+        "02.2025": 0.0064,
+        "08.2025": 0.0061
+      }
+    },
+    {
+      "order": 21,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_MUB2",
+      "history": {
+        "08.2021": 0.0034,
+        "08.2022": 0.0037,
+        "08.2023": 0.0044,
+        "11.2024": 0.0049,
+        "02.2025": 0.0054,
+        "08.2025": 0.0051
+      }
+    },
+    {
+      "order": 22,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_LUB2",
+      "history": {
+        "08.2021": 0.0078000000000000005,
+        "08.2022": 0.0069,
+        "08.2023": 0.006500000000000001,
+        "11.2024": 0.006,
+        "02.2025": 0.0066,
+        "08.2025": 0.0067
+      }
+    },
+    {
+      "order": 23,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_LUB2",
+      "history": {
+        "08.2021": 0.0061,
+        "08.2022": 0.0057,
+        "08.2023": 0.0058,
+        "11.2024": 0.005699999999999999,
+        "02.2025": 0.0062,
+        "08.2025": 0.0064
+      }
+    },
+    {
+      "order": 24,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_LUB2",
+      "history": {
+        "08.2021": 0.0045,
+        "08.2022": 0.0045,
+        "08.2023": 0.0049,
+        "11.2024": 0.0052,
+        "02.2025": 0.0057,
+        "08.2025": 0.0059
+      }
+    },
+    {
+      "order": 25,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_LUB2",
+      "history": {
+        "08.2021": 0.0031,
+        "08.2022": 0.0035,
+        "08.2023": 0.0042,
+        "11.2024": 0.0048,
+        "02.2025": 0.0053,
+        "08.2025": 0.0052
+      }
+    },
+    {
+      "order": 26,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_LUB2",
+      "history": {
+        "08.2021": 0.0025,
+        "08.2022": 0.0029,
+        "08.2023": 0.0035,
+        "11.2024": 0.0042,
+        "02.2025": 0.0046,
+        "08.2025": 0.0048
+      }
+    },
+    {
+      "order": 27,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_CUB1",
+      "history": {
+        "08.2021": 0.023,
+        "08.2022": 0.0218,
+        "08.2023": 0.022099999999999998,
+        "11.2024": 0.022099999999999998,
+        "02.2025": 0.0242,
+        "08.2025": 0.0255
+      }
+    },
+    {
+      "order": 28,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_CUB1",
+      "history": {
+        "08.2021": 0.0188,
+        "08.2022": 0.018,
+        "08.2023": 0.0184,
+        "11.2024": 0.018600000000000002,
+        "02.2025": 0.0204,
+        "08.2025": 0.0219
+      }
+    },
+    {
+      "order": 29,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_CUB1",
+      "history": {
+        "08.2021": 0.0157,
+        "08.2022": 0.0153,
+        "08.2023": 0.0157,
+        "11.2024": 0.0159,
+        "02.2025": 0.0174,
+        "08.2025": 0.0166
+      }
+    },
+    {
+      "order": 30,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_CUB1",
+      "history": {
+        "08.2021": 0.0118,
+        "08.2022": 0.0108,
+        "08.2023": 0.0106,
+        "11.2024": 0.0102,
+        "02.2025": 0.0112,
+        "08.2025": 0.0102
+      }
+    },
+    {
+      "order": 31,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_CUB1",
+      "history": {
+        "08.2021": 0.0085,
+        "08.2022": 0.0077,
+        "08.2023": 0.0076,
+        "11.2024": 0.0072,
+        "02.2025": 0.0079,
+        "08.2025": 0.0067
+      }
+    },
+    {
+      "order": 32,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_MUB1",
+      "history": {
+        "08.2021": 0.017,
+        "08.2022": 0.016399999999999998,
+        "08.2023": 0.0168,
+        "11.2024": 0.0169,
+        "02.2025": 0.0185,
+        "08.2025": 0.0202
+      }
+    },
+    {
+      "order": 33,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_MUB1",
+      "history": {
+        "08.2021": 0.0139,
+        "08.2022": 0.0138,
+        "08.2023": 0.0146,
+        "11.2024": 0.0152,
+        "02.2025": 0.0167,
+        "08.2025": 0.0179
+      }
+    },
+    {
+      "order": 34,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_MUB1",
+      "history": {
+        "08.2021": 0.0092,
+        "08.2022": 0.0101,
+        "08.2023": 0.0119,
+        "11.2024": 0.0137,
+        "02.2025": 0.015,
+        "08.2025": 0.0145
+      }
+    },
+    {
+      "order": 35,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_MUB1",
+      "history": {
+        "08.2021": 0.0065,
+        "08.2022": 0.007,
+        "08.2023": 0.008,
+        "11.2024": 0.009000000000000001,
+        "02.2025": 0.0098,
+        "08.2025": 0.0093
+      }
+    },
+    {
+      "order": 36,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_MUB1",
+      "history": {
+        "08.2021": 0.0044,
+        "08.2022": 0.005,
+        "08.2023": 0.0059,
+        "11.2024": 0.0067,
+        "02.2025": 0.0074,
+        "08.2025": 0.0065
+      }
+    },
+    {
+      "order": 37,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_LUB1",
+      "history": {
+        "08.2021": 0.0124,
+        "08.2022": 0.0103,
+        "08.2023": 0.0089,
+        "11.2024": 0.0070999999999999995,
+        "02.2025": 0.0077,
+        "08.2025": 0.0073
+      }
+    },
+    {
+      "order": 38,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAPSH_LUB1",
+      "history": {
+        "08.2021": 0.0095,
+        "08.2022": 0.0083,
+        "08.2023": 0.0077,
+        "11.2024": 0.0068000000000000005,
+        "02.2025": 0.0075,
+        "08.2025": 0.007
+      }
+    },
+    {
+      "order": 39,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EACSH_LUB1",
+      "history": {
+        "08.2021": 0.006,
+        "08.2022": 0.0057,
+        "08.2023": 0.0058,
+        "11.2024": 0.0058,
+        "02.2025": 0.0064,
+        "08.2025": 0.0063
+      }
+    },
+    {
+      "order": 40,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAPSB_LUB1",
+      "history": {
+        "08.2021": 0.0041,
+        "08.2022": 0.0043,
+        "08.2023": 0.0049,
+        "11.2024": 0.0054,
+        "02.2025": 0.0059,
+        "08.2025": 0.0057
+      }
+    },
+    {
+      "order": 41,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EACSB_LUB1",
+      "history": {
+        "08.2021": 0.0021,
+        "08.2022": 0.0027,
+        "08.2023": 0.0035,
+        "11.2024": 0.0045000000000000005,
+        "02.2025": 0.0049,
+        "08.2025": 0.0052
+      }
+    },
+    {
+      "order": 42,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_CUA",
+      "history": {
+        "08.2021": 0.0373,
+        "08.2022": 0.0442,
+        "08.2023": 0.0535,
+        "11.2024": 0.06280000000000001,
+        "02.2025": 0.0676,
+        "08.2025": 0.0574
+      }
+    },
+    {
+      "order": 43,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAHPSH_CUA",
+      "history": {
+        "08.2021": 0.032,
+        "08.2022": 0.0352,
+        "08.2023": 0.0401,
+        "11.2024": 0.045,
+        "02.2025": 0.0484,
+        "08.2025": 0.0423
+      }
+    },
+    {
+      "order": 44,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EAHCSH_CUA",
+      "history": {
+        "08.2021": 0.0217,
+        "08.2022": 0.0226,
+        "08.2023": 0.0245,
+        "11.2024": 0.0263,
+        "02.2025": 0.0283,
+        "08.2025": 0.0199
+      }
+    },
+    {
+      "order": 45,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAHPSB_CUA",
+      "history": {
+        "08.2021": 0.0164,
+        "08.2022": 0.0135,
+        "08.2023": 0.0108,
+        "11.2024": 0.0076,
+        "02.2025": 0.0082,
+        "08.2025": 0.0101
+      }
+    },
+    {
+      "order": 46,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EAHCSB_CUA",
+      "history": {
+        "08.2021": 0.0101,
+        "08.2022": 0.0084,
+        "08.2023": 0.007,
+        "11.2024": 0.005,
+        "02.2025": 0.0054,
+        "08.2025": 0.0069
+      }
+    },
+    {
+      "order": 47,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_LUA",
+      "history": {
+        "08.2021": 0.028,
+        "08.2022": 0.0278,
+        "08.2023": 0.0288,
+        "11.2024": 0.029300000000000003,
+        "02.2025": 0.0316,
+        "08.2025": 0.0265
+      }
+    },
+    {
+      "order": 48,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAHPSH_LUA",
+      "history": {
+        "08.2021": 0.0211,
+        "08.2022": 0.0211,
+        "08.2023": 0.0219,
+        "11.2024": 0.022400000000000003,
+        "02.2025": 0.0241,
+        "08.2025": 0.021
+      }
+    },
+    {
+      "order": 49,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EAHCSH_LUA",
+      "history": {
+        "08.2021": 0.0138,
+        "08.2022": 0.0145,
+        "08.2023": 0.0158,
+        "11.2024": 0.017,
+        "02.2025": 0.0183,
+        "08.2025": 0.0147
+      }
+    },
+    {
+      "order": 50,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAHPSB_LUA",
+      "history": {
+        "08.2021": 0.0089,
+        "08.2022": 0.008,
+        "08.2023": 0.0074,
+        "11.2024": 0.006500000000000001,
+        "02.2025": 0.007,
+        "08.2025": 0.0092
+      }
+    },
+    {
+      "order": 51,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EAHCSB_LUA",
+      "history": {
+        "08.2021": 0.0077,
+        "08.2022": 0.0067,
+        "08.2023": 0.0059,
+        "11.2024": 0.0049,
+        "02.2025": 0.0053,
+        "08.2025": 0.0068
+      }
+    },
+    {
+      "order": 52,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_CUAM",
+      "history": {
+        "08.2021": 0.0478,
+        "08.2022": 0.0549,
+        "08.2023": 0.0649,
+        "11.2024": 0.0748,
+        "02.2025": 0.0805,
+        "08.2025": 0.0701
+      }
+    },
+    {
+      "order": 53,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAHPSHCUAM",
+      "history": {
+        "08.2021": 0.0307,
+        "08.2022": 0.0338,
+        "08.2023": 0.0387,
+        "11.2024": 0.0433,
+        "02.2025": 0.0466,
+        "08.2025": 0.0405
+      }
+    },
+    {
+      "order": 54,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EAHCSH_CUA",
+      "history": {
+        "08.2021": 0.0217,
+        "08.2022": 0.0226,
+        "08.2023": 0.0245,
+        "11.2024": 0.0263,
+        "02.2025": 0.0283,
+        "08.2025": 0.0199
+      }
+    },
+    {
+      "order": 55,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAHPSB_CUA",
+      "history": {
+        "08.2021": 0.0164,
+        "08.2022": 0.0135,
+        "08.2023": 0.0108,
+        "11.2024": 0.0076,
+        "02.2025": 0.0082,
+        "08.2025": 0.0101
+      }
+    },
+    {
+      "order": 56,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EAHCSB_CUA",
+      "history": {
+        "08.2021": 0.0101,
+        "08.2022": 0.0084,
+        "08.2023": 0.007,
+        "11.2024": 0.005,
+        "02.2025": 0.0054,
+        "08.2025": 0.0069
+      }
+    },
+    {
+      "order": 57,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C1",
+      "cle": "EAPTE_LUAM",
+      "history": {
+        "08.2021": 0.0321,
+        "08.2022": 0.0321,
+        "08.2023": 0.0333,
+        "11.2024": 0.034,
+        "02.2025": 0.0366,
+        "08.2025": 0.0315
+      }
+    },
+    {
+      "order": 58,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C2",
+      "cle": "EAHPSHLUAM",
+      "history": {
+        "08.2021": 0.0193,
+        "08.2022": 0.0192,
+        "08.2023": 0.0199,
+        "11.2024": 0.0203,
+        "02.2025": 0.0219,
+        "08.2025": 0.0187
+      }
+    },
+    {
+      "order": 59,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C3",
+      "cle": "EAHCSH_LUA",
+      "history": {
+        "08.2021": 0.0138,
+        "08.2022": 0.0145,
+        "08.2023": 0.0158,
+        "11.2024": 0.017,
+        "02.2025": 0.0183,
+        "08.2025": 0.0147
+      }
+    },
+    {
+      "order": 60,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C4",
+      "cle": "EAHPSB_LUA",
+      "history": {
+        "08.2021": 0.0089,
+        "08.2022": 0.008,
+        "08.2023": 0.0074,
+        "11.2024": 0.006500000000000001,
+        "02.2025": 0.007,
+        "08.2025": 0.0092
+      }
+    },
+    {
+      "order": 61,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C5",
+      "cle": "EAHCSB_LUA",
+      "history": {
+        "08.2021": 0.0077,
+        "08.2022": 0.0067,
+        "08.2023": 0.0059,
+        "11.2024": 0.0049,
+        "02.2025": 0.0053,
+        "08.2025": 0.0068
+      }
+    },
+    {
+      "order": 62,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Prod ZPROD_225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_EA_PRO",
+      "cle": "PROHTB2_EA",
+      "history": {
+        "08.2021": 0.00023,
+        "08.2022": 0.00023,
+        "08.2023": 0.00023,
+        "11.2024": 0.00023,
+        "02.2025": 0.00023,
+        "08.2025": 0.00037
+      }
+    },
+    {
+      "order": 63,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Prod ZPROD_400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_EA_PRO",
+      "cle": "PROHTB3_EA",
+      "history": {
+        "08.2021": 0.00023,
+        "08.2022": 0.00023,
+        "08.2023": 0.00023,
+        "11.2024": 0.00023,
+        "02.2025": 0.00023,
+        "08.2025": 0.00037
+      }
+    },
+    {
+      "order": 64,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Prod ZPROD_HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_EA_PRO",
+      "cle": "PRODHTA_EA",
+      "history": {
+        "08.2021": 0.0,
+        "08.2022": 0.0,
+        "08.2023": 0.0,
+        "11.2024": 0.0,
+        "02.2025": 0.0,
+        "08.2025": 0.0
+      }
+    },
+    {
+      "order": 65,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Prod ZPROD_HTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_EA_PRO",
+      "cle": "PROHTB1_EA",
+      "history": {
+        "08.2021": 0.0,
+        "08.2022": 0.0,
+        "08.2023": 0.0,
+        "11.2024": 0.0,
+        "02.2025": 0.0,
+        "08.2025": 0.0
+      }
+    },
+    {
+      "order": 66,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "S225P400EA",
+      "history": {
+        "08.2021": 0.0077,
+        "08.2022": 0.0077,
+        "08.2023": 0.0082,
+        "11.2024": 0.0086,
+        "02.2025": 0.0095,
+        "08.2025": 0.0095
+      }
+    },
+    {
+      "order": 67,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "SHTAP225EA",
+      "history": {
+        "08.2021": 0.0184,
+        "08.2022": 0.0188,
+        "08.2023": 0.02,
+        "11.2024": 0.021,
+        "02.2025": 0.0226,
+        "08.2025": 0.0222
+      }
+    },
+    {
+      "order": 68,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "SHTAP400EA",
+      "history": {
+        "08.2021": 0.0184,
+        "08.2022": 0.0188,
+        "08.2023": 0.02,
+        "11.2024": 0.021,
+        "02.2025": 0.0226,
+        "08.2025": 0.0222
+      }
+    },
+    {
+      "order": 69,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "SHTAPHTBEA",
+      "history": {
+        "08.2021": 0.0184,
+        "08.2022": 0.0188,
+        "08.2023": 0.02,
+        "11.2024": 0.021,
+        "02.2025": 0.0226,
+        "08.2025": 0.0222
+      }
+    },
+    {
+      "order": 70,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "SHTBP225EA",
+      "history": {
+        "08.2021": 0.0131,
+        "08.2022": 0.0131,
+        "08.2023": 0.014,
+        "11.2024": 0.0147,
+        "02.2025": 0.0161,
+        "08.2025": 0.0161
+      }
+    },
+    {
+      "order": 71,
+      "section": "Composante de Soutirage PV",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "COEFF_C_S",
+      "cle": "SHTBP400EA",
+      "history": {
+        "08.2021": 0.0131,
+        "08.2022": 0.0131,
+        "08.2023": 0.014,
+        "11.2024": 0.0147,
+        "02.2025": 0.0161,
+        "08.2025": 0.0161
+      }
+    },
+    {
+      "order": 72,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 1.43,
+        "08.2022": 1.92,
+        "08.2023": 2.64,
+        "11.2024": 3.36,
+        "02.2025": 3.72,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 73,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 1.37,
+        "08.2022": 1.92,
+        "08.2023": 2.64,
+        "11.2024": 3.36,
+        "02.2025": 3.72,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 74,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 1.35,
+        "08.2022": 1.92,
+        "08.2023": 2.64,
+        "11.2024": 3.36,
+        "02.2025": 3.72,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 75,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 1.28,
+        "08.2022": 1.92,
+        "08.2023": 2.64,
+        "11.2024": 3.36,
+        "02.2025": 3.72,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 76,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 1.05,
+        "08.2022": 1.68,
+        "08.2023": 2.52,
+        "11.2024": 3.36,
+        "02.2025": 3.72,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 77,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 4.42,
+        "08.2022": 4.2,
+        "08.2023": 4.2,
+        "11.2024": 4.2,
+        "02.2025": 4.56,
+        "08.2025": 4.32
+      }
+    },
+    {
+      "order": 78,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 4.24,
+        "08.2022": 4.08,
+        "08.2023": 4.08,
+        "11.2024": 4.08,
+        "02.2025": 4.56,
+        "08.2025": 4.2
+      }
+    },
+    {
+      "order": 79,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 4.16,
+        "08.2022": 3.96,
+        "08.2023": 3.96,
+        "11.2024": 3.84,
+        "02.2025": 4.2,
+        "08.2025": 3.84
+      }
+    },
+    {
+      "order": 80,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 3.43,
+        "08.2022": 3.36,
+        "08.2023": 3.48,
+        "11.2024": 3.6,
+        "02.2025": 3.96,
+        "08.2025": 3.6
+      }
+    },
+    {
+      "order": 81,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 2.42,
+        "08.2022": 2.64,
+        "08.2023": 3.0,
+        "11.2024": 3.48,
+        "02.2025": 3.84,
+        "08.2025": 3.48
+      }
+    },
+    {
+      "order": 82,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 11.92,
+        "08.2022": 11.28,
+        "08.2023": 11.28,
+        "11.2024": 11.16,
+        "02.2025": 12.24,
+        "08.2025": 11.28
+      }
+    },
+    {
+      "order": 83,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 11.44,
+        "08.2022": 10.8,
+        "08.2023": 10.8,
+        "11.2024": 10.68,
+        "02.2025": 11.76,
+        "08.2025": 10.68
+      }
+    },
+    {
+      "order": 84,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 9.4,
+        "08.2022": 8.76,
+        "08.2023": 8.64,
+        "11.2024": 8.4,
+        "02.2025": 9.24,
+        "08.2025": 7.92
+      }
+    },
+    {
+      "order": 85,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 7.17,
+        "08.2022": 6.48,
+        "08.2023": 6.24,
+        "11.2024": 5.88,
+        "02.2025": 6.48,
+        "08.2025": 5.4
+      }
+    },
+    {
+      "order": 86,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 3.87,
+        "08.2022": 3.84,
+        "08.2023": 4.2,
+        "11.2024": 4.32,
+        "02.2025": 4.8,
+        "08.2025": 4.08
+      }
+    },
+    {
+      "order": 87,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 4.19,
+        "08.2022": 5.88,
+        "08.2023": 8.16,
+        "11.2024": 10.44,
+        "02.2025": 11.52,
+        "08.2025": 11.76
+      }
+    },
+    {
+      "order": 88,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 3.88,
+        "08.2022": 5.64,
+        "08.2023": 8.04,
+        "11.2024": 10.44,
+        "02.2025": 11.52,
+        "08.2025": 11.76
+      }
+    },
+    {
+      "order": 89,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 3.77,
+        "08.2022": 5.64,
+        "08.2023": 7.92,
+        "11.2024": 10.44,
+        "02.2025": 11.52,
+        "08.2025": 11.76
+      }
+    },
+    {
+      "order": 90,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 3.19,
+        "08.2022": 5.28,
+        "08.2023": 7.8,
+        "11.2024": 10.44,
+        "02.2025": 11.52,
+        "08.2025": 11.76
+      }
+    },
+    {
+      "order": 91,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 2.8,
+        "08.2022": 4.92,
+        "08.2023": 7.68,
+        "11.2024": 10.44,
+        "02.2025": 11.52,
+        "08.2025": 11.76
+      }
+    },
+    {
+      "order": 92,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 16.63,
+        "08.2022": 14.64,
+        "08.2023": 13.56,
+        "11.2024": 12.24,
+        "02.2025": 13.32,
+        "08.2025": 13.44
+      }
+    },
+    {
+      "order": 93,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 16.02,
+        "08.2022": 14.16,
+        "08.2023": 13.32,
+        "11.2024": 12.0,
+        "02.2025": 13.08,
+        "08.2025": 13.2
+      }
+    },
+    {
+      "order": 94,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 13.59,
+        "08.2022": 12.36,
+        "08.2023": 12.0,
+        "11.2024": 11.4,
+        "02.2025": 12.48,
+        "08.2025": 12.48
+      }
+    },
+    {
+      "order": 95,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 9.91,
+        "08.2022": 9.84,
+        "08.2023": 10.44,
+        "11.2024": 10.92,
+        "02.2025": 12.0,
+        "08.2025": 12.12
+      }
+    },
+    {
+      "order": 96,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 5.87,
+        "08.2022": 7.08,
+        "08.2023": 8.76,
+        "11.2024": 10.56,
+        "02.2025": 11.64,
+        "08.2025": 11.88
+      }
+    },
+    {
+      "order": 97,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 32.17,
+        "08.2022": 32.64,
+        "08.2023": 35.4,
+        "11.2024": 37.92,
+        "02.2025": 41.52,
+        "08.2025": 41.64
+      }
+    },
+    {
+      "order": 98,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 30.99,
+        "08.2022": 31.32,
+        "08.2023": 33.84,
+        "11.2024": 36.12,
+        "02.2025": 39.6,
+        "08.2025": 39.36
+      }
+    },
+    {
+      "order": 99,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 24.86,
+        "08.2022": 24.96,
+        "08.2023": 26.88,
+        "11.2024": 28.56,
+        "02.2025": 31.32,
+        "08.2025": 28.92
+      }
+    },
+    {
+      "order": 100,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 17.49,
+        "08.2022": 17.4,
+        "08.2023": 18.48,
+        "11.2024": 19.32,
+        "02.2025": 21.12,
+        "08.2025": 19.08
+      }
+    },
+    {
+      "order": 101,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 9.94,
+        "08.2022": 10.8,
+        "08.2023": 12.48,
+        "11.2024": 14.16,
+        "02.2025": 15.48,
+        "08.2025": 13.92
+      }
+    },
+    {
+      "order": 102,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 4.88,
+        "08.2022": 7.25,
+        "08.2023": 10.12,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 103,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 4.67,
+        "08.2022": 7.11,
+        "08.2023": 10.04,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 104,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 4.4,
+        "08.2022": 6.91,
+        "08.2023": 9.94,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 105,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 4.26,
+        "08.2022": 6.82,
+        "08.2023": 9.89,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 12.55
+      }
+    },
+    {
+      "order": 106,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 3.6,
+        "08.2022": 6.37,
+        "08.2023": 9.65,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 11.22
+      }
+    },
+    {
+      "order": 107,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 19.36,
+        "08.2022": 22.75,
+        "08.2023": 27.39,
+        "11.2024": 32.01,
+        "02.2025": 34.48,
+        "08.2025": 35.33
+      }
+    },
+    {
+      "order": 108,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 18.26,
+        "08.2022": 21.08,
+        "08.2023": 25.01,
+        "11.2024": 28.89,
+        "02.2025": 31.12,
+        "08.2025": 32.3
+      }
+    },
+    {
+      "order": 109,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 13.85,
+        "08.2022": 14.6,
+        "08.2023": 16.01,
+        "11.2024": 17.28,
+        "02.2025": 18.61,
+        "08.2025": 20.39
+      }
+    },
+    {
+      "order": 110,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 9.71,
+        "08.2022": 10.83,
+        "08.2023": 12.49,
+        "11.2024": 14.1,
+        "02.2025": 15.18,
+        "08.2025": 14.33
+      }
+    },
+    {
+      "order": 111,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 4.15,
+        "08.2022": 6.76,
+        "08.2023": 9.89,
+        "11.2024": 13.17,
+        "02.2025": 14.19,
+        "08.2025": 11.56
+      }
+    },
+    {
+      "order": 112,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 5.34,
+        "08.2022": 7.56,
+        "08.2023": 10.28,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 113,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 4.61,
+        "08.2022": 7.06,
+        "08.2023": 10.02,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 114,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 4.4,
+        "08.2022": 6.91,
+        "08.2023": 9.94,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 14.41
+      }
+    },
+    {
+      "order": 115,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 4.26,
+        "08.2022": 6.82,
+        "08.2023": 9.89,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 12.55
+      }
+    },
+    {
+      "order": 116,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 3.6,
+        "08.2022": 6.37,
+        "08.2023": 9.65,
+        "11.2024": 13.12,
+        "02.2025": 14.13,
+        "08.2025": 11.22
+      }
+    },
+    {
+      "order": 117,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B1",
+      "cle": "",
+      "history": {
+        "08.2021": 21.81,
+        "08.2022": 25.25,
+        "08.2023": 30.04,
+        "11.2024": 34.79,
+        "02.2025": 37.46,
+        "08.2025": 38.27
+      }
+    },
+    {
+      "order": 118,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B2",
+      "cle": "",
+      "history": {
+        "08.2021": 19.93,
+        "08.2022": 22.77,
+        "08.2023": 26.81,
+        "11.2024": 30.78,
+        "02.2025": 33.15,
+        "08.2025": 34.3
+      }
+    },
+    {
+      "order": 119,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B3",
+      "cle": "",
+      "history": {
+        "08.2021": 13.85,
+        "08.2022": 14.6,
+        "08.2023": 16.01,
+        "11.2024": 17.28,
+        "02.2025": 18.61,
+        "08.2025": 20.39
+      }
+    },
+    {
+      "order": 120,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B4",
+      "cle": "ok",
+      "history": {
+        "08.2021": 9.71,
+        "08.2022": 10.83,
+        "08.2023": 12.49,
+        "11.2024": 14.1,
+        "02.2025": 15.18,
+        "08.2025": 14.33
+      }
+    },
+    {
+      "order": 121,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B5",
+      "cle": "",
+      "history": {
+        "08.2021": 4.15,
+        "08.2022": 6.76,
+        "08.2023": 9.89,
+        "11.2024": 13.17,
+        "02.2025": 14.19,
+        "08.2025": 11.56
+      }
+    },
+    {
+      "order": 122,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZS225_P400",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 7.41,
+        "08.2022": 7.41,
+        "08.2023": 7.9,
+        "11.2024": 8.3,
+        "02.2025": 9.1,
+        "08.2025": 9.1
+      }
+    },
+    {
+      "order": 123,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_P225",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 8.5,
+        "08.2022": 8.69,
+        "08.2023": 9.26,
+        "11.2024": 9.7,
+        "02.2025": 10.45,
+        "08.2025": 10.25
+      }
+    },
+    {
+      "order": 124,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_P400",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 2.96,
+        "08.2022": 3.03,
+        "08.2023": 3.22,
+        "11.2024": 3.38,
+        "02.2025": 3.64,
+        "08.2025": 3.57
+      }
+    },
+    {
+      "order": 125,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_PHTB",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 2.96,
+        "08.2022": 3.03,
+        "08.2023": 3.22,
+        "11.2024": 3.38,
+        "02.2025": 3.64,
+        "08.2025": 3.57
+      }
+    },
+    {
+      "order": 126,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTB_P225",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 1.59,
+        "08.2022": 1.59,
+        "08.2023": 1.7,
+        "11.2024": 1.78,
+        "02.2025": 1.95,
+        "08.2025": 1.95
+      }
+    },
+    {
+      "order": 127,
+      "section": "Composante de Soutirage PF",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTB_P400",
+      "operande": "ZCOEF_B",
+      "cle": "",
+      "history": {
+        "08.2021": 5.45,
+        "08.2022": 5.45,
+        "08.2023": 5.81,
+        "11.2024": 6.1,
+        "02.2025": 6.69,
+        "08.2025": 6.69
+      }
+    },
+    {
+      "order": 128,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.43,
+        "07.2022": 1.92,
+        "07.2023": 2.64,
+        "10.2024": 3.36,
+        "02.2025": 3.72,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 129,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.37,
+        "07.2022": 1.92,
+        "07.2023": 2.64,
+        "10.2024": 3.36,
+        "02.2025": 3.72,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 130,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.35,
+        "07.2022": 1.92,
+        "07.2023": 2.64,
+        "10.2024": 3.36,
+        "02.2025": 3.72,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 131,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.28,
+        "07.2022": 1.92,
+        "07.2023": 2.64,
+        "10.2024": 3.36,
+        "02.2025": 3.72,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 132,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_CU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.05,
+        "07.2022": 1.68,
+        "07.2023": 2.52,
+        "10.2024": 3.36,
+        "02.2025": 3.72,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 133,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.42,
+        "07.2022": 4.2,
+        "07.2023": 4.2,
+        "10.2024": 4.2,
+        "02.2025": 4.56,
+        "07.2025": 4.32
+      }
+    },
+    {
+      "order": 134,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.24,
+        "07.2022": 4.08,
+        "07.2023": 4.08,
+        "10.2024": 4.08,
+        "02.2025": 4.56,
+        "07.2025": 4.2
+      }
+    },
+    {
+      "order": 135,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.16,
+        "07.2022": 3.96,
+        "07.2023": 3.96,
+        "10.2024": 3.84,
+        "02.2025": 4.2,
+        "07.2025": 3.84
+      }
+    },
+    {
+      "order": 136,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.43,
+        "07.2022": 3.36,
+        "07.2023": 3.48,
+        "10.2024": 3.6,
+        "02.2025": 3.96,
+        "07.2025": 3.6
+      }
+    },
+    {
+      "order": 137,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 2.42,
+        "07.2022": 2.64,
+        "07.2023": 3.0,
+        "10.2024": 3.48,
+        "02.2025": 3.84,
+        "07.2025": 3.48
+      }
+    },
+    {
+      "order": 138,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 11.92,
+        "07.2022": 11.28,
+        "07.2023": 11.28,
+        "10.2024": 11.16,
+        "02.2025": 12.24,
+        "07.2025": 11.28
+      }
+    },
+    {
+      "order": 139,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 11.44,
+        "07.2022": 10.8,
+        "07.2023": 10.8,
+        "10.2024": 10.68,
+        "02.2025": 11.76,
+        "07.2025": 10.68
+      }
+    },
+    {
+      "order": 140,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 9.4,
+        "07.2022": 8.76,
+        "07.2023": 8.64,
+        "10.2024": 8.4,
+        "02.2025": 9.24,
+        "07.2025": 7.92
+      }
+    },
+    {
+      "order": 141,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 7.17,
+        "07.2022": 6.48,
+        "07.2023": 6.24,
+        "10.2024": 5.88,
+        "02.2025": 6.48,
+        "07.2025": 5.4
+      }
+    },
+    {
+      "order": 142,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB2_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.87,
+        "07.2022": 3.84,
+        "07.2023": 4.2,
+        "10.2024": 4.32,
+        "02.2025": 4.8,
+        "07.2025": 4.08
+      }
+    },
+    {
+      "order": 143,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.19,
+        "07.2022": 5.88,
+        "07.2023": 8.16,
+        "10.2024": 10.44,
+        "02.2025": 11.52,
+        "07.2025": 11.76
+      }
+    },
+    {
+      "order": 144,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.88,
+        "07.2022": 5.64,
+        "07.2023": 8.04,
+        "10.2024": 10.44,
+        "02.2025": 11.52,
+        "07.2025": 11.76
+      }
+    },
+    {
+      "order": 145,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.77,
+        "07.2022": 5.64,
+        "07.2023": 7.92,
+        "10.2024": 10.44,
+        "02.2025": 11.52,
+        "07.2025": 11.76
+      }
+    },
+    {
+      "order": 146,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.19,
+        "07.2022": 5.28,
+        "07.2023": 7.8,
+        "10.2024": 10.44,
+        "02.2025": 11.52,
+        "07.2025": 11.76
+      }
+    },
+    {
+      "order": 147,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_CU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_CU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 2.8,
+        "07.2022": 4.92,
+        "07.2023": 7.68,
+        "10.2024": 10.44,
+        "02.2025": 11.52,
+        "07.2025": 11.76
+      }
+    },
+    {
+      "order": 148,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 16.63,
+        "07.2022": 14.64,
+        "07.2023": 13.56,
+        "10.2024": 12.24,
+        "02.2025": 13.32,
+        "07.2025": 13.44
+      }
+    },
+    {
+      "order": 149,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 16.02,
+        "07.2022": 14.16,
+        "07.2023": 13.32,
+        "10.2024": 12.0,
+        "02.2025": 13.08,
+        "07.2025": 13.2
+      }
+    },
+    {
+      "order": 150,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 13.59,
+        "07.2022": 12.36,
+        "07.2023": 12.0,
+        "10.2024": 11.4,
+        "02.2025": 12.48,
+        "07.2025": 12.48
+      }
+    },
+    {
+      "order": 151,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 9.91,
+        "07.2022": 9.84,
+        "07.2023": 10.44,
+        "10.2024": 10.92,
+        "02.2025": 12.0,
+        "07.2025": 12.12
+      }
+    },
+    {
+      "order": 152,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_MU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 5.87,
+        "07.2022": 7.08,
+        "07.2023": 8.76,
+        "10.2024": 10.56,
+        "02.2025": 11.64,
+        "07.2025": 11.88
+      }
+    },
+    {
+      "order": 153,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 32.17,
+        "07.2022": 32.64,
+        "07.2023": 35.4,
+        "10.2024": 37.92,
+        "02.2025": 41.52,
+        "07.2025": 41.64
+      }
+    },
+    {
+      "order": 154,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 30.99,
+        "07.2022": 31.32,
+        "07.2023": 33.84,
+        "10.2024": 36.12,
+        "02.2025": 39.6,
+        "07.2025": 39.36
+      }
+    },
+    {
+      "order": 155,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 24.86,
+        "07.2022": 24.96,
+        "07.2023": 26.88,
+        "10.2024": 28.56,
+        "02.2025": 31.32,
+        "07.2025": 28.92
+      }
+    },
+    {
+      "order": 156,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 17.49,
+        "07.2022": 17.4,
+        "07.2023": 18.48,
+        "10.2024": 19.32,
+        "02.2025": 21.12,
+        "07.2025": 19.08
+      }
+    },
+    {
+      "order": 157,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTB1_LU",
+      "tarif_ekdi": "5CL_CAL01 Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 9.94,
+        "07.2022": 10.8,
+        "07.2023": 12.48,
+        "10.2024": 14.16,
+        "02.2025": 15.48,
+        "07.2025": 13.92
+      }
+    },
+    {
+      "order": 158,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.88,
+        "07.2022": 7.25,
+        "07.2023": 10.12,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 159,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.67,
+        "07.2022": 7.11,
+        "07.2023": 10.04,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 160,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.4,
+        "07.2022": 6.91,
+        "07.2023": 9.94,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 161,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.26,
+        "07.2022": 6.82,
+        "07.2023": 9.89,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 12.55
+      }
+    },
+    {
+      "order": 162,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_CU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.6,
+        "07.2022": 6.37,
+        "07.2023": 9.65,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 11.22
+      }
+    },
+    {
+      "order": 163,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 19.36,
+        "07.2022": 22.75,
+        "07.2023": 27.39,
+        "10.2024": 32.01,
+        "02.2025": 34.48,
+        "07.2025": 35.33
+      }
+    },
+    {
+      "order": 164,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 18.26,
+        "07.2022": 21.08,
+        "07.2023": 25.01,
+        "10.2024": 28.89,
+        "02.2025": 31.12,
+        "07.2025": 32.3
+      }
+    },
+    {
+      "order": 165,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 13.85,
+        "07.2022": 14.6,
+        "07.2023": 16.01,
+        "10.2024": 17.28,
+        "02.2025": 18.61,
+        "07.2025": 20.39
+      }
+    },
+    {
+      "order": 166,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 9.71,
+        "07.2022": 10.83,
+        "07.2023": 12.49,
+        "10.2024": 14.1,
+        "02.2025": 15.18,
+        "07.2025": 14.33
+      }
+    },
+    {
+      "order": 167,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Fixe_LU",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_PFEA1",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.15,
+        "07.2022": 6.76,
+        "07.2023": 9.89,
+        "10.2024": 13.17,
+        "02.2025": 14.19,
+        "07.2025": 11.56
+      }
+    },
+    {
+      "order": 168,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 5.34,
+        "07.2022": 7.56,
+        "07.2023": 10.28,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 169,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.61,
+        "07.2022": 7.06,
+        "07.2023": 10.02,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 170,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.4,
+        "07.2022": 6.91,
+        "07.2023": 9.94,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 14.41
+      }
+    },
+    {
+      "order": 171,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.26,
+        "07.2022": 6.82,
+        "07.2023": 9.89,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 12.55
+      }
+    },
+    {
+      "order": 172,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_CU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 3.6,
+        "07.2022": 6.37,
+        "07.2023": 9.65,
+        "10.2024": 13.12,
+        "02.2025": 14.13,
+        "07.2025": 11.22
+      }
+    },
+    {
+      "order": 173,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B1_P",
+      "cle": "",
+      "history": {
+        "07.2021": 21.81,
+        "07.2022": 25.25,
+        "07.2023": 30.04,
+        "10.2024": 34.79,
+        "02.2025": 37.46,
+        "07.2025": 38.27
+      }
+    },
+    {
+      "order": 174,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B2_P",
+      "cle": "",
+      "history": {
+        "07.2021": 19.93,
+        "07.2022": 22.77,
+        "07.2023": 26.81,
+        "10.2024": 30.78,
+        "02.2025": 33.15,
+        "07.2025": 34.3
+      }
+    },
+    {
+      "order": 175,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B3_P",
+      "cle": "",
+      "history": {
+        "07.2021": 13.85,
+        "07.2022": 14.6,
+        "07.2023": 16.01,
+        "10.2024": 17.28,
+        "02.2025": 18.61,
+        "07.2025": 20.39
+      }
+    },
+    {
+      "order": 176,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B4_P",
+      "cle": "",
+      "history": {
+        "07.2021": 9.71,
+        "07.2022": 10.83,
+        "07.2023": 12.49,
+        "10.2024": 14.1,
+        "02.2025": 15.18,
+        "07.2025": 14.33
+      }
+    },
+    {
+      "order": 177,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "HTA_Mobile_LU",
+      "tarif_ekdi": "Z5CL_CAL02 Z5CL_PFEA2",
+      "grp": "ZHTA_LU",
+      "operande": "ZCOEF_B5_P",
+      "cle": "",
+      "history": {
+        "07.2021": 4.15,
+        "07.2022": 6.76,
+        "07.2023": 9.89,
+        "10.2024": 13.17,
+        "02.2025": 14.19,
+        "07.2025": 11.56
+      }
+    },
+    {
+      "order": 178,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZS225_P400",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 7.41,
+        "07.2022": 7.41,
+        "07.2023": 7.9,
+        "10.2024": 8.3,
+        "02.2025": 9.1,
+        "07.2025": 9.1
+      }
+    },
+    {
+      "order": 179,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_P225",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 8.5,
+        "07.2022": 8.69,
+        "07.2023": 9.26,
+        "10.2024": 9.7,
+        "02.2025": 10.45,
+        "07.2025": 10.25
+      }
+    },
+    {
+      "order": 180,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_P400",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 2.96,
+        "07.2022": 3.03,
+        "07.2023": 3.22,
+        "10.2024": 3.38,
+        "02.2025": 3.64,
+        "07.2025": 3.57
+      }
+    },
+    {
+      "order": 181,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTA_PHTB",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 2.96,
+        "07.2022": 3.03,
+        "07.2023": 3.22,
+        "10.2024": 3.38,
+        "02.2025": 3.64,
+        "07.2025": 3.57
+      }
+    },
+    {
+      "order": 182,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTB_P225",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 1.59,
+        "07.2022": 1.59,
+        "07.2023": 1.7,
+        "10.2024": 1.78,
+        "02.2025": 1.95,
+        "07.2025": 1.95
+      }
+    },
+    {
+      "order": 183,
+      "section": "Composante de Soutirage Part fixe à échoir",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "ZP_FIX_SEC",
+      "grp": "ZSHTB_P400",
+      "operande": "ZCOEF_B_P",
+      "cle": "",
+      "history": {
+        "07.2021": 5.45,
+        "07.2022": 5.45,
+        "07.2023": 5.81,
+        "10.2024": 6.1,
+        "02.2025": 6.69,
+        "07.2025": 6.69
+      }
+    },
+    {
+      "order": 184,
+      "section": "Dépassement puissance",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DPALPH",
+      "cle": "HTB_DP_C",
+      "history": {
+        "08.2021": 0.04,
+        "08.2022": 0.04,
+        "08.2023": 0.04,
+        "11.2024": 0.04,
+        "02.2025": 0.04,
+        "08.2025": 0.04
+      }
+    },
+    {
+      "order": 185,
+      "section": "Dépassement puissance",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DPALPH",
+      "cle": "HTB_DP_C",
+      "history": {
+        "08.2021": 0.04,
+        "08.2022": 0.04,
+        "08.2023": 0.04,
+        "11.2024": 0.04,
+        "02.2025": 0.04,
+        "08.2025": 0.04
+      }
+    },
+    {
+      "order": 186,
+      "section": "Dépassement puissance",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DPALPH",
+      "cle": "HTA_DP_C",
+      "history": {
+        "08.2021": 0.04,
+        "08.2022": 0.04,
+        "08.2023": 0.04,
+        "11.2024": 0.04,
+        "02.2025": 0.04,
+        "08.2025": 0.04
+      }
+    },
+    {
+      "order": 187,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SEC225_DP",
+      "history": {
+        "08.2021": 0.3139,
+        "08.2022": 0.3139,
+        "08.2023": 0.3349,
+        "11.2024": 0.35159999999999997,
+        "02.2025": 0.3854,
+        "08.2025": 0.3854
+      }
+    },
+    {
+      "order": 188,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SECHTA_DP2",
+      "history": {
+        "08.2021": 0.6821,
+        "08.2022": 0.6975,
+        "08.2023": 0.7429,
+        "11.2024": 0.7787000000000001,
+        "02.2025": 0.8387,
+        "08.2025": 0.8226
+      }
+    },
+    {
+      "order": 189,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SECHTA_DP",
+      "history": {
+        "08.2021": 0.2422,
+        "08.2022": 0.2477,
+        "08.2023": 0.2638,
+        "11.2024": 0.27649999999999997,
+        "02.2025": 0.2978,
+        "08.2025": 0.2921
+      }
+    },
+    {
+      "order": 190,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SECHTA_DP",
+      "history": {
+        "08.2021": 0.2422,
+        "08.2022": 0.2477,
+        "08.2023": 0.2638,
+        "11.2024": 0.27649999999999997,
+        "02.2025": 0.2978,
+        "08.2025": 0.2921
+      }
+    },
+    {
+      "order": 191,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SECTB1_DP",
+      "history": {
+        "08.2021": 0.0698,
+        "08.2022": 0.0698,
+        "08.2023": 0.0745,
+        "11.2024": 0.0782,
+        "02.2025": 0.0857,
+        "08.2025": 0.0857
+      }
+    },
+    {
+      "order": 192,
+      "section": "Dépassement puissance",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_DP_1PS",
+      "cle": "SECHTB_DP",
+      "history": {
+        "08.2021": 0.2325,
+        "08.2022": 0.2325,
+        "08.2023": 0.248,
+        "11.2024": 0.26039999999999996,
+        "02.2025": 0.2854,
+        "08.2025": 0.2854
+      }
+    },
+    {
+      "order": 193,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB3_HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_AE",
+      "cle": "REG_HTB3",
+      "history": {
+        "08.2021": 0.0581,
+        "08.2022": 0.0581,
+        "08.2023": 0.062,
+        "11.2024": 0.0651,
+        "02.2025": 0.0713,
+        "08.2025": 0.0713
+      }
+    },
+    {
+      "order": 194,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB3_HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_SO",
+      "cle": "REG_HTB3",
+      "history": {
+        "08.2021": 0.0581,
+        "08.2022": 0.0581,
+        "08.2023": 0.062,
+        "11.2024": 0.0651,
+        "02.2025": 0.0713,
+        "08.2025": 0.0713
+      }
+    },
+    {
+      "order": 195,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB2_HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_AE",
+      "cle": "REG_225AER",
+      "history": {
+        "08.2021": 0.1512,
+        "08.2022": 0.1512,
+        "08.2023": 0.1613,
+        "11.2024": 0.1693,
+        "02.2025": 0.1856,
+        "08.2025": 0.1856
+      }
+    },
+    {
+      "order": 196,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB2_HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_SO",
+      "cle": "REG_225SOU",
+      "history": {
+        "08.2021": 0.5812,
+        "08.2022": 0.5811,
+        "08.2023": 0.62,
+        "11.2024": 0.6509,
+        "02.2025": 0.7135,
+        "08.2025": 0.7135
+      }
+    },
+    {
+      "order": 197,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB1_HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_AE",
+      "cle": "REG_HTBAER",
+      "history": {
+        "08.2021": 0.7673,
+        "08.2022": 0.7672,
+        "08.2023": 0.8186,
+        "11.2024": 0.8594,
+        "02.2025": 0.942,
+        "08.2025": 0.942
+      }
+    },
+    {
+      "order": 198,
+      "section": "Composante regroupement",
+      "tarif_label": "HTB1_HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_SO",
+      "cle": "REG_HTBSOU",
+      "history": {
+        "08.2021": 1.3486,
+        "08.2022": 1.3485,
+        "08.2023": 1.4387,
+        "11.2024": 1.5104,
+        "02.2025": 1.6557,
+        "08.2025": 1.6557
+      }
+    },
+    {
+      "order": 199,
+      "section": "Composante regroupement",
+      "tarif_label": "HTA2_HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_AE",
+      "cle": "REG_HTBAER",
+      "history": {
+        "08.2021": 0.7673,
+        "08.2022": 0.7672,
+        "08.2023": 0.8186,
+        "11.2024": 0.8594,
+        "02.2025": 0.942,
+        "08.2025": 0.942
+      }
+    },
+    {
+      "order": 200,
+      "section": "Composante regroupement",
+      "tarif_label": "HTA2_HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_SO",
+      "cle": "REG_HTBSOU",
+      "history": {
+        "08.2021": 1.3486,
+        "08.2022": 1.3485,
+        "08.2023": 1.4387,
+        "11.2024": 1.5104,
+        "02.2025": 1.6557,
+        "08.2025": 1.6557
+      }
+    },
+    {
+      "order": 201,
+      "section": "Composante regroupement",
+      "tarif_label": "HTA1_HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_AE",
+      "cle": "REG_HTAAER",
+      "history": {
+        "08.2021": 0.52,
+        "08.2022": 0.53,
+        "08.2023": 0.57,
+        "11.2024": 0.59,
+        "02.2025": 0.64,
+        "08.2025": 0.63
+      }
+    },
+    {
+      "order": 202,
+      "section": "Composante regroupement",
+      "tarif_label": "HTA1_HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_REG_SO",
+      "cle": "REG_HTASOU",
+      "history": {
+        "08.2021": 0.76,
+        "08.2022": 0.78,
+        "08.2023": 0.83,
+        "11.2024": 0.87,
+        "02.2025": 0.93,
+        "08.2025": 0.92
+      }
+    },
+    {
+      "order": 203,
+      "section": "CACS",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB3CEL",
+      "history": {
+        "08.2021": 106930.88,
+        "08.2022": 106920.19,
+        "08.2023": 114073.86,
+        "11.2024": 119762.59,
+        "02.2025": 131279.04,
+        "08.2025": 131279.04
+      }
+    },
+    {
+      "order": 204,
+      "section": "CACS",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB3AER",
+      "history": {
+        "08.2021": 10135.99,
+        "08.2022": 10134.98,
+        "08.2023": 10813.07,
+        "11.2024": 11352.31,
+        "02.2025": 12443.95,
+        "08.2025": 12443.95
+      }
+    },
+    {
+      "order": 205,
+      "section": "CACS",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB3AER",
+      "history": {
+        "08.2021": 10135.99,
+        "08.2022": 10134.98,
+        "08.2023": 10813.07,
+        "11.2024": 11352.31,
+        "02.2025": 12443.95,
+        "08.2025": 12443.95
+      }
+    },
+    {
+      "order": 206,
+      "section": "CACS",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB2CEL",
+      "history": {
+        "08.2021": 64488.15,
+        "08.2022": 64481.7,
+        "08.2023": 68795.96,
+        "11.2024": 72226.73,
+        "02.2025": 79172.1,
+        "08.2025": 79172.1
+      }
+    },
+    {
+      "order": 207,
+      "section": "CACS",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB2AER",
+      "history": {
+        "08.2021": 6462.01,
+        "08.2022": 6461.36,
+        "08.2023": 6893.67,
+        "11.2024": 7237.45,
+        "02.2025": 7933.41,
+        "08.2025": 7933.41
+      }
+    },
+    {
+      "order": 208,
+      "section": "CACS",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB2SOU",
+      "history": {
+        "08.2021": 32308.87,
+        "08.2022": 32305.64,
+        "08.2023": 34467.1,
+        "11.2024": 36185.93,
+        "02.2025": 39665.6,
+        "08.2025": 39665.6
+      }
+    },
+    {
+      "order": 209,
+      "section": "CACS",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB1CEL",
+      "history": {
+        "08.2021": 33496.46,
+        "08.2022": 33493.11,
+        "08.2023": 35734.02,
+        "11.2024": 37516.04,
+        "02.2025": 41123.6,
+        "08.2025": 41123.6
+      }
+    },
+    {
+      "order": 210,
+      "section": "CACS",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB1AER",
+      "history": {
+        "08.2021": 3834.42,
+        "08.2022": 3834.04,
+        "08.2023": 4090.56,
+        "11.2024": 4294.55,
+        "02.2025": 4707.52,
+        "08.2025": 4707.52
+      }
+    },
+    {
+      "order": 211,
+      "section": "CACS",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB1SOU",
+      "history": {
+        "08.2021": 7668.84,
+        "08.2022": 7668.07,
+        "08.2023": 8181.12,
+        "11.2024": 8589.1,
+        "02.2025": 9415.03,
+        "08.2025": 9415.03
+      }
+    },
+    {
+      "order": 212,
+      "section": "CACS",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTA_CEL",
+      "history": {
+        "08.2021": 3355.09,
+        "08.2022": 3430.92,
+        "08.2023": 3654.36,
+        "11.2024": 3830.23,
+        "02.2025": 4125.16,
+        "08.2025": 4045.96
+      }
+    },
+    {
+      "order": 213,
+      "section": "CACS",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTA_AER",
+      "history": {
+        "08.2021": 915.22,
+        "08.2022": 935.9,
+        "08.2023": 996.86,
+        "11.2024": 1044.83,
+        "02.2025": 1125.28,
+        "08.2025": 1103.68
+      }
+    },
+    {
+      "order": 214,
+      "section": "CACS",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTA_SOU",
+      "history": {
+        "08.2021": 1372.83,
+        "08.2022": 1403.86,
+        "08.2023": 1495.29,
+        "11.2024": 1567.25,
+        "02.2025": 1687.93,
+        "08.2025": 1655.52
+      }
+    },
+    {
+      "order": 215,
+      "section": "CACS",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB2_CE",
+      "history": {
+        "08.2021": 64488.15,
+        "08.2022": 64481.7,
+        "08.2023": 68795.96,
+        "11.2024": 72226.73,
+        "02.2025": 79172.1,
+        "08.2025": 79172.1
+      }
+    },
+    {
+      "order": 216,
+      "section": "CACS",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB2_AE",
+      "history": {
+        "08.2021": 6462.01,
+        "08.2022": 6461.36,
+        "08.2023": 6893.67,
+        "11.2024": 7237.45,
+        "02.2025": 7933.41,
+        "08.2025": 7933.41
+      }
+    },
+    {
+      "order": 217,
+      "section": "CACS",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB2_SO",
+      "history": {
+        "08.2021": 32308.87,
+        "08.2022": 32305.64,
+        "08.2023": 34467.1,
+        "11.2024": 36185.93,
+        "02.2025": 39665.6,
+        "08.2025": 39665.6
+      }
+    },
+    {
+      "order": 218,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTA_CEL",
+      "history": {
+        "08.2021": 3355.09,
+        "08.2022": 3430.92,
+        "08.2023": 3654.36,
+        "11.2024": 3830.23,
+        "02.2025": 4125.16,
+        "08.2025": 4045.96
+      }
+    },
+    {
+      "order": 219,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTA_AER",
+      "history": {
+        "08.2021": 915.22,
+        "08.2022": 935.9,
+        "08.2023": 996.86,
+        "11.2024": 1044.83,
+        "02.2025": 1125.28,
+        "08.2025": 1103.68
+      }
+    },
+    {
+      "order": 220,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTA_SOU",
+      "history": {
+        "08.2021": 1372.83,
+        "08.2022": 1403.86,
+        "08.2023": 1495.29,
+        "11.2024": 1567.25,
+        "02.2025": 1687.93,
+        "08.2025": 1655.52
+      }
+    },
+    {
+      "order": 221,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTA_CEL",
+      "history": {
+        "08.2021": 3355.09,
+        "08.2022": 3430.92,
+        "08.2023": 3654.36,
+        "11.2024": 3830.23,
+        "02.2025": 4125.16,
+        "08.2025": 4045.96
+      }
+    },
+    {
+      "order": 222,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTA_AER",
+      "history": {
+        "08.2021": 915.22,
+        "08.2022": 935.9,
+        "08.2023": 996.86,
+        "11.2024": 1044.83,
+        "02.2025": 1125.28,
+        "08.2025": 1103.68
+      }
+    },
+    {
+      "order": 223,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTA_SOU",
+      "history": {
+        "08.2021": 1372.83,
+        "08.2022": 1403.86,
+        "08.2023": 1495.29,
+        "11.2024": 1567.25,
+        "02.2025": 1687.93,
+        "08.2025": 1655.52
+      }
+    },
+    {
+      "order": 224,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTA_CEL",
+      "history": {
+        "08.2021": 3355.09,
+        "08.2022": 3430.92,
+        "08.2023": 3654.36,
+        "11.2024": 3830.23,
+        "02.2025": 4125.16,
+        "08.2025": 4045.96
+      }
+    },
+    {
+      "order": 225,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTA_AER",
+      "history": {
+        "08.2021": 915.22,
+        "08.2022": 935.9,
+        "08.2023": 996.86,
+        "11.2024": 1044.83,
+        "02.2025": 1125.28,
+        "08.2025": 1103.68
+      }
+    },
+    {
+      "order": 226,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTA_SOU",
+      "history": {
+        "08.2021": 1372.83,
+        "08.2022": 1403.86,
+        "08.2023": 1495.29,
+        "11.2024": 1567.25,
+        "02.2025": 1687.93,
+        "08.2025": 1655.52
+      }
+    },
+    {
+      "order": 227,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB1_CE",
+      "history": {
+        "08.2021": 33496.46,
+        "08.2022": 33493.11,
+        "08.2023": 35734.02,
+        "11.2024": 37516.04,
+        "02.2025": 41123.6,
+        "08.2025": 41123.6
+      }
+    },
+    {
+      "order": 228,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB1_AE",
+      "history": {
+        "08.2021": 3834.42,
+        "08.2022": 3834.04,
+        "08.2023": 4090.56,
+        "11.2024": 4294.55,
+        "02.2025": 4707.52,
+        "08.2025": 4707.52
+      }
+    },
+    {
+      "order": 229,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB1_SO",
+      "history": {
+        "08.2021": 7668.84,
+        "08.2022": 7668.07,
+        "08.2023": 8181.12,
+        "11.2024": 8589.1,
+        "02.2025": 9415.03,
+        "08.2025": 9415.03
+      }
+    },
+    {
+      "order": 230,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPX_C_CAC",
+      "cle": "PX_HTB1_CE",
+      "history": {
+        "08.2021": 33496.46,
+        "08.2022": 33493.11,
+        "08.2023": 35734.02,
+        "11.2024": 37516.04,
+        "02.2025": 41123.6,
+        "08.2025": 41123.6
+      }
+    },
+    {
+      "order": 231,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_AE_CAC",
+      "cle": "PX_HTB1_AE",
+      "history": {
+        "08.2021": 3834.42,
+        "08.2022": 3834.04,
+        "08.2023": 4090.56,
+        "11.2024": 4294.55,
+        "02.2025": 4707.52,
+        "08.2025": 4707.52
+      }
+    },
+    {
+      "order": 232,
+      "section": "CACS",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZP_SO_CAC",
+      "cle": "PX_HTB1_SO",
+      "history": {
+        "08.2021": 7668.84,
+        "08.2022": 7668.07,
+        "08.2023": 8181.12,
+        "11.2024": 8589.1,
+        "02.2025": 9415.03,
+        "08.2025": 9415.03
+      }
+    },
+    {
+      "order": 233,
+      "section": "Réservation de puissance",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_RP",
+      "cle": "PX_HTB2_RP",
+      "history": {
+        "08.2021": 1.55,
+        "08.2022": 1.55,
+        "08.2023": 1.65,
+        "11.2024": 1.74,
+        "02.2025": 1.9,
+        "08.2025": 1.9
+      }
+    },
+    {
+      "order": 234,
+      "section": "Réservation de puissance",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_RP",
+      "cle": "PX_HTB1_RP",
+      "history": {
+        "08.2021": 2.98,
+        "08.2022": 2.98,
+        "08.2023": 3.18,
+        "11.2024": 3.34,
+        "02.2025": 3.66,
+        "08.2025": 3.66
+      }
+    },
+    {
+      "order": 235,
+      "section": "Réservation de puissance",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_RP",
+      "cle": "PX_HTA_RP",
+      "history": {
+        "08.2021": 6.55,
+        "08.2022": 6.7,
+        "08.2023": 7.13,
+        "11.2024": 7.48,
+        "02.2025": 8.05,
+        "08.2025": 7.9
+      }
+    },
+    {
+      "order": 236,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB2_CU ZHTB2_LU ZHTB2_MU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 3.91,
+        "08.2022": 3.91,
+        "08.2023": 4.17,
+        "11.2024": 4.38,
+        "02.2025": 4.8,
+        "08.2025": 4.8
+      }
+    },
+    {
+      "order": 237,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB1_CU ZHTB1_LU ZHTB1_MU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 6.91,
+        "08.2022": 6.91,
+        "08.2023": 7.37,
+        "11.2024": 7.74,
+        "02.2025": 8.48,
+        "08.2025": 8.48
+      }
+    },
+    {
+      "order": 238,
+      "section": "Composante de transformation",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTA_LU ZHTA_CU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 8.74,
+        "08.2022": 8.94,
+        "08.2023": 9.52,
+        "11.2024": 9.98,
+        "02.2025": 10.75,
+        "08.2025": 10.54
+      }
+    },
+    {
+      "order": 239,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PX_KPON",
+      "cle": "ZPX_KPON",
+      "history": {
+        "08.2021": 1.82,
+        "08.2022": 1.82,
+        "08.2023": 1.94,
+        "11.2024": 2.04,
+        "02.2025": 2.23,
+        "08.2025": 2.23
+      }
+    },
+    {
+      "order": 240,
+      "section": "DPP",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB2_CU ZHTB2_LU ZHTB2_MU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 0.000143,
+        "08.2022": 0.000143,
+        "08.2023": 0.000143,
+        "11.2024": 0.000143,
+        "02.2025": 0.000143,
+        "08.2025": 0.000143
+      }
+    },
+    {
+      "order": 241,
+      "section": "DPP",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB1_CU ZHTB1_LU ZHTB1_MU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 9e-05,
+        "08.2022": 9e-05,
+        "08.2023": 9e-05,
+        "11.2024": 9e-05,
+        "02.2025": 9e-05,
+        "08.2025": 9e-05
+      }
+    },
+    {
+      "order": 242,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "DER_HTB2",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 243,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 244,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 246,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "DER_HTB1",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 247,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 248,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 250,
+      "section": "DER non distributeur",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "CCVHTA_DER",
+      "history": {
+        "08.2021": 0.0202,
+        "08.2022": 0.0207,
+        "08.2023": 0.022,
+        "11.2024": 0.0231,
+        "02.2025": 0.0248,
+        "08.2025": 0.0244
+      }
+    },
+    {
+      "order": 251,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "DER_HTB3",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 252,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 253,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 255,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "SEC225_DER",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 256,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 257,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 259,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTA_DER",
+      "history": {
+        "08.2021": 0.0202,
+        "08.2022": 0.0207,
+        "08.2023": 0.022,
+        "11.2024": 0.0231,
+        "02.2025": 0.0248,
+        "08.2025": 0.0244
+      }
+    },
+    {
+      "order": 260,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "HTA5_DER",
+      "history": {
+        "08.2021": 0.0202,
+        "08.2022": 0.0207,
+        "08.2023": 0.022,
+        "11.2024": 0.0231,
+        "02.2025": 0.0248,
+        "08.2025": 0.0244
+      }
+    },
+    {
+      "order": 261,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTA_DER",
+      "history": {
+        "08.2021": 0.0202,
+        "08.2022": 0.0207,
+        "08.2023": 0.022,
+        "11.2024": 0.0231,
+        "02.2025": 0.0248,
+        "08.2025": 0.0244
+      }
+    },
+    {
+      "order": 262,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTB_DER",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 263,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 264,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 266,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTB_DER",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 267,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 268,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 270,
+      "section": "DER distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 271,
+      "section": "DER distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 272,
+      "section": "DER distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 273,
+      "section": "DER distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 274,
+      "section": "DER distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 275,
+      "section": "DER distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 276,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 277,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 278,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 279,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 280,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 281,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 282,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 283,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 284,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 285,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 286,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 287,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    }
+  ]
+}

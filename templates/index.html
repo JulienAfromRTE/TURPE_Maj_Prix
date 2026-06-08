@@ -3,66 +3,118 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ app_name }}</title>
+  <title>{{ app_name }} &middot; Portail</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header>
-    <h1>{{ app_name }}</h1>
-    <p class="subtitle">{{ app_description }} &middot; v{{ app_version }}</p>
+    <div class="head-row">
+      <div>
+        <h1>{{ app_name }}</h1>
+        <p class="subtitle">{{ app_description }} &middot; v{{ app_version }}</p>
+      </div>
+      <div class="user-box">
+        <span class="user-label">Utilisateur</span>
+        <span id="userName" class="user-name">&mdash;</span>
+        <button id="btnChangeUser" class="link">changer</button>
+      </div>
+    </div>
   </header>
 
   <main>
     <section class="card">
-      <h2>1. Charger les exports EKDI</h2>
-      <div class="grid">
-        <label>Export EKDI &mdash; annee a verifier (N)
-          <input type="file" id="fileNew" accept=".xlsx">
-        </label>
-        <label>Export EKDI &mdash; annee precedente (N-1)
-          <input type="file" id="fileOld" accept=".xlsx">
-        </label>
-        <label>Date d'effet (01.08)
-          <input type="date" id="refDate" value="2026-08-01">
-        </label>
+      <div class="card-head">
+        <h2>Campagnes de mise à jour des prix</h2>
+        <div class="head-actions">
+          <a class="btn-link secondary" href="{{ url_for('reconcile_page') }}">Outil réconciliation EKDI N/N-1</a>
+          <button id="btnTrash" class="secondary">Corbeille <span id="trashCount" class="count-badge" style="display:none">0</span></button>
+          <button id="btnNew">+ Nouvelle mise à jour</button>
+        </div>
       </div>
-      <p class="hint">Les operandes en <code>_P</code> (part fixe a echoir) sont automatiquement compares a la date d'effet moins un mois (01.07).</p>
-      <button id="btnRun">Lancer la reconciliation</button>
-      <span id="status" class="status"></span>
-    </section>
+      <p class="hint">Chaque campagne suit le workflow : délibérations CRE &rarr; saisie de la grille &rarr; vérification EKDI/EA09, avec validations TMA puis chef de projet DSIT. Toutes les actions sont tracées.</p>
+      <div id="campaignList" class="campaign-list"></div>
+      <p id="emptyState" class="empty" style="display:none">Aucune campagne pour le moment. Cliquez sur &laquo; Nouvelle mise à jour &raquo; pour démarrer.</p>
 
-    <section class="card" id="summary" style="display:none">
-      <h2>2. Synthese</h2>
-      <div class="counts">
-        <span class="chip chip-changed">Modifiees : <b id="cChanged">0</b></span>
-        <span class="chip chip-new">Nouvelles : <b id="cNew">0</b></span>
-        <span class="chip chip-removed">Supprimees : <b id="cRemoved">0</b></span>
-        <span class="chip chip-unchanged">Inchangees : <b id="cUnchanged">0</b></span>
-        <span class="chip chip-aberrant">Alertes &gt;20% : <b id="cAberrant">0</b></span>
-      </div>
-      <div class="filters">
-        <label><input type="checkbox" class="fStatus" value="changed" checked> Modifiees</label>
-        <label><input type="checkbox" class="fStatus" value="new" checked> Nouvelles</label>
-        <label><input type="checkbox" class="fStatus" value="removed" checked> Supprimees</label>
-        <label><input type="checkbox" class="fStatus" value="unchanged"> Inchangees</label>
-        <label class="sep"><input type="checkbox" id="fAberrant"> Alertes uniquement</label>
-        <button id="btnExport" class="secondary">Exporter les ecarts (.xlsx)</button>
-      </div>
-      <div class="table-wrap">
-        <table id="tbl">
-          <thead>
-            <tr>
-              <th>Tarif</th><th>GrpValFix</th><th>Operande</th>
-              <th class="num">Valeur N-1</th><th class="num">Valeur N</th>
-              <th class="num">Evolution</th><th>Valide du</th><th>Statut</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+      <div id="trashSection" style="display:none">
+        <div class="card-head trash-head">
+          <h2>Corbeille</h2>
+          <button id="btnHideTrash" class="link">masquer</button>
+        </div>
+        <p class="hint">Les campagnes mises à la corbeille ne sont jamais supprimées : leurs données et leur journal d'audit restent intacts. Elles peuvent être restaurées à tout moment.</p>
+        <div id="trashList" class="campaign-list"></div>
+        <p id="trashEmpty" class="empty" style="display:none">La corbeille est vide.</p>
       </div>
     </section>
   </main>
 
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  <!-- Modal : identite utilisateur -->
+  <div id="userModal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h3>Qui êtes-vous ?</h3>
+      <p class="hint">Votre nom et votre profil sont associés à chaque action (saisie, upload, validation) pour assurer la traçabilité.</p>
+      <input type="text" id="userInput" placeholder="Prénom Nom" autocomplete="name">
+      <label class="profile-label">Profil
+        <select id="userProfile">
+          <option value="" disabled selected>Choisir un profil…</option>
+          <option value="TMA">TMA</option>
+          <option value="Chef de projet DSIT">Chef de projet DSIT</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button id="btnSaveUser">Valider</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal : nouvelle campagne -->
+  <div id="newModal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h3>Nouvelle mise à jour des prix</h3>
+      <label>Intitulé
+        <input type="text" id="ncName" placeholder="MAJ tarifaire août 2026">
+      </label>
+      <label>Période (libellé de colonne)
+        <input type="text" id="ncPeriod" placeholder="08.2026">
+      </label>
+      <label>Date d'effet
+        <input type="date" id="ncDate" value="2026-08-01">
+      </label>
+      <p class="hint">La grille sera instanciée avec l'historique des MAJ précédentes (287 lignes tarifaires).</p>
+      <div class="modal-actions">
+        <button id="btnCancelNew" class="secondary">Annuler</button>
+        <button id="btnCreateNew">Créer</button>
+      </div>
+      <span id="ncStatus" class="status"></span>
+    </div>
+  </div>
+
+  <!-- Modal : mise a la corbeille (reversible) -->
+  <div id="deleteModal" class="modal" style="display:none">
+    <div class="modal-box">
+      <h3>Mettre cette campagne à la corbeille ?</h3>
+      <div class="warn-banner">
+        La campagne sera <b>retirée de la liste active</b> mais <b>jamais supprimée</b> :
+        sa grille, ses validations, ses captures CRE, ses fichiers et son journal d'audit
+        restent intacts. Vous pourrez la <b>restaurer</b> à tout moment depuis la corbeille.
+      </div>
+      <p class="hint">Campagne ciblée :</p>
+      <p class="del-target"><b id="delCampName">&mdash;</b> <span id="delCampMeta" class="muted"></span></p>
+      <label>Pour confirmer, recopiez <u>exactement</u> l'intitulé ci-dessus
+        <input type="text" id="delConfirmInput" placeholder="Recopiez l'intitulé de la campagne" autocomplete="off">
+      </label>
+      <label class="check-line">
+        <input type="checkbox" id="delAck1">
+        Je confirme vouloir déplacer cette campagne vers la corbeille.
+      </label>
+      <div class="modal-actions">
+        <button id="btnCancelDelete" class="secondary">Annuler</button>
+        <button id="btnConfirmDelete" disabled>Mettre à la corbeille</button>
+      </div>
+      <span id="delStatus" class="status"></span>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='common.js') }}"></script>
+  <script src="{{ url_for('static', filename='portal.js') }}"></script>
 </body>
 </html>

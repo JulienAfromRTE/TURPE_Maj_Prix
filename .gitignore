@@ -1,1 +1,14 @@
+*.xlsx
+*.db
+__pycache__/*
+
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Uploads & data runtime
+data/uploads/
+
+# Délibérations CRE (gros PDF, non versionnés)
+data/Délibérations CRE/
