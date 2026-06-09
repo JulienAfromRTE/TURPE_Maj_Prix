@@ -22,6 +22,20 @@
   </header>
 
   <main>
+    <details class="help-box" open>
+      <summary>Comment renseigner cette campagne</summary>
+      <div class="help-body">
+        <p><strong>Le principe :</strong> une campagne reproduit la mise à jour tarifaire de bout en bout, en traçant chaque action. Suivez les 3 étapes ci-dessous (le bandeau numéroté permet de naviguer entre elles).</p>
+        <ol>
+          <li><strong>Délibérations CRE</strong> &mdash; déposez les deux PDF de la CRE (HTA-BT et HTB). Ils restent stockés et retéléchargeables.</li>
+          <li><strong>Saisie de la grille</strong> &mdash; reportez les nouveaux prix lus dans les PDF dans la colonne « nouvelle valeur ». L'outil affiche l'historique et le % d'évolution par clé, et <strong>alerte au-delà de &plusmn;20 %</strong>. Cochez <em>Validée</em> après contrôle ; cliquez une ligne pour y joindre les captures du tableau CRE et consulter son historique.</li>
+          <li><strong>Vérification post-injection</strong> &mdash; une fois les valeurs injectées dans SAP, déposez l'extract EKDI ou EA09 : l'outil le confronte automatiquement à votre grille et signale les écarts.</li>
+        </ol>
+        <p><strong>Validations :</strong> la campagne est contrôlée par la TMA puis par le chef de projet DSIT (onglet <em>Journal &amp; vérifs</em>).</p>
+        <p class="help-audit">Toutes vos actions (saisie, modification, validation, upload) sont horodatées et associées à votre nom et votre profil, pour la traçabilité d'audit.</p>
+      </div>
+    </details>
+
     <!-- Stepper workflow -->
     <section class="card">
       <div class="stepper" id="stepper">

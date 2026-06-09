@@ -22,6 +22,26 @@
   </header>
 
   <main>
+    <details class="help-box" open>
+      <summary>À propos de cet outil &mdash; à lire avant de commencer</summary>
+      <div class="help-body">
+        <p><strong>À quoi sert cet outil ?</strong> Chaque année au 1<sup>er</sup> août, RTE doit mettre à jour les prix du TURPE (Tarif d'Utilisation des Réseaux Publics d'Électricité) à partir des délibérations de la CRE. Cet outil <strong>sécurise et trace</strong> cette mise à jour, qui se faisait jusqu'ici manuellement (recopie des PDF vers Excel, injection dans SAP, puis vérification d'environ 150 clés une par une dans la transaction EA09).</p>
+
+        <p><strong>Ce que l'outil fait concrètement :</strong></p>
+        <ol>
+          <li><strong>Une grille tarifaire centrale</strong> où l'on saisit les nouveaux prix lus dans les PDF CRE, avec pour chaque clé l'historique des mises à jour précédentes, le pourcentage d'évolution et une <strong>alerte automatique au-delà de &plusmn;20 %</strong> (valeur potentiellement aberrante).</li>
+          <li><strong>La vérification post-injection</strong> : après que les valeurs ont été injectées dans SAP, on dépose un extract (table EKDI ou transaction EA09) et l'outil le confronte automatiquement aux valeurs saisies. C'est le contrôle clé par clé, fait en une fois au lieu de ~150 vérifications manuelles.</li>
+          <li><strong>Une réconciliation</strong> entre l'année N et l'année N-1 pour repérer d'un coup d'œil ce qui a changé (outil accessible depuis le bouton ci-dessous).</li>
+        </ol>
+
+        <p><strong>Important :</strong> l'outil travaille <strong>uniquement en lecture seule</strong>. Il n'écrit jamais dans SAP : l'injection des tarifs reste une opération manuelle maîtrisée.</p>
+
+        <p><strong>Ce que vous avez à faire :</strong> créer une campagne (la MAJ annuelle du 1<sup>er</sup> août, ou une MAJ intermédiaire) avec le bouton <em>&laquo; Nouvelle mise à jour &raquo;</em>, puis suivre les 3 étapes du workflow : déposer les PDF CRE &rarr; saisir la grille &rarr; vérifier après injection. Chaque campagne est validée par la TMA puis par le chef de projet DSIT.</p>
+
+        <p class="help-audit"><strong>Pour les auditeurs (commissaires aux comptes) :</strong> tout est traçable. Chaque action enregistre <em>qui</em> (nom + profil), <em>quoi</em> et <em>quand</em>. La grille est tracée ligne par ligne (historique des changements de valeur et de validation), les captures des tableaux CRE sont rattachées à chaque clé de prix, les validations métier sont horodatées, et l'ensemble est exportable dans un fichier Excel auditable à plusieurs feuilles. Aucune campagne n'est jamais réellement supprimée : la suppression la déplace dans une corbeille, données et journal intacts.</p>
+      </div>
+    </details>
+
     <section class="card">
       <div class="card-head">
         <h2>Campagnes de mise à jour des prix</h2>

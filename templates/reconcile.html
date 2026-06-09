@@ -13,6 +13,16 @@
   </header>
 
   <main>
+    <details class="help-box" open>
+      <summary>À quoi sert cette page</summary>
+      <div class="help-body">
+        <p><strong>Le principe :</strong> cet outil compare deux exports de la table SAP EKDI &mdash; l'année à vérifier (N) et l'année précédente (N-1) &mdash; et met en évidence, <strong>clé par clé</strong>, ce qui a changé. Une clé est identifiée par le triplet <strong>(Tarif, GrpValFix, Opérande)</strong>.</p>
+        <p>Chaque clé reçoit un statut : <em>modifiée, nouvelle, supprimée</em> ou <em>inchangée</em>, avec son évolution annuelle en %. Une <strong>alerte automatique se déclenche au-delà de &plusmn;20 %</strong> (valeur potentiellement aberrante). Les écarts sont exportables en <code>.xlsx</code>.</p>
+        <p><strong>Ce que vous avez à faire :</strong> chargez les deux exports EKDI, indiquez la date d'effet, puis lancez la réconciliation. Filtrez ensuite par statut et exportez les écarts si besoin.</p>
+        <p class="help-audit">⚠ Utilisez deux exports de <strong>périmètre identique</strong> (même sélection de tarifs). Comparer un export partiel à un export complet génère de nombreuses « nouvelles » clés en faux positif.</p>
+      </div>
+    </details>
+
     <section class="card">
       <h2>1. Charger les exports EKDI</h2>
       <div class="grid">
