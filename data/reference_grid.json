@@ -4002,7 +4002,7 @@
       "section": "Composante de transformation",
       "tarif_label": "HTB2",
       "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
-      "grp": "ZHTB2_CU ZHTB2_LU ZHTB2_MU",
+      "grp": "ZHTB2_CU",
       "operande": "ZCOEF_KPON",
       "cle": "",
       "history": {
@@ -4017,9 +4017,43 @@
     {
       "order": 237,
       "section": "Composante de transformation",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 3.91,
+        "08.2022": 3.91,
+        "08.2023": 4.17,
+        "11.2024": 4.38,
+        "02.2025": 4.8,
+        "08.2025": 4.8
+      }
+    },
+    {
+      "order": 238,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 3.91,
+        "08.2022": 3.91,
+        "08.2023": 4.17,
+        "11.2024": 4.38,
+        "02.2025": 4.8,
+        "08.2025": 4.8
+      }
+    },
+    {
+      "order": 239,
+      "section": "Composante de transformation",
       "tarif_label": "HTB1",
       "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
-      "grp": "ZHTB1_CU ZHTB1_LU ZHTB1_MU",
+      "grp": "ZHTB1_CU",
       "operande": "ZCOEF_KPON",
       "cle": "",
       "history": {
@@ -4032,11 +4066,45 @@
       }
     },
     {
-      "order": 238,
+      "order": 240,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 6.91,
+        "08.2022": 6.91,
+        "08.2023": 7.37,
+        "11.2024": 7.74,
+        "02.2025": 8.48,
+        "08.2025": 8.48
+      }
+    },
+    {
+      "order": 241,
+      "section": "Composante de transformation",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 6.91,
+        "08.2022": 6.91,
+        "08.2023": 7.37,
+        "11.2024": 7.74,
+        "02.2025": 8.48,
+        "08.2025": 8.48
+      }
+    },
+    {
+      "order": 242,
       "section": "Composante de transformation",
       "tarif_label": "HTA",
       "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
-      "grp": "ZHTA_LU ZHTA_CU",
+      "grp": "ZHTA_LU",
       "operande": "ZCOEF_KPON",
       "cle": "",
       "history": {
@@ -4049,7 +4117,24 @@
       }
     },
     {
-      "order": 239,
+      "order": 243,
+      "section": "Composante de transformation",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "Z5CL_CAL01 Z5CL_CAL02",
+      "grp": "ZHTA_CU",
+      "operande": "ZCOEF_KPON",
+      "cle": "",
+      "history": {
+        "08.2021": 8.74,
+        "08.2022": 8.94,
+        "08.2023": 9.52,
+        "11.2024": 9.98,
+        "02.2025": 10.75,
+        "08.2025": 10.54
+      }
+    },
+    {
+      "order": 244,
       "section": "Composante de transformation",
       "tarif_label": "HTB3",
       "tarif_ekdi": "",
@@ -4066,11 +4151,11 @@
       }
     },
     {
-      "order": 240,
+      "order": 245,
       "section": "DPP",
       "tarif_label": "HTB2",
       "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
-      "grp": "ZHTB2_CU ZHTB2_LU ZHTB2_MU",
+      "grp": "ZHTB2_CU",
       "operande": "ZCO_ALPDPP",
       "cle": "",
       "history": {
@@ -4083,11 +4168,45 @@
       }
     },
     {
-      "order": 241,
+      "order": 246,
+      "section": "DPP",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB2_LU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 0.000143,
+        "08.2022": 0.000143,
+        "08.2023": 0.000143,
+        "11.2024": 0.000143,
+        "02.2025": 0.000143,
+        "08.2025": 0.000143
+      }
+    },
+    {
+      "order": 247,
+      "section": "DPP",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB2_MU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 0.000143,
+        "08.2022": 0.000143,
+        "08.2023": 0.000143,
+        "11.2024": 0.000143,
+        "02.2025": 0.000143,
+        "08.2025": 0.000143
+      }
+    },
+    {
+      "order": 248,
       "section": "DPP",
       "tarif_label": "HTB1",
       "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
-      "grp": "ZHTB1_CU ZHTB1_LU ZHTB1_MU",
+      "grp": "ZHTB1_CU",
       "operande": "ZCO_ALPDPP",
       "cle": "",
       "history": {
@@ -4100,7 +4219,41 @@
       }
     },
     {
-      "order": 242,
+      "order": 249,
+      "section": "DPP",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB1_LU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 9e-05,
+        "08.2022": 9e-05,
+        "08.2023": 9e-05,
+        "11.2024": 9e-05,
+        "02.2025": 9e-05,
+        "08.2025": 9e-05
+      }
+    },
+    {
+      "order": 250,
+      "section": "DPP",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "ZDPP_HCSB ZDPP_HCSH ZDPP_HPSB ZDPP_HPSH ZDPP_PTE",
+      "grp": "ZHTB1_MU",
+      "operande": "ZCO_ALPDPP",
+      "cle": "",
+      "history": {
+        "08.2021": 9e-05,
+        "08.2022": 9e-05,
+        "08.2023": 9e-05,
+        "11.2024": 9e-05,
+        "02.2025": 9e-05,
+        "08.2025": 9e-05
+      }
+    },
+    {
+      "order": 251,
       "section": "DER non distributeur",
       "tarif_label": "HTB2",
       "tarif_ekdi": "",
@@ -4117,128 +4270,9 @@
       }
     },
     {
-      "order": 243,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB2",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNBT",
-      "cle": "DERNDIST_B",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0103,
-        "08.2023": 0.0103,
-        "11.2024": 0.01099,
-        "02.2025": 0.01154,
-        "08.2025": 0.01265
-      }
-    },
-    {
-      "order": 244,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB2",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNHT",
-      "cle": "DERNDIST_H",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0009,
-        "08.2023": 0.0009,
-        "11.2024": 0.00096,
-        "02.2025": 0.00101,
-        "08.2025": 0.0011
-      }
-    },
-    {
-      "order": 246,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB1",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZPRX_DER",
-      "cle": "DER_HTB1",
-      "history": {
-        "08.2021": null,
-        "08.2022": null,
-        "08.2023": null,
-        "11.2024": null,
-        "02.2025": null,
-        "08.2025": null
-      }
-    },
-    {
-      "order": 247,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB1",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNBT",
-      "cle": "DERNDIST_B",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0103,
-        "08.2023": 0.0103,
-        "11.2024": 0.01099,
-        "02.2025": 0.01154,
-        "08.2025": 0.01265
-      }
-    },
-    {
-      "order": 248,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB1",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNHT",
-      "cle": "DERNDIST_H",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0009,
-        "08.2023": 0.0009,
-        "11.2024": 0.00096,
-        "02.2025": 0.00101,
-        "08.2025": 0.0011
-      }
-    },
-    {
-      "order": 250,
-      "section": "DER non distributeur",
-      "tarif_label": "HTA",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZPRX_DER",
-      "cle": "CCVHTA_DER",
-      "history": {
-        "08.2021": 0.0202,
-        "08.2022": 0.0207,
-        "08.2023": 0.022,
-        "11.2024": 0.0231,
-        "02.2025": 0.0248,
-        "08.2025": 0.0244
-      }
-    },
-    {
-      "order": 251,
-      "section": "DER non distributeur",
-      "tarif_label": "HTB3",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZPRX_DER",
-      "cle": "DER_HTB3",
-      "history": {
-        "08.2021": null,
-        "08.2022": null,
-        "08.2023": null,
-        "11.2024": null,
-        "02.2025": null,
-        "08.2025": null
-      }
-    },
-    {
       "order": 252,
       "section": "DER non distributeur",
-      "tarif_label": "HTB3",
+      "tarif_label": "HTB2",
       "tarif_ekdi": "",
       "grp": "",
       "operande": "PRX_DERNBT",
@@ -4255,6 +4289,125 @@
     {
       "order": 253,
       "section": "DER non distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 254,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "DER_HTB1",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 255,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 256,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
+      }
+    },
+    {
+      "order": 257,
+      "section": "DER non distributeur",
+      "tarif_label": "HTA",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "CCVHTA_DER",
+      "history": {
+        "08.2021": 0.0202,
+        "08.2022": 0.0207,
+        "08.2023": 0.022,
+        "11.2024": 0.0231,
+        "02.2025": 0.0248,
+        "08.2025": 0.0244
+      }
+    },
+    {
+      "order": 258,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZPRX_DER",
+      "cle": "DER_HTB3",
+      "history": {
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
+      }
+    },
+    {
+      "order": 259,
+      "section": "DER non distributeur",
+      "tarif_label": "HTB3",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 260,
+      "section": "DER non distributeur",
       "tarif_label": "HTB3",
       "tarif_ekdi": "",
       "grp": "",
@@ -4270,7 +4423,7 @@
       }
     },
     {
-      "order": 255,
+      "order": 261,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZS225_P400",
       "tarif_ekdi": "",
@@ -4287,7 +4440,7 @@
       }
     },
     {
-      "order": 256,
+      "order": 262,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZS225_P400",
       "tarif_ekdi": "",
@@ -4304,7 +4457,7 @@
       }
     },
     {
-      "order": 257,
+      "order": 263,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZS225_P400",
       "tarif_ekdi": "",
@@ -4321,7 +4474,7 @@
       }
     },
     {
-      "order": 259,
+      "order": 264,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZSHTA_P225",
       "tarif_ekdi": "",
@@ -4338,7 +4491,7 @@
       }
     },
     {
-      "order": 260,
+      "order": 265,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZSHTA_P400",
       "tarif_ekdi": "",
@@ -4355,7 +4508,7 @@
       }
     },
     {
-      "order": 261,
+      "order": 266,
       "section": "DER non distributeur",
       "tarif_label": "Secours ZSHTA_PHTB",
       "tarif_ekdi": "",
@@ -4372,94 +4525,43 @@
       }
     },
     {
-      "order": 262,
-      "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P225",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZPRX_DER",
-      "cle": "SECHTB_DER",
-      "history": {
-        "08.2021": null,
-        "08.2022": null,
-        "08.2023": null,
-        "11.2024": null,
-        "02.2025": null,
-        "08.2025": null
-      }
-    },
-    {
-      "order": 263,
-      "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P225",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNBT",
-      "cle": "DERNDIST_B",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0103,
-        "08.2023": 0.0103,
-        "11.2024": 0.01099,
-        "02.2025": 0.01154,
-        "08.2025": 0.01265
-      }
-    },
-    {
-      "order": 264,
-      "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P225",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DERNHT",
-      "cle": "DERNDIST_H",
-      "history": {
-        "08.2021": null,
-        "08.2022": 0.0009,
-        "08.2023": 0.0009,
-        "11.2024": 0.00096,
-        "02.2025": 0.00101,
-        "08.2025": 0.0011
-      }
-    },
-    {
-      "order": 266,
-      "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P400",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZPRX_DER",
-      "cle": "SECHTB_DER",
-      "history": {
-        "08.2021": null,
-        "08.2022": null,
-        "08.2023": null,
-        "11.2024": null,
-        "02.2025": null,
-        "08.2025": null
-      }
-    },
-    {
       "order": 267,
       "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_label": "Secours ZSHTB_P225",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "PRX_DERNBT",
-      "cle": "DERNDIST_B",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTB_DER",
       "history": {
         "08.2021": null,
-        "08.2022": 0.0103,
-        "08.2023": 0.0103,
-        "11.2024": 0.01099,
-        "02.2025": 0.01154,
-        "08.2025": 0.01265
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
       }
     },
     {
       "order": 268,
       "section": "DER non distributeur",
-      "tarif_label": "Secours ZSHTB_P400",
+      "tarif_label": "Secours ZSHTB_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
+      "history": {
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
+      }
+    },
+    {
+      "order": 269,
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P225",
       "tarif_ekdi": "",
       "grp": "",
       "operande": "PRX_DERNHT",
@@ -4475,58 +4577,109 @@
     },
     {
       "order": 270,
-      "section": "DER distributeur",
-      "tarif_label": "HTB2",
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
+      "operande": "ZPRX_DER",
+      "cle": "SECHTB_DER",
       "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
+        "08.2021": null,
+        "08.2022": null,
+        "08.2023": null,
+        "11.2024": null,
+        "02.2025": null,
+        "08.2025": null
       }
     },
     {
       "order": 271,
-      "section": "DER distributeur",
-      "tarif_label": "HTB2",
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "ZS_DER_HT",
-      "cle": "DER_DIST_H",
+      "operande": "PRX_DERNBT",
+      "cle": "DERNDIST_B",
       "history": {
-        "08.2021": 0.00053,
-        "08.2022": 0.00053,
-        "08.2023": 0.00057,
-        "11.2024": 0.00059,
-        "02.2025": 0.00065,
-        "08.2025": 0.00214
+        "08.2021": null,
+        "08.2022": 0.0103,
+        "08.2023": 0.0103,
+        "11.2024": 0.01099,
+        "02.2025": 0.01154,
+        "08.2025": 0.01265
       }
     },
     {
       "order": 272,
-      "section": "DER distributeur",
-      "tarif_label": "HTB1",
+      "section": "DER non distributeur",
+      "tarif_label": "Secours ZSHTB_P400",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
+      "operande": "PRX_DERNHT",
+      "cle": "DERNDIST_H",
       "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
+        "08.2021": null,
+        "08.2022": 0.0009,
+        "08.2023": 0.0009,
+        "11.2024": 0.00096,
+        "02.2025": 0.00101,
+        "08.2025": 0.0011
       }
     },
     {
       "order": 273,
       "section": "DER distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 274,
+      "section": "DER distributeur",
+      "tarif_label": "HTB2",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 275,
+      "section": "DER distributeur",
+      "tarif_label": "HTB1",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 276,
+      "section": "DER distributeur",
       "tarif_label": "HTB1",
       "tarif_ekdi": "",
       "grp": "",
@@ -4542,93 +4695,93 @@
       }
     },
     {
-      "order": 274,
-      "section": "DER distributeur",
-      "tarif_label": "HTB3",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
-      "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
-      }
-    },
-    {
-      "order": 275,
-      "section": "DER distributeur",
-      "tarif_label": "HTB3",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZS_DER_HT",
-      "cle": "DER_DIST_H",
-      "history": {
-        "08.2021": 0.00053,
-        "08.2022": 0.00053,
-        "08.2023": 0.00057,
-        "11.2024": 0.00059,
-        "02.2025": 0.00065,
-        "08.2025": 0.00214
-      }
-    },
-    {
-      "order": 276,
-      "section": "DER distributeur",
-      "tarif_label": "Secours ZS225_P400",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
-      "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
-      }
-    },
-    {
       "order": 277,
       "section": "DER distributeur",
-      "tarif_label": "Secours ZS225_P400",
+      "tarif_label": "HTB3",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "ZS_DER_HT",
-      "cle": "DER_DIST_H",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
       "history": {
-        "08.2021": 0.00053,
-        "08.2022": 0.00053,
-        "08.2023": 0.00057,
-        "11.2024": 0.00059,
-        "02.2025": 0.00065,
-        "08.2025": 0.00214
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
       }
     },
     {
       "order": 278,
       "section": "DER distributeur",
-      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_label": "HTB3",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
       "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
       }
     },
     {
       "order": 279,
       "section": "DER distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 280,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZS225_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 281,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P225",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 282,
+      "section": "DER distributeur",
       "tarif_label": "Secours ZSHTA_P225",
       "tarif_ekdi": "",
       "grp": "",
@@ -4644,76 +4797,76 @@
       }
     },
     {
-      "order": 280,
-      "section": "DER distributeur",
-      "tarif_label": "Secours ZSHTA_P400",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
-      "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
-      }
-    },
-    {
-      "order": 281,
-      "section": "DER distributeur",
-      "tarif_label": "Secours ZSHTA_P400",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "ZS_DER_HT",
-      "cle": "DER_DIST_H",
-      "history": {
-        "08.2021": 0.00053,
-        "08.2022": 0.00053,
-        "08.2023": 0.00057,
-        "11.2024": 0.00059,
-        "02.2025": 0.00065,
-        "08.2025": 0.00214
-      }
-    },
-    {
-      "order": 282,
-      "section": "DER distributeur",
-      "tarif_label": "Secours ZSHTA_PHTB",
-      "tarif_ekdi": "",
-      "grp": "",
-      "operande": "PRX_DER_BT",
-      "cle": "DER_DIST_B",
-      "history": {
-        "08.2021": 0.00305,
-        "08.2022": 0.00305,
-        "08.2023": 0.00325,
-        "11.2024": 0.00342,
-        "02.2025": 0.00374,
-        "08.2025": 0.00376
-      }
-    },
-    {
       "order": 283,
       "section": "DER distributeur",
-      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_label": "Secours ZSHTA_P400",
       "tarif_ekdi": "",
       "grp": "",
-      "operande": "ZS_DER_HT",
-      "cle": "DER_DIST_H",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
       "history": {
-        "08.2021": 0.00053,
-        "08.2022": 0.00053,
-        "08.2023": 0.00057,
-        "11.2024": 0.00059,
-        "02.2025": 0.00065,
-        "08.2025": 0.00214
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
       }
     },
     {
       "order": 284,
       "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_P400",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 285,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "PRX_DER_BT",
+      "cle": "DER_DIST_B",
+      "history": {
+        "08.2021": 0.00305,
+        "08.2022": 0.00305,
+        "08.2023": 0.00325,
+        "11.2024": 0.00342,
+        "02.2025": 0.00374,
+        "08.2025": 0.00376
+      }
+    },
+    {
+      "order": 286,
+      "section": "DER distributeur",
+      "tarif_label": "Secours ZSHTA_PHTB",
+      "tarif_ekdi": "",
+      "grp": "",
+      "operande": "ZS_DER_HT",
+      "cle": "DER_DIST_H",
+      "history": {
+        "08.2021": 0.00053,
+        "08.2022": 0.00053,
+        "08.2023": 0.00057,
+        "11.2024": 0.00059,
+        "02.2025": 0.00065,
+        "08.2025": 0.00214
+      }
+    },
+    {
+      "order": 287,
+      "section": "DER distributeur",
       "tarif_label": "Secours ZSHTB_P225",
       "tarif_ekdi": "",
       "grp": "",
@@ -4729,7 +4882,7 @@
       }
     },
     {
-      "order": 285,
+      "order": 288,
       "section": "DER distributeur",
       "tarif_label": "Secours ZSHTB_P225",
       "tarif_ekdi": "",
@@ -4746,7 +4899,7 @@
       }
     },
     {
-      "order": 286,
+      "order": 289,
       "section": "DER distributeur",
       "tarif_label": "Secours ZSHTB_P400",
       "tarif_ekdi": "",
@@ -4763,7 +4916,7 @@
       }
     },
     {
-      "order": 287,
+      "order": 290,
       "section": "DER distributeur",
       "tarif_label": "Secours ZSHTB_P400",
       "tarif_ekdi": "",

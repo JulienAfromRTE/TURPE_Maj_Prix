@@ -104,14 +104,16 @@ def main():
         val = history.get(PERIOD)
         rid = con.execute(
             "INSERT INTO grid_rows (campaign_id, sort_order, section, tarif_label, tarif_ekdi, "
-            "grp, operande, cle, history, new_value, validated, validated_by, validated_at) "
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            "grp, operande, cle, history, new_value, "
+            "validated_rte, validated_rte_by, validated_rte_profile, validated_rte_at) "
+            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
             (cid, rrec["order"], rrec["section"], rrec["tarif_label"], rrec["tarif_ekdi"],
              rrec["grp"], rrec["operande"], rrec["cle"],
              json.dumps(history, ensure_ascii=False),
              val,
              1 if val is not None else 0,
              CDP if val is not None else None,
+             "Chef de projet DSIT" if val is not None else None,
              TS_VALIDATE if val is not None else None),
         ).lastrowid
 
@@ -119,8 +121,8 @@ def main():
             # Trace de saisie (None -> valeur) par l'agent TMA.
             row_history(con, cid, rid, "valeur", None, val, AGENT, TS_SAISIE)
             n_saisies += 1
-            # Trace de validation (non validee -> validee) par le CDP RTE.
-            row_history(con, cid, rid, "validation", "non validee", "validee", CDP, TS_VALIDATE)
+            # Trace de validation DSIT (non validee -> validee) par le CDP.
+            row_history(con, cid, rid, "validation_rte", "non validee", "validee", CDP, TS_VALIDATE)
             n_validees += 1
 
     audit(con, cid, AGENT, TS_SAISIE, "saisie_grille", f"{n_saisies} ligne(s) saisie(s)")

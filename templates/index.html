@@ -25,12 +25,12 @@
     <details class="help-box" open>
       <summary>À propos de cet outil &mdash; à lire avant de commencer</summary>
       <div class="help-body">
-        <p><strong>À quoi sert cet outil ?</strong> Chaque année au 1<sup>er</sup> août, RTE doit mettre à jour les prix du TURPE (Tarif d'Utilisation des Réseaux Publics d'Électricité) à partir des délibérations de la CRE. Cet outil <strong>sécurise et trace</strong> cette mise à jour, qui se faisait jusqu'ici manuellement (recopie des PDF vers Excel, injection dans SAP, puis vérification d'environ 150 clés une par une dans la transaction EA09).</p>
+        <p><strong>À quoi sert cet outil ?</strong> Chaque année au 1<sup>er</sup> août, RTE doit mettre à jour les prix du TURPE (Tarif d'Utilisation des Réseaux Publics d'Électricité) à partir des délibérations de la CRE. Cet outil <strong>sécurise et trace</strong> cette mise à jour, qui se faisait jusqu'ici manuellement (recopie des PDF vers Excel, injection dans SAP, puis vérification d'environ 150 clés une par une dans SAP).</p>
 
         <p><strong>Ce que l'outil fait concrètement :</strong></p>
         <ol>
           <li><strong>Une grille tarifaire centrale</strong> où l'on saisit les nouveaux prix lus dans les PDF CRE, avec pour chaque clé l'historique des mises à jour précédentes, le pourcentage d'évolution et une <strong>alerte automatique au-delà de &plusmn;20 %</strong> (valeur potentiellement aberrante).</li>
-          <li><strong>La vérification post-injection</strong> : après que les valeurs ont été injectées dans SAP, on dépose un extract (table EKDI ou transaction EA09) et l'outil le confronte automatiquement aux valeurs saisies. C'est le contrôle clé par clé, fait en une fois au lieu de ~150 vérifications manuelles.</li>
+          <li><strong>La vérification post-injection</strong> : après que les valeurs ont été injectées dans SAP, on dépose les extracts des deux bases — <strong>EKDI</strong> (lignes sans clé de prix) et <strong>EPREIH</strong> (lignes avec clé de prix) — et l'outil les confronte automatiquement aux valeurs saisies. C'est le contrôle clé par clé, fait en une fois au lieu de ~150 vérifications manuelles.</li>
           <li><strong>Une réconciliation</strong> entre l'année N et l'année N-1 pour repérer d'un coup d'œil ce qui a changé (outil accessible depuis le bouton ci-dessous).</li>
         </ol>
 
@@ -51,7 +51,7 @@
           <button id="btnNew">+ Nouvelle mise à jour</button>
         </div>
       </div>
-      <p class="hint">Chaque campagne suit le workflow : délibérations CRE &rarr; saisie de la grille &rarr; vérification EKDI/EA09, avec validations TMA puis chef de projet DSIT. Toutes les actions sont tracées.</p>
+      <p class="hint">Chaque campagne suit le workflow : délibérations CRE &rarr; saisie de la grille &rarr; vérification EKDI/EPREIH, avec validations TMA puis chef de projet DSIT. Toutes les actions sont tracées.</p>
       <div id="campaignList" class="campaign-list"></div>
       <p id="emptyState" class="empty" style="display:none">Aucune campagne pour le moment. Cliquez sur &laquo; Nouvelle mise à jour &raquo; pour démarrer.</p>
 

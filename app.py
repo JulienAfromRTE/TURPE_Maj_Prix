@@ -7,8 +7,8 @@ workflow trace de bout en bout :
   1. Upload des deliberations CRE (PDF), stockees sur le serveur et retelechargeables.
   2. Saisie en ligne de la grille tarifaire (instanciee avec l'historique des MAJ
      precedentes), exportable en .xlsx pour injection dans SAP.
-  3. Verification post-injection : comparaison d'un extract EKDI (et/ou EA09) avec
-     les valeurs saisies dans la grille.
+  3. Verification post-injection : comparaison des extracts EKDI (lignes sans cle
+     de prix) et EPREIH (lignes avec cle de prix) avec les valeurs saisies.
 
 Chaque campagne fait l'objet de verifications (TMA puis chef de projet DSIT), toutes
 les actions sont tracees dans un journal (qui, quoi, quand). L'ecriture dans SAP
@@ -29,7 +29,7 @@ from flask import (Flask, abort, g, jsonify, render_template, request,
                    send_file, send_from_directory, url_for)
 
 APP_NAME = "TURPE_Maj_Prix"
-APP_VERSION = "2.3.0"
+APP_VERSION = "2.7.0"
 APP_DESCRIPTION = "Portail de gestion des mises a jour tarifaires TURPE"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -53,19 +53,38 @@ COL_VALID_TO = "Fin de validité"
 COL_VALUE = "Valeur de saisie"
 REQUIRED_COLS = [COL_TARIF, COL_GRP, COL_OP, COL_VALID_FROM, COL_VALUE]
 
+# Colonnes EPREIH (libelles SAP exacts) -- verification des lignes portant une
+# "Cle de prix". L'EPREIH est indexe par la colonne "Prix" (= cle de prix de la
+# grille) ; la valeur est dans "Montant de prix".
+COL_PRX_KEY = "Prix"
+COL_PRX_VALUE = "Montant de prix"
+COL_PRX_FROM = "Valide du"
+REQUIRED_EPREIH_COLS = [COL_PRX_KEY, COL_PRX_VALUE, COL_PRX_FROM]
+
 ABERRATION_THRESHOLD = 0.20  # 20 % -> alerte valeur potentiellement aberrante
 
-# Etapes du workflow d'une campagne (ordre = progression)
+# Etapes du workflow d'une campagne (ordre = progression). L'etape "scripts"
+# (generation des scripts SQL de MAJ EKDI/EPREIH) s'intercale entre la saisie de
+# la grille et la verification post-injection. Le stepper du front et l'ensemble
+# des statuts valides (api_set_status) sont derives de cette liste : ajouter une
+# etape ici suffit a l'exposer partout.
 WORKFLOW_STEPS = [
     ("pdf", "Deliberations CRE"),
     ("grid", "Saisie grille tarifaire"),
-    ("verif", "Verification EKDI / EA09"),
+    ("scripts", "Procedure de saisie SAP"),
+    ("verif", "Verification EKDI / EPREIH"),
 ]
 # Roles de verification metier
 VERIF_ROLES = [
     ("tma", "TMA"),
     ("rte", "Chef de projet DSIT"),
 ]
+# Validation ligne a ligne : deux niveaux distincts (TMA puis chef de projet DSIT).
+# Une case ne peut etre cochee que par le profil correspondant (controle serveur).
+VALIDATION_ROLES = {
+    "tma": "TMA",
+    "rte": "Chef de projet DSIT",
+}
 # Profils utilisateur saisis a l'ouverture, traces sur chaque action (audit).
 USER_PROFILES = ["TMA", "Chef de projet DSIT"]
 # Types de fichiers stockes par campagne
@@ -73,7 +92,7 @@ FILE_KINDS = {
     "cre_pdf_1": "Deliberation CRE HTB",
     "cre_pdf_2": "Deliberation CRE HTA",
     "ekdi": "Extract EKDI",
-    "ea09": "Extract EA09",
+    "epreih": "Extract EPREIH",
     "export": "Export grille (.xlsx)",
 }
 
@@ -198,9 +217,43 @@ def init_db():
             FOREIGN KEY (campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE
         );
 
+        -- Commentaires libres au niveau de la campagne (sous la grille) : fil de
+        -- notes horodatees et nominatives, non rattachees a une ligne precise.
+        -- Traces et exportes dans le .xlsx (feuille dediee).
+        CREATE TABLE IF NOT EXISTS campaign_comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            campaign_id INTEGER NOT NULL,
+            comment TEXT NOT NULL,
+            user_name TEXT NOT NULL,
+            user_profile TEXT,
+            created_at TEXT NOT NULL,
+            FOREIGN KEY (campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE
+        );
+
+        -- Validation humaine du controle de l'etape 3 : le chef de projet DSIT
+        -- confirme, ligne par ligne, la valeur trouvee en base (EKDI/EPREIH). On
+        -- fige la valeur attendue (grille) et la valeur en base au moment de la
+        -- validation, pour un controle auditable. Une validation par ligne.
+        CREATE TABLE IF NOT EXISTS compare_validations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            campaign_id INTEGER NOT NULL,
+            row_id INTEGER NOT NULL,
+            kind TEXT NOT NULL,            -- ekdi | epreih
+            expected REAL,                 -- valeur attendue (grille, etape 2)
+            found REAL,                    -- valeur en base (extract SAP)
+            status TEXT,                   -- ok | diff | missing | ambiguous au moment de la validation
+            validated_by TEXT NOT NULL,
+            validated_profile TEXT,
+            validated_at TEXT NOT NULL,
+            UNIQUE(campaign_id, row_id),
+            FOREIGN KEY (campaign_id) REFERENCES campaigns(id) ON DELETE CASCADE
+        );
+
         CREATE INDEX IF NOT EXISTS idx_rowhist_row ON grid_row_history(row_id);
         CREATE INDEX IF NOT EXISTS idx_rowimg_row ON grid_row_images(row_id);
         CREATE INDEX IF NOT EXISTS idx_rowcmt_row ON grid_row_comments(row_id);
+        CREATE INDEX IF NOT EXISTS idx_campcmt_camp ON campaign_comments(campaign_id);
+        CREATE INDEX IF NOT EXISTS idx_cmpval_camp ON compare_validations(campaign_id);
         """
     )
     # Migration : colonnes de validation sur grid_rows (bases anterieures a la v2.1).
@@ -212,6 +265,47 @@ def init_db():
         ("validated_profile", "TEXT"),
     ):
         if col not in existing:
+            con.execute(f"ALTER TABLE grid_rows ADD COLUMN {col} {ddl}")
+    # Migration : deux niveaux de validation distincts (TMA / chef de projet DSIT),
+    # chacun avec son validateur, profil et horodatage (v2.4). On reprend l'ancienne
+    # validation unique (`validated`) vers le niveau correspondant au profil du
+    # validateur (a defaut : chef de projet DSIT = niveau rte).
+    grid_cols = {r[1] for r in con.execute("PRAGMA table_info(grid_rows)").fetchall()}
+    added_dual = "validated_rte" not in grid_cols
+    for col, ddl in (
+        ("validated_tma", "INTEGER NOT NULL DEFAULT 0"),
+        ("validated_tma_by", "TEXT"),
+        ("validated_tma_profile", "TEXT"),
+        ("validated_tma_at", "TEXT"),
+        ("validated_rte", "INTEGER NOT NULL DEFAULT 0"),
+        ("validated_rte_by", "TEXT"),
+        ("validated_rte_profile", "TEXT"),
+        ("validated_rte_at", "TEXT"),
+    ):
+        if col not in grid_cols:
+            con.execute(f"ALTER TABLE grid_rows ADD COLUMN {col} {ddl}")
+    if added_dual:
+        con.execute(
+            "UPDATE grid_rows SET validated_tma=1, validated_tma_by=validated_by, "
+            "validated_tma_profile=validated_profile, validated_tma_at=validated_at "
+            "WHERE validated=1 AND validated_profile='TMA'"
+        )
+        con.execute(
+            "UPDATE grid_rows SET validated_rte=1, validated_rte_by=validated_by, "
+            "validated_rte_profile=validated_profile, validated_rte_at=validated_at "
+            "WHERE validated=1 AND (validated_profile IS NULL OR validated_profile<>'TMA')"
+        )
+    # Migration : marqueur "present Excel" sur grid_rows, coche par le chef de
+    # projet DSIT pour signaler les cles presentes dans le fichier de suivi Excel
+    # (qui, quel profil, quand). Trace comme la validation, mais distinct d'elle.
+    grid_cols = {r[1] for r in con.execute("PRAGMA table_info(grid_rows)").fetchall()}
+    for col, ddl in (
+        ("excel_present", "INTEGER NOT NULL DEFAULT 0"),
+        ("excel_present_by", "TEXT"),
+        ("excel_present_profile", "TEXT"),
+        ("excel_present_at", "TEXT"),
+    ):
+        if col not in grid_cols:
             con.execute(f"ALTER TABLE grid_rows ADD COLUMN {col} {ddl}")
     # Migration : profil utilisateur (TMA | Chef de projet DSIT) trace sur les actions
     # (bases anterieures a la v2.2).
@@ -229,8 +323,89 @@ def init_db():
     for col in ("deleted_at", "deleted_by", "deleted_profile"):
         if col not in camp_cols:
             con.execute(f"ALTER TABLE campaigns ADD COLUMN {col} TEXT")
+    # Migration v2.6 : Ordre de Transport SAP (un OT par campagne, saisi
+    # manuellement depuis Ocas / SAP ChaRM) repris sur la procedure de saisie.
+    if "sap_ot" not in camp_cols:
+        con.execute("ALTER TABLE campaigns ADD COLUMN sap_ot TEXT")
     con.commit()
+    _migrate_split_grp(con)
     con.close()
+
+
+# Colonnes de grid_rows recopiees telles quelles sur les lignes filles lors de
+# l'eclatement d'un GrpValFix agrege (tout sauf id et grp).
+_SPLIT_COPY_COLS = (
+    "campaign_id", "sort_order", "section", "tarif_label", "tarif_ekdi",
+    "operande", "cle", "history", "new_value",
+    "validated", "validated_by", "validated_at", "validated_profile", "comment",
+    "validated_tma", "validated_tma_by", "validated_tma_profile", "validated_tma_at",
+    "validated_rte", "validated_rte_by", "validated_rte_profile", "validated_rte_at",
+    "excel_present", "excel_present_by", "excel_present_profile", "excel_present_at",
+)
+
+
+def _migrate_split_grp(con):
+    """Migration v2.7 : grille atomique (une ligne = un GrpValFix).
+
+    Les lignes dont le champ `grp` agrege plusieurs groupes ValFix (p.ex.
+    "ZHTB2_CU ZHTB2_LU ZHTB2_MU" = 3 lignes SAP au meme prix) sont eclatees en
+    une ligne par GrpValFix, pour coller au fichier Excel de suivi et permettre
+    une saisie / validation / verification ligne par ligne.
+
+    NON DESTRUCTIF : la ligne existante est conservee (id, valeur, validations,
+    present Excel, historique, captures et commentaires intacts) et recoit le 1er
+    token ; les tokens suivants donnent de NOUVELLES lignes copiant les memes
+    attributs. Idempotent (ne fait rien s'il ne reste aucun grp multi-valeurs) et
+    limite aux campagnes NON cloturees (les campagnes audit/cloturees sont figees).
+    """
+    prev_factory = con.row_factory
+    con.row_factory = sqlite3.Row
+    rows = con.execute(
+        "SELECT gr.* FROM grid_rows gr JOIN campaigns c ON c.id = gr.campaign_id "
+        "WHERE instr(trim(gr.grp), ' ') > 0 AND c.status <> 'cloture'"
+    ).fetchall()
+    if not rows:
+        con.row_factory = prev_factory
+        return
+    ts = now_iso()
+    cols_sql = ",".join(_SPLIT_COPY_COLS)
+    ph_sql = ",".join("?" for _ in _SPLIT_COPY_COLS)
+    added_per_camp = {}
+    for r in rows:
+        tokens = [t for t in re.split(r"\s+", (r["grp"] or "").strip()) if t]
+        if len(tokens) < 2:
+            continue
+        # 1) la ligne existante garde le 1er GrpValFix (aucune donnee effacee).
+        con.execute("UPDATE grid_rows SET grp=? WHERE id=?", (tokens[0], r["id"]))
+        con.execute(
+            "INSERT INTO grid_row_history (campaign_id, row_id, field, old_value, "
+            "new_value, user_name, user_profile, created_at) VALUES (?,?,?,?,?,?,?,?)",
+            (r["campaign_id"], r["id"], "grp_split", r["grp"], tokens[0],
+             "Migration v2.7", "systeme", ts),
+        )
+        # 2) une nouvelle ligne par GrpValFix suivant, copiant tous les attributs.
+        for tok in tokens[1:]:
+            new_id = con.execute(
+                f"INSERT INTO grid_rows ({cols_sql}, grp) VALUES ({ph_sql}, ?)",
+                [r[c] for c in _SPLIT_COPY_COLS] + [tok],
+            ).lastrowid
+            con.execute(
+                "INSERT INTO grid_row_history (campaign_id, row_id, field, old_value, "
+                "new_value, user_name, user_profile, created_at) VALUES (?,?,?,?,?,?,?,?)",
+                (r["campaign_id"], new_id, "creation", None,
+                 "Eclatement GrpValFix " + tok + " (depuis ligne #" + str(r["id"]) + ")",
+                 "Migration v2.7", "systeme", ts),
+            )
+        added_per_camp[r["campaign_id"]] = added_per_camp.get(r["campaign_id"], 0) + len(tokens) - 1
+    for cid, n_added in added_per_camp.items():
+        con.execute(
+            "INSERT INTO audit_log (campaign_id, user_name, user_profile, action, "
+            "detail, created_at) VALUES (?,?,?,?,?,?)",
+            (cid, "Migration v2.7", "systeme", "migration_split_grp",
+             "Eclatement des GrpValFix agreges : " + str(n_added) + " ligne(s) ajoutee(s)", ts),
+        )
+    con.commit()
+    con.row_factory = prev_factory
 
 
 def current_user():
@@ -313,6 +488,40 @@ def load_ekdi(file_storage):
     df["valide_du"] = df[COL_VALID_FROM].apply(normalize_date)
     df["valeur"] = pd.to_numeric(df[COL_VALUE], errors="coerce")
     return df
+
+
+def load_epreih(file_storage):
+    """Charge un export EPREIH en DataFrame normalise (cles de prix).
+
+    Cle = colonne "Prix" (correspond a la "Cle de prix" de la grille), valeur =
+    "Montant de prix", date de debut = "Valide du". Leve ValueError si colonnes
+    manquantes. Les noms peuvent etre entoures d'apostrophes cote SAP -> on les
+    nettoie.
+    """
+    raw = file_storage.read()
+    df = pd.read_excel(io.BytesIO(raw), sheet_name=0)
+    df.columns = [str(c).strip().strip("'").strip() for c in df.columns]
+    missing = [c for c in REQUIRED_EPREIH_COLS if c not in df.columns]
+    if missing:
+        raise ValueError("Colonnes manquantes dans l'export EPREIH : " + ", ".join(missing))
+    df = df[REQUIRED_EPREIH_COLS].copy()
+    df[COL_PRX_KEY] = df[COL_PRX_KEY].fillna("").astype(str).str.strip()
+    df["valide_du"] = df[COL_PRX_FROM].apply(normalize_date)
+    df["valeur"] = pd.to_numeric(df[COL_PRX_VALUE], errors="coerce")
+    return df
+
+
+def effective_value(periods, target):
+    """Derniere valeur dont la date de debut <= date cible (logique SAP).
+
+    `periods` : liste de (valide_du, valeur). Renvoie None si aucune periode
+    n'est en vigueur a `target`.
+    """
+    best = None
+    for vd, val in periods:
+        if vd is not None and vd <= target and (best is None or vd > best[0]):
+            best = (vd, val)
+    return best[1] if best else None
 
 
 def select_effective_rows(df, ref_date, p_ref_date):
@@ -446,6 +655,7 @@ def campaign_to_dict(row, db):
         "status": row["status"],
         "created_at": row["created_at"],
         "created_by": row["created_by"],
+        "sap_ot": row["sap_ot"],
         "n_rows": n_rows,
         "n_filled": n_filled,
         "files": [dict(f) for f in files],
@@ -701,8 +911,12 @@ def api_get_grid(cid):
             "tarif_ekdi": r["tarif_ekdi"], "grp": r["grp"], "operande": r["operande"],
             "cle": r["cle"], "history": history, "prev_value": prev,
             "new_value": nv, "pct": pct, "aberrant": aberrant,
-            "validated": bool(r["validated"]),
-            "validated_by": r["validated_by"], "validated_at": r["validated_at"],
+            "validated_tma": bool(r["validated_tma"]),
+            "validated_tma_by": r["validated_tma_by"], "validated_tma_at": r["validated_tma_at"],
+            "validated_rte": bool(r["validated_rte"]),
+            "validated_rte_by": r["validated_rte_by"], "validated_rte_at": r["validated_rte_at"],
+            "excel_present": bool(r["excel_present"]),
+            "excel_present_by": r["excel_present_by"], "excel_present_at": r["excel_present_at"],
             "n_comments": cmt_counts.get(r["id"], 0),
             "n_images": img_counts.get(r["id"], 0),
         })
@@ -751,6 +965,45 @@ def api_save_grid(cid):
     if changed:
         audit(cid, "saisie_grille", f"{changed} ligne(s) modifiee(s)")
     return jsonify({"updated": changed})
+
+
+@app.route("/api/campaigns/<int:cid>/rows", methods=["POST"])
+def api_add_row(cid):
+    """Ajoute manuellement une ligne (cle de prix) a la grille d'une campagne.
+
+    Utile quand une nouvelle composante apparait en cours de campagne sans figurer
+    dans la grille de reference. La creation est tracee (audit + historique fin).
+    """
+    get_campaign_or_404(cid)
+    payload = request.get_json(silent=True) or {}
+    operande = (payload.get("operande") or "").strip()
+    if not operande:
+        return jsonify({"error": "L'operande est obligatoire."}), 400
+    fields = {
+        "section": (payload.get("section") or "").strip(),
+        "tarif_label": (payload.get("tarif_label") or "").strip(),
+        "tarif_ekdi": (payload.get("tarif_ekdi") or "").strip(),
+        "grp": (payload.get("grp") or "").strip(),
+        "operande": operande,
+        "cle": (payload.get("cle") or "").strip(),
+    }
+    db = get_db()
+    next_order = db.execute(
+        "SELECT COALESCE(MAX(sort_order), 0) + 1 AS n FROM grid_rows WHERE campaign_id=?", (cid,)
+    ).fetchone()["n"]
+    cur = db.execute(
+        """INSERT INTO grid_rows (campaign_id, sort_order, section, tarif_label,
+           tarif_ekdi, grp, operande, cle, history, new_value)
+           VALUES (?,?,?,?,?,?,?,?,?,?)""",
+        (cid, next_order, fields["section"], fields["tarif_label"], fields["tarif_ekdi"],
+         fields["grp"], operande, fields["cle"], "{}", None),
+    )
+    rid = cur.lastrowid
+    record_row_history(db, cid, rid, "creation", None, fields["cle"] or operande)
+    db.commit()
+    audit(cid, "ajout_ligne",
+          f"Ligne #{rid} ajoutee ({fields['tarif_label'] or '-'} / {operande})")
+    return jsonify({"id": rid, "sort_order": next_order}), 201
 
 
 # Champs d'identite editables d'une ligne (Tarif / Operande / Cle). La cle SAP
@@ -854,6 +1107,59 @@ def api_delete_row_comment(cid, comment_id):
     return jsonify({"row_id": rid, "comments": comments, "n_comments": len(comments)})
 
 
+def _campaign_comments(db, cid):
+    """Liste des commentaires de campagne (sous la grille), du plus recent au plus ancien."""
+    rows = db.execute(
+        """SELECT id, comment, user_name, user_profile, created_at
+           FROM campaign_comments WHERE campaign_id=? ORDER BY id DESC""",
+        (cid,),
+    ).fetchall()
+    return [dict(r) for r in rows]
+
+
+@app.route("/api/campaigns/<int:cid>/grid-comments", methods=["GET"])
+def api_list_campaign_comments(cid):
+    get_campaign_or_404(cid)
+    return jsonify({"comments": _campaign_comments(get_db(), cid)})
+
+
+@app.route("/api/campaigns/<int:cid>/grid-comments", methods=["POST"])
+def api_add_campaign_comment(cid):
+    """Ajoute un commentaire libre au niveau de la campagne (sous la grille). Append-only, nominatif."""
+    get_campaign_or_404(cid)
+    payload = request.get_json(silent=True) or {}
+    text = (payload.get("comment") or "").strip()
+    if not text:
+        return jsonify({"error": "Commentaire vide."}), 400
+    db = get_db()
+    db.execute(
+        """INSERT INTO campaign_comments (campaign_id, comment, user_name, user_profile, created_at)
+           VALUES (?,?,?,?,?)""",
+        (cid, text, current_user(), current_profile(), now_iso()),
+    )
+    db.commit()
+    audit(cid, "commentaire_campagne", "Commentaire ajoute")
+    comments = _campaign_comments(db, cid)
+    return jsonify({"comments": comments, "n_comments": len(comments)})
+
+
+@app.route("/api/campaigns/<int:cid>/grid-comments/<int:comment_id>", methods=["DELETE"])
+def api_delete_campaign_comment(cid, comment_id):
+    get_campaign_or_404(cid)
+    db = get_db()
+    row = db.execute(
+        "SELECT id FROM campaign_comments WHERE id=? AND campaign_id=?",
+        (comment_id, cid),
+    ).fetchone()
+    if row is None:
+        return jsonify({"error": "Commentaire introuvable."}), 404
+    db.execute("DELETE FROM campaign_comments WHERE id=? AND campaign_id=?", (comment_id, cid))
+    db.commit()
+    audit(cid, "commentaire_campagne", "Commentaire supprime")
+    comments = _campaign_comments(db, cid)
+    return jsonify({"comments": comments, "n_comments": len(comments)})
+
+
 @app.route("/api/campaigns/<int:cid>/grid/export", methods=["GET"])
 def api_export_grid(cid):
     row = get_campaign_or_404(cid)
@@ -871,8 +1177,11 @@ def api_export_grid(cid):
     ordered_periods = sorted(all_periods, key=_period_sort_key)
     base_cols = ["Section", "Tarif (EKDI)", "GrpValFix (EKDI)", "Operande", "Cle de prix"]
     columns = (base_cols + [f"Valeur {p}" for p in ordered_periods]
-               + [f"Valeur {period}", "Validee", "Validee par",
-                  "Profil validateur", "Validee le", "Nb captures CRE", "Nb commentaires"])
+               + [f"Valeur {period}",
+                  "Present Excel", "Present Excel par", "Present Excel le",
+                  "Validee TMA", "Validee TMA par", "Validee TMA le",
+                  "Validee DSIT", "Validee DSIT par", "Validee DSIT le",
+                  "Nb captures CRE", "Nb commentaires"])
     img_counts = {
         x["row_id"]: x["n"] for x in db.execute(
             "SELECT row_id, COUNT(*) AS n FROM grid_row_images WHERE campaign_id=? GROUP BY row_id",
@@ -895,10 +1204,15 @@ def api_export_grid(cid):
         for p in ordered_periods:
             rec[f"Valeur {p}"] = history.get(p)
         rec[f"Valeur {period}"] = r["new_value"]
-        rec["Validee"] = "Oui" if r["validated"] else "Non"
-        rec["Validee par"] = r["validated_by"]
-        rec["Profil validateur"] = r["validated_profile"]
-        rec["Validee le"] = (r["validated_at"] or "").replace("T", " ")
+        rec["Present Excel"] = "Oui" if r["excel_present"] else "Non"
+        rec["Present Excel par"] = r["excel_present_by"]
+        rec["Present Excel le"] = (r["excel_present_at"] or "").replace("T", " ")
+        rec["Validee TMA"] = "Oui" if r["validated_tma"] else "Non"
+        rec["Validee TMA par"] = r["validated_tma_by"]
+        rec["Validee TMA le"] = (r["validated_tma_at"] or "").replace("T", " ")
+        rec["Validee DSIT"] = "Oui" if r["validated_rte"] else "Non"
+        rec["Validee DSIT par"] = r["validated_rte_by"]
+        rec["Validee DSIT le"] = (r["validated_rte_at"] or "").replace("T", " ")
         rec["Nb captures CRE"] = img_counts.get(r["id"], 0)
         rec["Nb commentaires"] = cmt_counts.get(r["id"], 0)
         records.append(rec)
@@ -961,16 +1275,55 @@ def api_export_grid(cid):
                  "Commentaire"],
     )
 
+    # Feuille 5 : validation humaine du controle en base (EKDI/EPREIH) -- audit.
+    cv_rows = db.execute(
+        """SELECT v.kind, v.expected, v.found, v.status, v.validated_by, v.validated_profile,
+                  v.validated_at, g.section, g.tarif_label, g.operande, g.cle
+           FROM compare_validations v JOIN grid_rows g ON g.id = v.row_id
+           WHERE v.campaign_id=? ORDER BY v.id""",
+        (cid,),
+    ).fetchall()
+    cv_df = pd.DataFrame(
+        [{
+            "Source": (v["kind"] or "").upper(),
+            "Section": v["section"], "Tarif": v["tarif_label"], "Operande": v["operande"],
+            "Cle de prix": v["cle"],
+            "Valeur attendue (grille)": v["expected"], "Valeur en base (SAP)": v["found"],
+            "Statut controle": v["status"], "Validee par": v["validated_by"],
+            "Profil": v["validated_profile"], "Validee le": (v["validated_at"] or "").replace("T", " "),
+        } for v in cv_rows],
+        columns=["Source", "Section", "Tarif", "Operande", "Cle de prix",
+                 "Valeur attendue (grille)", "Valeur en base (SAP)", "Statut controle",
+                 "Validee par", "Profil", "Validee le"],
+    )
+
+    # Feuille 6 : commentaires libres de campagne (sous la grille) -- audit.
+    ccmt_rows = db.execute(
+        """SELECT created_at, user_name, user_profile, comment
+           FROM campaign_comments WHERE campaign_id=? ORDER BY id""",
+        (cid,),
+    ).fetchall()
+    ccmt_df = pd.DataFrame(
+        [{
+            "Date": c["created_at"].replace("T", " "), "Auteur": c["user_name"],
+            "Profil": c["user_profile"], "Commentaire": c["comment"],
+        } for c in ccmt_rows],
+        columns=["Date", "Auteur", "Profil", "Commentaire"],
+    )
+
     buf = io.BytesIO()
     with pd.ExcelWriter(buf, engine="openpyxl") as xw:
         df.to_excel(xw, index=False, sheet_name="Grille TURPE")
         hist_df.to_excel(xw, index=False, sheet_name="Historique modifications")
         img_df.to_excel(xw, index=False, sheet_name="Captures CRE")
         cmt_df.to_excel(xw, index=False, sheet_name="Commentaires")
+        cv_df.to_excel(xw, index=False, sheet_name="Verification base")
+        ccmt_df.to_excel(xw, index=False, sheet_name="Commentaires campagne")
     buf.seek(0)
     audit(cid, "export_grille",
           f"Export .xlsx grille periode {period} (+ historique {len(hist_rows)} traces, "
-          f"{len(img_rows)} captures, {len(cmt_rows)} commentaires)")
+          f"{len(img_rows)} captures, {len(cmt_rows)} commentaires, "
+          f"{len(cv_rows)} validations base, {len(ccmt_rows)} commentaires campagne)")
     return send_file(
         buf, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         as_attachment=True, download_name=f"grille_TURPE_{_safe_name(period)}.xlsx",
@@ -978,39 +1331,285 @@ def api_export_grid(cid):
 
 
 # ---------------------------------------------------------------------------
-# Routes -- validation ligne a ligne (chef de projet RTE)
+# Etape intermediaire -- generation des procedures de saisie SAP
+# ---------------------------------------------------------------------------
+# A partir des valeurs *saisies* dans la grille (etape 2), on genere deux
+# PROCEDURES DE SAISIE SAP (et non du SQL : les tarifs sont mis a jour dans
+# l'IHM SAP, pas en base), une par table :
+#   - EKDI   : lignes SANS cle de prix  -> cle (Tarif, GrpValFix, Operande) ;
+#   - EPREIH : lignes AVEC cle de prix  -> cle = colonne "Prix".
+# Chaque modification porte sa date d'effet (decalage _P au 01.07, sinon date
+# d'effet de la campagne) et l'Ordre de Transport (OT) a affecter.
+#
+# CONTRAINTE METIER (retour TMA) : toute modification dans SAP exige un Ordre de
+# Transport (OT), recupere dans Ocas (l'outil SAP ChaRM de suivi des OT). SAP le
+# reclame a CHAQUE modification -> la procedure rappelle l'OT a affecter sur
+# chaque etape. L'OT est saisi manuellement au niveau de la campagne (un OT par
+# campagne), pas d'integration Ocas (l'application reste en lecture seule et
+# n'ecrit jamais dans SAP, cf. CLAUDE.md).
+SAP_TABLE_EKDI = "EKDI"
+SAP_TABLE_EPREIH = "EPREIH"
+
+
+def _fmt_num_fr(value):
+    """Valeur numerique en notation francaise (virgule), sans bruit flottant.
+
+    Entiers rendus sans decimale ; le reste via repr() (plus courte chaine qui se
+    relit a l'identique en Python 3), point remplace par une virgule (ex: 11,76).
+    """
+    if value is None:
+        return ""
+    v = float(value)
+    s = str(int(v)) if v.is_integer() else repr(v)
+    return s.replace(".", ",")
+
+
+def _row_effective_date(operande, ref_date, p_ref_date):
+    """Date de validite a appliquer a la ligne : 01.07 pour les operandes en _P,
+    sinon la date d'effet de la campagne."""
+    return p_ref_date if str(operande or "").endswith("_P") else ref_date
+
+
+def _ot_label(ot):
+    """Libelle de l'OT a afficher (ou marqueur explicite si absent)."""
+    return ot or "<OT manquant : a recuperer dans Ocas (SAP ChaRM)>"
+
+
+def _build_ekdi_procedure(camp, rows, ref_date, p_ref_date, ot):
+    """Construit la procedure de saisie EKDI (lignes sans cle de prix).
+
+    Depuis la v2.7 la grille est atomique : une ligne = un GrpValFix (les lignes
+    qui en agregaient plusieurs, p.ex. ZHTB2_CU/LU/MU, sont desormais eclatees a
+    la source dans reference_grid.json). On emet donc une etape de saisie par
+    ligne. Le produit cartesien (Tarif x GrpValFix) est conserve comme filet de
+    securite : il reste correct pour les campagnes anterieures (dont les
+    grid_rows agregent encore grp) et un tarif_ekdi multi-valeurs (variantes
+    d'ecriture SAP, p.ex. "5CL_CAL01 Z5CL_CAL01").
+    """
+    steps, n_step = [], 0
+    for r in rows:
+        op = (r["operande"] or "").strip()
+        if not op:
+            continue
+        val = _fmt_num_fr(r["new_value"])
+        eff = _row_effective_date(op, ref_date, p_ref_date).strftime("%d.%m.%Y")
+        tarifs = [t for t in re.split(r"\s+", (r["tarif_ekdi"] or "").strip()) if t] or [""]
+        grps = [grp for grp in re.split(r"\s+", (r["grp"] or "").strip()) if grp] or [""]
+        for tarif in tarifs:
+            for grp in grps:
+                n_step += 1
+                steps.append("\n".join([
+                    "[{}] {}  --  {}".format(n_step, r["section"] or "-", r["tarif_label"] or "-"),
+                    "     Tarif        : {}".format(tarif or "-"),
+                    "     GrpValFix    : {}".format(grp or "-"),
+                    "     Operande     : {}".format(op),
+                    "     Valide du    : {}".format(eff),
+                    "     Valeur       : {}".format(val),
+                    "     OT a saisir  : {}".format(_ot_label(ot)),
+                ]))
+    body = ("\n\n".join(steps) if steps
+            else "(Aucune ligne sans cle de prix saisie a l'etape 2.)") + "\n"
+    return _procedure_header(camp, SAP_TABLE_EKDI, "lignes SANS cle de prix "
+                             "(cle = Tarif / GrpValFix / Operande)", len(rows), n_step, ot) \
+        + body, len(rows), n_step
+
+
+def _build_epreih_procedure(camp, rows, ref_date, p_ref_date, ot):
+    """Construit la procedure de saisie EPREIH (lignes avec cle de prix).
+
+    Appariement sur la cle de prix = colonne "Prix" ; valeur = "Montant de prix".
+    """
+    steps, n_step = [], 0
+    for r in rows:
+        cle = (r["cle"] or "").strip()
+        if not cle:
+            continue
+        n_step += 1
+        val = _fmt_num_fr(r["new_value"])
+        eff = _row_effective_date(r["operande"], ref_date, p_ref_date).strftime("%d.%m.%Y")
+        steps.append("\n".join([
+            "[{}] {}  --  {}".format(n_step, r["section"] or "-", r["tarif_label"] or "-"),
+            "     Cle de prix  : {}".format(cle),
+            "     Valide du    : {}".format(eff),
+            "     Montant      : {}".format(val),
+            "     OT a saisir  : {}".format(_ot_label(ot)),
+        ]))
+    body = ("\n\n".join(steps) if steps
+            else "(Aucune ligne avec cle de prix saisie a l'etape 2.)") + "\n"
+    return _procedure_header(camp, SAP_TABLE_EPREIH, "lignes AVEC cle de prix "
+                             "(cle = colonne Prix)", len(rows), n_step, ot) \
+        + body, len(rows), n_step
+
+
+def _procedure_header(camp, table, scope, n_rows, n_step, ot):
+    """En-tete d'une procedure (contexte campagne + OT + rappel metier)."""
+    return (
+        "============================================================\n"
+        "Procedure de saisie SAP -- table {table}\n"
+        "Campagne : {name} (periode {period}, date d'effet {eff})\n"
+        "Ordre de Transport (OT) : {ot}\n"
+        "Transaction SAP : (a preciser selon la composante)\n"
+        "Perimetre : {scope}\n"
+        "{n_rows} ligne(s) saisie(s) -> {n_step} modification(s) SAP\n"
+        "Genere le {ts} par {app} v{ver}\n"
+        "------------------------------------------------------------\n"
+        "IMPORTANT : a chaque modification, SAP reclame un Ordre de Transport.\n"
+        "  Affecter l'OT ci-dessus (recupere dans Ocas / SAP ChaRM).\n"
+        "  Saisie MANUELLE dans SAP : l'application n'ecrit jamais en base.\n"
+        "============================================================\n\n"
+    ).format(
+        table=table, name=camp["name"], period=camp["period_label"],
+        eff=camp["effective_date"], ot=_ot_label(ot), scope=scope,
+        n_rows=n_rows, n_step=n_step, ts=now_iso().replace("T", " "),
+        app=APP_NAME, ver=APP_VERSION,
+    )
+
+
+def _generate_procedures(cid):
+    """Genere les deux procedures (EKDI, EPREIH) pour une campagne.
+
+    Retourne {ot, ekdi: {text, n_rows, n_steps}, epreih: {...}} a partir des
+    seules lignes de grille ayant une valeur saisie (new_value non nul).
+    """
+    camp = get_campaign_or_404(cid)
+    ot = (camp["sap_ot"] or "").strip()
+    ref_date = datetime.strptime(camp["effective_date"], "%Y-%m-%d").date()
+    p_ref_date = (date(ref_date.year, ref_date.month - 1, 1)
+                  if ref_date.month > 1 else date(ref_date.year - 1, 12, 1))
+    db = get_db()
+    rows = db.execute(
+        "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
+        "ORDER BY sort_order", (cid,)).fetchall()
+    ekdi_rows = [r for r in rows if not (r["cle"] or "").strip()]
+    epreih_rows = [r for r in rows if (r["cle"] or "").strip()]
+    e_txt, e_nrows, e_nsteps = _build_ekdi_procedure(camp, ekdi_rows, ref_date, p_ref_date, ot)
+    p_txt, p_nrows, p_nsteps = _build_epreih_procedure(camp, epreih_rows, ref_date, p_ref_date, ot)
+    return {
+        "ot": ot,
+        "ekdi": {"text": e_txt, "n_rows": e_nrows, "n_steps": e_nsteps},
+        "epreih": {"text": p_txt, "n_rows": p_nrows, "n_steps": p_nsteps},
+    }
+
+
+@app.route("/api/campaigns/<int:cid>/ot", methods=["POST"])
+def api_set_ot(cid):
+    """Enregistre l'Ordre de Transport (OT) de la campagne (saisi depuis Ocas).
+
+    Un seul OT par campagne, repris sur toutes les etapes de la procedure SAP.
+    Toute modification est tracee dans le journal d'audit.
+    """
+    row = get_campaign_or_404(cid)
+    payload = request.get_json(silent=True) or {}
+    ot = (payload.get("ot") or "").strip()
+    old = (row["sap_ot"] or "").strip()
+    db = get_db()
+    db.execute("UPDATE campaigns SET sap_ot=? WHERE id=?", (ot or None, cid))
+    db.commit()
+    if old != ot:
+        audit(cid, "saisie_ot", f"OT : {old or '(vide)'} -> {ot or '(vide)'}")
+    return jsonify({"sap_ot": ot})
+
+
+@app.route("/api/campaigns/<int:cid>/scripts", methods=["GET"])
+def api_get_scripts(cid):
+    """Apercu JSON des deux procedures de saisie SAP (pour l'etape 'scripts')."""
+    return jsonify(_generate_procedures(cid))
+
+
+@app.route("/api/campaigns/<int:cid>/scripts/download", methods=["GET"])
+def api_download_script(cid):
+    """Telechargement d'une procedure .txt (kind = ekdi | epreih), trace dans l'audit."""
+    camp = get_campaign_or_404(cid)
+    kind = (request.args.get("kind") or "").strip().lower()
+    if kind not in ("ekdi", "epreih"):
+        return jsonify({"error": "Type de procedure invalide (ekdi/epreih)."}), 400
+    block = _generate_procedures(cid)[kind]
+    audit(cid, "generation_procedure_sap",
+          f"{kind.upper()} : {block['n_rows']} ligne(s) -> {block['n_steps']} modification(s) SAP")
+    buf = io.BytesIO(block["text"].encode("utf-8"))
+    fname = f"Procedure_SAP_{kind.upper()}_{_safe_name(camp['period_label'])}.txt"
+    return send_file(buf, mimetype="text/plain; charset=utf-8", as_attachment=True,
+                     download_name=fname)
+
+
+# ---------------------------------------------------------------------------
+# Routes -- validation ligne a ligne (deux niveaux : TMA / chef de projet DSIT)
 # ---------------------------------------------------------------------------
 @app.route("/api/campaigns/<int:cid>/grid/validate", methods=["POST"])
 def api_validate_row(cid):
     get_campaign_or_404(cid)
     payload = request.get_json(silent=True) or {}
     rid = payload.get("id")
+    role = (payload.get("role") or "rte").strip()
     validated = bool(payload.get("validated"))
+    if role not in VALIDATION_ROLES:
+        return jsonify({"error": "Niveau de validation invalide."}), 400
+    # Seul le profil correspondant peut (de)valider a ce niveau (tracabilite audit).
+    required = VALIDATION_ROLES[role]
+    if current_profile() != required:
+        return jsonify({"error": f"Seul le profil « {required} » peut cocher cette validation."}), 403
+    col = "validated_" + role
+    by_col, prof_col, at_col = col + "_by", col + "_profile", col + "_at"
     db = get_db()
     row = db.execute(
-        "SELECT validated FROM grid_rows WHERE id=? AND campaign_id=?", (rid, cid)
+        f"SELECT {col} AS v FROM grid_rows WHERE id=? AND campaign_id=?", (rid, cid)
     ).fetchone()
     if row is None:
         return jsonify({"error": "Ligne introuvable."}), 404
-    if bool(row["validated"]) == validated:
-        return jsonify({"validated": validated, "validated_by": None,
-                        "validated_profile": None, "validated_at": None})
+    if bool(row["v"]) == validated:
+        return jsonify({"role": role, "validated": validated, "by": None, "at": None})
     who = current_user()
     prof = current_profile()
     when = now_iso() if validated else None
     db.execute(
-        "UPDATE grid_rows SET validated=?, validated_by=?, validated_profile=?, validated_at=? WHERE id=? AND campaign_id=?",
+        f"UPDATE grid_rows SET {col}=?, {by_col}=?, {prof_col}=?, {at_col}=? WHERE id=? AND campaign_id=?",
         (1 if validated else 0, who if validated else None,
          prof if validated else None, when, rid, cid),
     )
-    record_row_history(db, cid, rid, "validation",
-                       "validee" if row["validated"] else "non validee",
+    record_row_history(db, cid, rid, "validation_" + role,
+                       "validee" if row["v"] else "non validee",
                        "validee" if validated else "non validee")
     db.commit()
     audit(cid, "validation_ligne",
-          f"Ligne #{rid} {'validee' if validated else 'devalidee'}")
-    return jsonify({"validated": validated, "validated_by": who if validated else None,
-                    "validated_profile": prof if validated else None, "validated_at": when})
+          f"Ligne #{rid} {required} {'validee' if validated else 'devalidee'}")
+    return jsonify({"role": role, "validated": validated,
+                    "by": who if validated else None, "at": when})
+
+
+@app.route("/api/campaigns/<int:cid>/grid/excel-present", methods=["POST"])
+def api_excel_present(cid):
+    """Marque (ou demarque) une ligne comme presente dans le fichier de suivi
+    Excel. Reserve au chef de projet DSIT, trace pour l'audit."""
+    get_campaign_or_404(cid)
+    payload = request.get_json(silent=True) or {}
+    rid = payload.get("id")
+    present = bool(payload.get("present"))
+    required = VALIDATION_ROLES["rte"]
+    if current_profile() != required:
+        return jsonify({"error": f"Seul le profil « {required} » peut cocher « Présent Excel »."}), 403
+    db = get_db()
+    row = db.execute(
+        "SELECT excel_present AS v FROM grid_rows WHERE id=? AND campaign_id=?", (rid, cid)
+    ).fetchone()
+    if row is None:
+        return jsonify({"error": "Ligne introuvable."}), 404
+    if bool(row["v"]) == present:
+        return jsonify({"present": present, "by": None, "at": None})
+    who = current_user()
+    prof = current_profile()
+    when = now_iso() if present else None
+    db.execute(
+        "UPDATE grid_rows SET excel_present=?, excel_present_by=?, excel_present_profile=?, "
+        "excel_present_at=? WHERE id=? AND campaign_id=?",
+        (1 if present else 0, who if present else None, prof if present else None, when, rid, cid),
+    )
+    record_row_history(db, cid, rid, "excel_present",
+                       "present" if row["v"] else "absent",
+                       "present" if present else "absent")
+    db.commit()
+    audit(cid, "present_excel",
+          f"Ligne #{rid} marquee {'presente' if present else 'absente'} du fichier Excel")
+    return jsonify({"present": present, "by": who if present else None, "at": when})
 
 
 # ---------------------------------------------------------------------------
@@ -1108,83 +1707,255 @@ def api_delete_row_image(img_id):
 
 
 # ---------------------------------------------------------------------------
-# Routes -- verification post-injection (EKDI / EA09 vs grille saisie)
+# Routes -- verification post-injection (EKDI / EPREIH vs grille saisie)
 # ---------------------------------------------------------------------------
 def _norm_key(s):
     return re.sub(r"\s+", "", str(s or "")).upper()
 
 
-@app.route("/api/campaigns/<int:cid>/compare", methods=["POST"])
-def api_compare(cid):
-    """Compare un extract (EKDI ou EA09) aux valeurs saisies dans la grille.
+def _compare_ekdi(file_storage, rows, ref_date, p_ref_date):
+    """Verifie les lignes SANS cle de prix contre un extract EKDI.
 
-    L'appariement se fait sur (GrpValFix, Operande) quand la grille les renseigne,
-    sinon sur l'Operande seul. On compare la 'Valeur de saisie' de l'extract a la
-    valeur saisie dans la grille pour cette campagne. On retient pour chaque cle de
-    l'extract la ligne effective a la date d'effet de la campagne (les operandes en
-    _P au 01.07), conformement a la logique de la transaction EA09.
+    Appariement du plus precis au plus large, en exploitant le ou les tarifs que
+    la grille renseigne (champ `tarif_ekdi`, plusieurs tarifs/groupes ValFix
+    espaces) : (Tarif, GrpValFix, Operande) -> (Tarif, Operande) ->
+    (GrpValFix, Operande) -> (Operande). Sur un dump SAP complet (tous tarifs),
+    cibler le tarif evite l'ambiguite entre lignes partageant le meme operande.
+    On retient pour chaque cle la ligne effective a la date d'effet (operandes en
+    _P au 01.07).
     """
-    camp = get_campaign_or_404(cid)
-    if "file" not in request.files:
-        return jsonify({"error": "Un extract .xlsx est requis."}), 400
-    kind = request.form.get("kind", "ekdi")
-    try:
-        df = load_ekdi(request.files["file"])
-    except ValueError as e:
-        return jsonify({"error": str(e)}), 400
-    except Exception:
-        return jsonify({"error": "Lecture impossible : verifier que le fichier est un extract .xlsx valide."}), 400
-
-    ref_date = datetime.strptime(camp["effective_date"], "%Y-%m-%d").date()
-    p_ref_date = date(ref_date.year, ref_date.month - 1, 1) if ref_date.month > 1 else date(ref_date.year - 1, 12, 1)
+    df = load_ekdi(file_storage)
     effective = select_effective_rows(df, ref_date, p_ref_date)
-
-    # Index des valeurs effectives : par (grp, operande) et par operande.
-    by_pair = {}
-    by_op = {}
+    by_tgo, by_to, by_pair, by_op = {}, {}, {}, {}
     for (tarif, grp, op), info in effective.items():
         val = info["valeur"]
         if pd.isna(val):
             continue
-        by_pair.setdefault((_norm_key(grp), _norm_key(op)), []).append(val)
-        by_op.setdefault(_norm_key(op), []).append(val)
-
-    db = get_db()
-    rows = db.execute(
-        "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL ORDER BY sort_order",
-        (cid,),
-    ).fetchall()
+        t, g, o = _norm_key(tarif), _norm_key(grp), _norm_key(op)
+        by_tgo.setdefault((t, g, o), []).append(val)
+        by_to.setdefault((t, o), []).append(val)
+        by_pair.setdefault((g, o), []).append(val)
+        by_op.setdefault(o, []).append(val)
 
     results = []
     counts = {"ok": 0, "diff": 0, "missing": 0, "ambiguous": 0}
     for r in rows:
         op = _norm_key(r["operande"])
-        grp = _norm_key(r["grp"])
+        # Grille atomique depuis la v2.7 (une ligne = un GrpValFix), mais on
+        # tokenise toujours : tarif_ekdi peut agreger des variantes d'ecriture
+        # (p.ex. "5CL_CAL01 Z5CL_CAL01") et les campagnes anterieures peuvent
+        # encore avoir un grp multi-valeurs.
+        tokens = [_norm_key(t) for t in re.split(r"\s+", r["tarif_ekdi"] or "") if t.strip()]
+        grps = [_norm_key(g) for g in re.split(r"\s+", r["grp"] or "") if g.strip()]
         saisie = r["new_value"]
-        cands = by_pair.get((grp, op)) if grp else None
-        match_on = "grp+operande"
+
+        cands, match_on = None, "operande"
+        if tokens and grps:
+            agg = [v for t in tokens for g in grps for v in by_tgo.get((t, g, op), [])]
+            if agg:
+                cands, match_on = agg, "tarif+grp+operande"
+        if not cands and tokens:
+            agg = [v for t in tokens for v in by_to.get((t, op), [])]
+            if agg:
+                cands, match_on = agg, "tarif+operande"
+        if not cands and grps:
+            agg = [v for g in grps for v in by_pair.get((g, op), [])]
+            if agg:
+                cands, match_on = agg, "grp+operande"
         if not cands:
             cands = by_op.get(op)
             match_on = "operande"
+
         if not cands:
-            status = "missing"
-            extract_val = None
+            status, extract_val = "missing", None
         elif len(set(round(v, 8) for v in cands)) > 1:
-            status = "ambiguous"
-            extract_val = None
+            status, extract_val = "ambiguous", None
         else:
             extract_val = cands[0]
             status = "ok" if abs(extract_val - saisie) <= 1e-9 else "diff"
         counts[status] += 1
         results.append({
+            "row_id": r["id"],
             "section": r["section"], "tarif_label": r["tarif_label"], "grp": r["grp"],
             "operande": r["operande"], "cle": r["cle"], "saisie": saisie,
             "extract": extract_val, "status": status, "match_on": match_on,
         })
+    return counts, results
 
+
+def _compare_epreih(file_storage, rows, ref_date, p_ref_date):
+    """Verifie les lignes AVEC cle de prix contre un extract EPREIH.
+
+    Appariement sur la cle de prix (colonne 'Prix' de l'EPREIH). On compare le
+    'Montant de prix' effectif a la date d'effet de la campagne (cle en _P au
+    01.07) a la valeur saisie dans la grille.
+    """
+    df = load_epreih(file_storage)
+    periods = {}
+    for _, rr in df.iterrows():
+        key = _norm_key(rr[COL_PRX_KEY])
+        vd, val = rr["valide_du"], rr["valeur"]
+        if not key or vd is None or pd.isna(val):
+            continue
+        periods.setdefault(key, []).append((vd, val))
+
+    results = []
+    counts = {"ok": 0, "diff": 0, "missing": 0, "ambiguous": 0}
+    for r in rows:
+        saisie = r["new_value"]
+        target = p_ref_date if str(r["operande"] or "").endswith("_P") else ref_date
+        cand = periods.get(_norm_key(r["cle"]))
+        extract_val = effective_value(cand, target) if cand else None
+        if extract_val is None:
+            status = "missing"
+        else:
+            status = "ok" if abs(extract_val - saisie) <= 1e-9 else "diff"
+        counts[status] += 1
+        results.append({
+            "row_id": r["id"],
+            "section": r["section"], "tarif_label": r["tarif_label"], "grp": r["grp"],
+            "operande": r["operande"], "cle": r["cle"], "saisie": saisie,
+            "extract": extract_val, "status": status, "match_on": "cle de prix",
+        })
+    return counts, results
+
+
+@app.route("/api/campaigns/<int:cid>/compare", methods=["POST"])
+def api_compare(cid):
+    """Compare un extract aux valeurs saisies dans la grille.
+
+    Deux sources complementaires, selon l'origine de la valeur dans le fichier de
+    suivi Excel :
+      - EKDI   -> lignes SANS cle de prix (appariement sur le triplet) ;
+      - EPREIH -> lignes AVEC cle de prix (appariement sur la cle de prix).
+    On retient la valeur effective a la date d'effet de la campagne (operandes en
+    _P au 01.07).
+    """
+    camp = get_campaign_or_404(cid)
+    if "file" not in request.files:
+        return jsonify({"error": "Un extract .xlsx est requis."}), 400
+    kind = request.form.get("kind", "ekdi")
+    if kind not in ("ekdi", "epreih"):
+        return jsonify({"error": "Type d'extract invalide (ekdi/epreih)."}), 400
+
+    ref_date = datetime.strptime(camp["effective_date"], "%Y-%m-%d").date()
+    p_ref_date = date(ref_date.year, ref_date.month - 1, 1) if ref_date.month > 1 else date(ref_date.year - 1, 12, 1)
+
+    db = get_db()
+    if kind == "epreih":
+        rows = db.execute(
+            "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
+            "AND cle IS NOT NULL AND cle!='' ORDER BY sort_order", (cid,)).fetchall()
+    else:
+        rows = db.execute(
+            "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
+            "AND (cle IS NULL OR cle='') ORDER BY sort_order", (cid,)).fetchall()
+
+    try:
+        if kind == "epreih":
+            counts, results = _compare_epreih(request.files["file"], rows, ref_date, p_ref_date)
+        else:
+            counts, results = _compare_ekdi(request.files["file"], rows, ref_date, p_ref_date)
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception:
+        return jsonify({"error": "Lecture impossible : verifier que le fichier est un extract .xlsx valide."}), 400
+
+    _merge_compare_validations(db, cid, results)
     audit(cid, "comparaison_extract", f"{FILE_KINDS.get(kind, kind)} : "
           f"{counts['ok']} OK, {counts['diff']} ecarts, {counts['missing']} absents, {counts['ambiguous']} ambigus")
     return jsonify({"kind": kind, "counts": counts, "results": results})
+
+
+def _merge_compare_validations(db, cid, results):
+    """Hydrate chaque resultat avec sa validation humaine persistee (si elle existe).
+
+    On expose aussi `stale` = la valeur en base a change depuis la validation
+    (l'extract courant ne donne plus la valeur validee) -> a revalider.
+    """
+    vals = {
+        v["row_id"]: v
+        for v in db.execute(
+            "SELECT row_id, found, validated_by, validated_profile, validated_at "
+            "FROM compare_validations WHERE campaign_id=?", (cid,)).fetchall()
+    }
+    for r in results:
+        v = vals.get(r["row_id"])
+        if not v:
+            r["validated"] = False
+            continue
+        cur = r.get("extract")
+        stale = cur is None or v["found"] is None or abs(cur - v["found"]) > 1e-9
+        r["validated"] = True
+        r["validated_by"] = v["validated_by"]
+        r["validated_profile"] = v["validated_profile"]
+        r["validated_at"] = v["validated_at"]
+        r["validated_found"] = v["found"]
+        r["stale"] = stale
+
+
+@app.route("/api/campaigns/<int:cid>/compare/validate", methods=["POST"])
+def api_validate_compare(cid):
+    """Validation humaine (chef de projet DSIT) d'une valeur trouvee en base.
+
+    Confirme, ligne par ligne, la valeur de l'extract SAP face a la valeur de la
+    grille. Trace dans `compare_validations`, le journal d'audit et l'historique
+    fin de la ligne (champ `verif_bdd`).
+    """
+    get_campaign_or_404(cid)
+    payload = request.get_json(silent=True) or {}
+    rid = payload.get("row_id")
+    kind = (payload.get("kind") or "").strip()
+    validated = bool(payload.get("validated"))
+    required = VALIDATION_ROLES["rte"]
+    if current_profile() != required:
+        return jsonify({"error": f"Seul le profil « {required} » peut valider la verification en base."}), 403
+    db = get_db()
+    row = db.execute("SELECT id, cle, operande FROM grid_rows WHERE id=? AND campaign_id=?",
+                     (rid, cid)).fetchone()
+    if row is None:
+        return jsonify({"error": "Ligne introuvable."}), 404
+
+    existing = db.execute(
+        "SELECT id FROM compare_validations WHERE campaign_id=? AND row_id=?", (cid, rid)).fetchone()
+    if not validated:
+        if existing:
+            db.execute("DELETE FROM compare_validations WHERE id=?", (existing["id"],))
+            record_row_history(db, cid, rid, "verif_bdd", "validee", "non validee")
+            db.commit()
+            audit(cid, "validation_verif_bdd", f"Ligne #{rid} verification en base devalidee")
+        return jsonify({"row_id": rid, "validated": False, "by": None, "at": None})
+
+    expected = payload.get("expected")
+    found = payload.get("found")
+    status = (payload.get("status") or "").strip()
+    who, prof, when = current_user(), current_profile(), now_iso()
+    if existing:
+        db.execute(
+            "UPDATE compare_validations SET kind=?, expected=?, found=?, status=?, "
+            "validated_by=?, validated_profile=?, validated_at=? WHERE id=?",
+            (kind, expected, found, status, who, prof, when, existing["id"]))
+    else:
+        db.execute(
+            "INSERT INTO compare_validations (campaign_id, row_id, kind, expected, found, "
+            "status, validated_by, validated_profile, validated_at) VALUES (?,?,?,?,?,?,?,?,?)",
+            (cid, rid, kind, expected, found, status, who, prof, when))
+    record_row_history(db, cid, rid, "verif_bdd", "non validee",
+                       f"validee (base={found})")
+    db.commit()
+    audit(cid, "validation_verif_bdd",
+          f"Ligne #{rid} valeur en base validee : attendue={expected} base={found} [{status}]")
+    return jsonify({"row_id": rid, "validated": True, "by": who, "profile": prof, "at": when})
+
+
+@app.route("/api/campaigns/<int:cid>/compare/validations", methods=["GET"])
+def api_list_compare_validations(cid):
+    get_campaign_or_404(cid)
+    db = get_db()
+    rows = db.execute(
+        "SELECT row_id, kind, expected, found, status, validated_by, validated_profile, "
+        "validated_at FROM compare_validations WHERE campaign_id=?", (cid,)).fetchall()
+    return jsonify({"validations": [dict(r) for r in rows]})
 
 
 # ---------------------------------------------------------------------------

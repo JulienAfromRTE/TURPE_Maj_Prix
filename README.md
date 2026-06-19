@@ -21,12 +21,13 @@ associe a **chaque action** (saisie, upload, verification) dans un journal d'aud
    (287 lignes tarifaires extraites de `MAJ_Tarifaire__Aout_2025_*.xlsx`). L'evolution
    par rapport a la derniere valeur connue est calculee en direct, avec **alerte
    au-dela de +/-20 %**. La grille est **exportable en .xlsx** pour injection SAP.
-3. **Verification post-injection (EKDI / EA09)** — apres injection dans SAP, on depose
-   un extract (EKDI et/ou EA09) ; l'outil le confronte automatiquement aux valeurs
-   saisies dans la grille. L'appariement se fait sur (GrpValFix, Operande), sinon sur
-   l'Operande seul ; la valeur **effective a la date d'effet** est selectionnee dans
-   l'extract (operandes en `_P` au 01.07). Statuts : conforme / ecart / absent /
-   ambigu.
+3. **Verification post-injection (EKDI / EPREIH)** — apres injection dans SAP, on depose
+   les extracts des deux bases : **EKDI** verifie les lignes **sans cle de prix**
+   (appariement sur (GrpValFix, Operande), sinon sur l'Operande seul) et **EPREIH**
+   verifie les lignes **avec cle de prix** (appariement sur la cle de prix = colonne
+   `Prix`, valeur = `Montant de prix`). Dans les deux cas la valeur **effective a la
+   date d'effet** est selectionnee dans l'extract (operandes en `_P` au 01.07).
+   Statuts : conforme / ecart / absent / ambigu.
 
 ### Validations metier et tracabilite
 

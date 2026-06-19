@@ -5,8 +5,17 @@ let CAMPAIGN = null;
 let GRID = null;          // { period_label, periods, rows }
 const FILE_KIND_LABELS = {
   cre_pdf_1: "Délibération CRE HTB", cre_pdf_2: "Délibération CRE HTA",
-  ekdi: "Extract EKDI", ea09: "Extract EA09", export: "Export grille",
+  ekdi: "Extract EKDI", epreih: "Extract EPREIH", export: "Export grille",
 };
+
+// Deux niveaux de validation ; chacun n'est cochable que par le profil associe.
+const VALIDATION_LABELS = { tma: "TMA", rte: "Chef de projet DSIT" };
+function canValidate(role) {
+  return getProfile() === VALIDATION_LABELS[role];
+}
+function rowFullyValidated(r) {
+  return !!(r.validated_tma && r.validated_rte);
+}
 
 // ---------------------------------------------------------------------------
 // Navigation stepper
@@ -19,6 +28,7 @@ function showPanel(name) {
     s.classList.toggle("active", s.getAttribute("data-step") === name);
   });
   if (name === "grid" && !GRID) loadGrid();
+  if (name === "scripts") loadScripts();
   if (name === "audit") { loadAudit(); renderVerifs(); }
 }
 
@@ -96,6 +106,57 @@ async function loadGrid() {
   buildYearsBar();
   buildGridHead();
   renderGrid();
+  loadCampComments();
+}
+
+// Commentaires libres au niveau de la campagne (sous la grille), distincts des
+// commentaires rattaches a une ligne. Traces, nominatifs et exportes dans le xlsx.
+async function loadCampComments() {
+  const resp = await apiFetch("../api/campaigns/" + CID + "/grid-comments");
+  const data = await resp.json();
+  renderCampComments(data.comments);
+}
+
+async function addCampComment() {
+  const inp = document.getElementById("campCmtInput");
+  const txt = inp.value.trim();
+  if (!txt) { inp.focus(); return; }
+  const resp = await apiFetch("../api/campaigns/" + CID + "/grid-comments", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ comment: txt }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { alert(data.error || "Erreur."); return; }
+  inp.value = "";
+  renderCampComments(data.comments);
+}
+
+function renderCampComments(comments) {
+  const ul = document.getElementById("campCmtList");
+  ul.innerHTML = "";
+  if (!comments.length) { ul.innerHTML = '<li class="empty">Aucun commentaire.</li>'; return; }
+  comments.forEach(function (c) {
+    const who = esc(c.user_name) + (c.user_profile ? " (" + esc(c.user_profile) + ")" : "");
+    const li = document.createElement("li");
+    li.innerHTML =
+      '<button class="cmt-del" data-del-cmt="' + c.id + '" title="Supprimer ce commentaire">Supprimer</button>' +
+      '<div class="cmt-text">' + esc(c.comment) + "</div>" +
+      '<div class="cmt-meta"><b>' + who + "</b> · " +
+      '<span class="atime">' + esc(c.created_at.replace("T", " ")) + "</span></div>";
+    ul.appendChild(li);
+  });
+  ul.querySelectorAll("[data-del-cmt]").forEach(function (b) {
+    b.addEventListener("click", function () { deleteCampComment(b.getAttribute("data-del-cmt")); });
+  });
+}
+
+async function deleteCampComment(commentId) {
+  if (!confirm("Supprimer ce commentaire ?")) return;
+  const resp = await apiFetch("../api/campaigns/" + CID + "/grid-comments/" + commentId, { method: "DELETE" });
+  const data = await resp.json();
+  if (!resp.ok) { alert(data.error || "Erreur."); return; }
+  renderCampComments(data.comments);
 }
 
 // Par defaut on affiche les annees N-1 et N-2 par rapport a la campagne en cours
@@ -144,27 +205,87 @@ function visiblePeriods() {
   return GRID.periods.filter(function (p) { return VISIBLE_PERIODS.has(p); });
 }
 
+// GrpValFix (valeur EKDI) : un champ peut agreger plusieurs groupes ValFix
+// separes par des espaces (ex "ZHTB2_CU ZHTB2_LU ZHTB2_MU" = 3 lignes SAP au
+// meme prix). On les empile comme dans le fichier Excel de suivi.
+function grpHtml(grp) {
+  const tokens = (grp || "").split(/\s+/).filter(Boolean);
+  return tokens.map(esc).join("<br>");
+}
+
 function buildGridHead() {
   const head = document.getElementById("gridHead");
-  let h = '<th class="num">N&deg;</th><th>Section</th><th>Tarif</th><th>Opérande</th><th>Clé</th>';
+  let h = '<th class="num">N&deg;</th><th>Section</th><th>Tarif</th><th>GrpValFix<br><span class="th-sub">(valeur EKDI)</span></th><th>Opérande</th><th>Clé</th>';
   visiblePeriods().forEach(function (p) { h += '<th class="num hist">' + p + "</th>"; });
   h += '<th class="num newcol">' + GRID.period_label + "</th>";
-  h += '<th class="num">Évol.</th><th class="valcol">Validée</th><th>CRE</th>';
+  h += '<th class="num">Évol.</th><th class="valcol">Présent Excel</th><th class="valcol">Val. TMA</th><th class="valcol">Val. DSIT</th><th>CRE</th>';
   head.innerHTML = h;
 }
 
 function updateGridProgress(shown) {
   const filled = GRID.rows.filter(function (r) { return r.new_value !== null && r.new_value !== undefined; }).length;
-  const validated = GRID.rows.filter(function (r) { return r.validated; }).length;
+  const validated = GRID.rows.filter(rowFullyValidated).length;
   let txt = filled + " / " + GRID.rows.length + " saisies · " + validated + " validées";
   if (shown !== undefined) txt += " · " + shown + " affichées";
   document.getElementById("gridProgress").textContent = txt;
 }
 
+// Cellule de validation pour un niveau (tma|rte). Case desactivee si le profil
+// courant ne correspond pas, avec une infobulle explicative.
+function valCell(role, r) {
+  const on = r["validated_" + role];
+  const by = r["validated_" + role + "_by"];
+  const allowed = canValidate(role);
+  return '<td class="valcol"><input type="checkbox" class="gval-check" data-role="' + role +
+    '" data-id="' + r.id + '"' + (on ? " checked" : "") + (allowed ? "" : " disabled") +
+    (allowed ? "" : ' title="Réservé au profil ' + esc(VALIDATION_LABELS[role]) + '"') + ">" +
+    (on && by ? '<div class="valmeta">' + esc(by) + "</div>" : "") + "</td>";
+}
+
+// « Present Excel » : coche reservee au chef de projet DSIT, signalant que la
+// cle figure dans le fichier de suivi Excel. Independante des validations.
+function canMarkExcel() {
+  return getProfile() === VALIDATION_LABELS.rte;
+}
+function excelCell(r) {
+  const on = r.excel_present;
+  const by = r.excel_present_by;
+  const allowed = canMarkExcel();
+  return '<td class="valcol"><input type="checkbox" class="excel-check" data-id="' + r.id + '"' +
+    (on ? " checked" : "") + (allowed ? "" : " disabled") +
+    (allowed ? "" : ' title="Réservé au profil ' + esc(VALIDATION_LABELS.rte) + '"') + ">" +
+    (on && by ? '<div class="valmeta">' + esc(by) + "</div>" : "") + "</td>";
+}
+
+// Interprete une saisie de filtre comme un nombre (virgule OU point en
+// decimale, espaces de milliers eventuels). Retourne { value, decimals } ou
+// null si la saisie n'est pas numerique. Permet de coller une valeur Excel
+// type "11 545,32" et de retrouver les lignes par leur prix.
+function parseFilterNumber(raw) {
+  const norm = raw.replace(/\s/g, "").replace(",", ".");
+  if (norm === "" || !/^-?\d+(\.\d+)?$/.test(norm)) return null;
+  const dot = norm.indexOf(".");
+  return { value: parseFloat(norm), decimals: dot === -1 ? 0 : norm.length - dot - 1 };
+}
+
+// Vrai si une des valeurs de prix de la ligne (historique + valeur saisie)
+// egale le nombre cherche, arrondi au nombre de decimales du filtre.
+function rowMatchesNumber(r, num) {
+  const factor = Math.pow(10, num.decimals);
+  const target = Math.round(num.value * factor);
+  const vals = Object.values(r.history || {});
+  if (r.new_value !== null && r.new_value !== undefined) vals.push(r.new_value);
+  return vals.some(function (v) {
+    return v !== null && v !== undefined && v !== "" && Math.round(v * factor) === target;
+  });
+}
+
 function renderGrid() {
   const filter = (document.getElementById("gridFilter").value || "").toLowerCase().trim();
+  const filterNum = filter ? parseFilterNumber(filter) : null;
   const onlyEmpty = document.getElementById("gridOnlyEmpty").checked;
   const onlyTodo = document.getElementById("gridOnlyTodo").checked;
+  const onlyAbsentExcel = document.getElementById("gridOnlyAbsentExcel").checked;
   const periods = visiblePeriods();
   const body = document.getElementById("gridBody");
   body.innerHTML = "";
@@ -172,20 +293,24 @@ function renderGrid() {
   GRID.rows.forEach(function (r) {
     const hasVal = r.new_value !== null && r.new_value !== undefined;
     if (onlyEmpty && hasVal) return;
-    if (onlyTodo && r.validated) return;
+    if (onlyTodo && rowFullyValidated(r)) return;
+    if (onlyAbsentExcel && r.excel_present) return;
     if (filter) {
       const hay = (r.section + " " + r.tarif_label + " " + r.operande + " " + r.cle + " " + r.grp).toLowerCase();
-      if (hay.indexOf(filter) === -1) return;
+      const matchText = hay.indexOf(filter) !== -1;
+      const matchNum = filterNum !== null && rowMatchesNumber(r, filterNum);
+      if (!matchText && !matchNum) return;
     }
     shown++;
     const tr = document.createElement("tr");
     tr.setAttribute("data-row", r.id);
     if (r.aberrant) tr.classList.add("row-aberrant");
-    if (r.validated) tr.classList.add("row-validated");
+    if (rowFullyValidated(r)) tr.classList.add("row-validated");
     let cells =
       '<td class="num row-open">' + (r.sort_order || "") + "</td>" +
       '<td class="sec row-open">' + r.section + "</td>" +
       '<td class="row-open">' + (r.tarif_label || "") + "</td>" +
+      '<td class="row-open grpcell">' + grpHtml(r.grp) + "</td>" +
       '<td class="row-open">' + r.operande + "</td>" +
       '<td class="row-open">' + (r.cle || "") + "</td>";
     periods.forEach(function (p) {
@@ -195,9 +320,7 @@ function renderGrid() {
     const val = hasVal ? r.new_value : "";
     cells += '<td class="num newcol"><input class="gval" data-id="' + r.id + '" value="' + val + '"></td>';
     cells += '<td class="num evolcell">' + (r.aberrant ? "⚠ " : "") + fmtPct(r.pct) + "</td>";
-    cells += '<td class="valcol"><input type="checkbox" class="gval-check" data-id="' + r.id + '"' +
-      (r.validated ? " checked" : "") + ">" +
-      (r.validated && r.validated_by ? '<div class="valmeta">' + esc(r.validated_by) + "</div>" : "") + "</td>";
+    cells += excelCell(r) + valCell("tma", r) + valCell("rte", r);
     cells += '<td><span class="cre-badge' + (r.n_images ? " has" : "") + '">&#128206; ' + (r.n_images || 0) + "</span>" +
       (r.n_comments ? ' <span class="cmt-badge">&#128172; ' + r.n_comments + "</span>" : "") + "</td>";
     tr.innerHTML = cells;
@@ -209,6 +332,9 @@ function renderGrid() {
   });
   body.querySelectorAll(".gval-check").forEach(function (chk) {
     chk.addEventListener("change", function () { onValidate(chk); });
+  });
+  body.querySelectorAll(".excel-check").forEach(function (chk) {
+    chk.addEventListener("change", function () { onExcelPresent(chk); });
   });
   body.querySelectorAll("tr").forEach(function (tr) {
     tr.addEventListener("click", function (e) {
@@ -253,29 +379,76 @@ function onGridEdit(inp) {
   inp.classList.toggle("bad", !setRowValue(id, inp.value));
 }
 
-async function onValidate(chk) {
-  const id = parseInt(chk.getAttribute("data-id"), 10);
+// Repercute la reponse serveur sur le modele de la ligne pour un niveau donne.
+function applyValidation(row, role, data) {
+  row["validated_" + role] = data.validated;
+  row["validated_" + role + "_by"] = data.by;
+  row["validated_" + role + "_at"] = data.at;
+}
+
+// Resynchronise les cases (et la surbrillance) d'une ligne dans la grille.
+function syncGridRowValidation(id) {
   const row = GRID.rows.find(function (r) { return r.id === id; });
-  const validated = chk.checked;
+  const tr = document.querySelector('#gridBody tr[data-row="' + id + '"]');
+  if (!tr || !row) return;
+  tr.querySelectorAll(".gval-check").forEach(function (chk) {
+    const role = chk.getAttribute("data-role");
+    chk.checked = !!row["validated_" + role];
+    const cell = chk.closest("td");
+    let meta = cell.querySelector(".valmeta");
+    const by = row["validated_" + role + "_by"];
+    if (chk.checked && by) {
+      if (!meta) { meta = document.createElement("div"); meta.className = "valmeta"; cell.appendChild(meta); }
+      meta.textContent = by;
+    } else if (meta) { meta.remove(); }
+  });
+  tr.classList.toggle("row-validated", rowFullyValidated(row));
+  updateGridProgress();
+}
+
+// Envoie la (de)validation d'un niveau au serveur (controle de profil cote serveur).
+// Retourne true si la requete a abouti.
+async function postValidation(id, role, validated) {
   const resp = await apiFetch("../api/campaigns/" + CID + "/grid/validate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id: id, validated: validated }),
+    body: JSON.stringify({ id: id, role: role, validated: validated }),
   });
   const data = await resp.json();
-  if (!resp.ok) { alert(data.error || "Erreur."); chk.checked = !validated; return; }
-  row.validated = data.validated;
-  row.validated_by = data.validated_by;
-  row.validated_at = data.validated_at;
-  const tr = chk.closest("tr");
-  tr.classList.toggle("row-validated", row.validated);
+  if (!resp.ok) { alert(data.error || "Erreur."); return false; }
+  const row = GRID.rows.find(function (r) { return r.id === id; });
+  applyValidation(row, role, data);
+  return true;
+}
+
+async function onValidate(chk) {
+  const id = parseInt(chk.getAttribute("data-id"), 10);
+  const role = chk.getAttribute("data-role");
+  const validated = chk.checked;
+  if (!(await postValidation(id, role, validated))) { chk.checked = !validated; return; }
+  syncGridRowValidation(id);
+  if (ROW_MODAL_ID === id) renderModalValidation(GRID.rows.find(function (r) { return r.id === id; }));
+}
+
+// (De)marque une ligne « Présent Excel » (controle de profil cote serveur).
+async function onExcelPresent(chk) {
+  const id = parseInt(chk.getAttribute("data-id"), 10);
+  const present = chk.checked;
+  const resp = await apiFetch("../api/campaigns/" + CID + "/grid/excel-present", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: id, present: present }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { alert(data.error || "Erreur."); chk.checked = !present; return; }
+  const row = GRID.rows.find(function (r) { return r.id === id; });
+  if (row) { row.excel_present = data.present; row.excel_present_by = data.by; row.excel_present_at = data.at; }
   const cell = chk.closest("td");
   let meta = cell.querySelector(".valmeta");
-  if (row.validated && row.validated_by) {
+  if (data.present && data.by) {
     if (!meta) { meta = document.createElement("div"); meta.className = "valmeta"; cell.appendChild(meta); }
-    meta.textContent = row.validated_by;
+    meta.textContent = data.by;
   } else if (meta) { meta.remove(); }
-  updateGridProgress();
 }
 
 // ---------------------------------------------------------------------------
@@ -298,6 +471,7 @@ async function openRowModal(id) {
   document.getElementById("rowIdStatus").textContent = "";
   document.getElementById("rowModalSaveStatus").textContent = "";
   updateModalEvol(row);
+  renderModalValidation(row);
   document.getElementById("rowModalComment").value = "";
   document.getElementById("rowModalCommentStatus").textContent = "";
   document.getElementById("rowImgInput").value = "";
@@ -374,6 +548,36 @@ async function saveRowIdentity() {
     ? "Enregistré à " + new Date().toLocaleTimeString("fr-FR")
     : "Aucune modification.";
   if (typeof renderGrid === "function" && GRID) renderGrid();
+  loadRowHistory(id);
+}
+
+// Reflete l'etat des deux validations dans la modale (cases gateees par profil).
+const MODAL_VAL_FIELDS = [
+  { role: "tma", chk: "rowValTma", meta: "rowValTmaMeta" },
+  { role: "rte", chk: "rowValRte", meta: "rowValRteMeta" },
+];
+
+function renderModalValidation(row) {
+  MODAL_VAL_FIELDS.forEach(function (f) {
+    const chk = document.getElementById(f.chk);
+    const meta = document.getElementById(f.meta);
+    const allowed = canValidate(f.role);
+    chk.checked = !!row["validated_" + f.role];
+    chk.disabled = !allowed;
+    chk.title = allowed ? "" : "Réservé au profil " + VALIDATION_LABELS[f.role];
+    const by = row["validated_" + f.role + "_by"];
+    meta.textContent = (chk.checked && by) ? "par " + by : "";
+  });
+}
+
+async function onModalValidate(chk) {
+  const id = ROW_MODAL_ID;
+  const role = chk.getAttribute("data-role");
+  const validated = chk.checked;
+  if (!(await postValidation(id, role, validated))) { chk.checked = !validated; return; }
+  const row = GRID.rows.find(function (r) { return r.id === id; });
+  renderModalValidation(row);
+  syncGridRowValidation(id);
   loadRowHistory(id);
 }
 
@@ -582,18 +786,29 @@ async function loadRowHistory(id) {
   if (!data.entries.length) { ul.innerHTML = '<li class="empty">Aucune modification tracée.</li>'; return; }
   data.entries.forEach(function (e) {
     const li = document.createElement("li");
-    const change = e.field === "validation"
+    const isValidation = e.field.indexOf("validation") === 0;
+    const change = isValidation
       ? esc(e.new_value)
       : (fmtHistVal(e.old_value) + " &rarr; " + fmtHistVal(e.new_value));
     const who = esc(e.user_name) + (e.user_profile ? " (" + esc(e.user_profile) + ")" : "");
     li.innerHTML = '<span class="atime">' + esc(e.created_at.replace("T", " ")) + "</span> " +
-      "<b>" + who + "</b> · <i>" + esc(e.field) + "</i> — " + change;
+      "<b>" + who + "</b> · <i>" + esc(histFieldLabel(e.field)) + "</i> — " + change;
     ul.appendChild(li);
   });
 }
 
 function fmtHistVal(v) {
   return (v === null || v === "" || v === undefined) ? "(vide)" : esc(v);
+}
+
+// Libelle lisible du champ trace dans l'historique fin.
+const HIST_FIELD_LABELS = {
+  valeur: "valeur", validation_tma: "validation TMA", validation_rte: "validation DSIT",
+  excel_present: "présent Excel",
+  creation: "création", tarif: "tarif", operande: "opérande", cle: "clé",
+};
+function histFieldLabel(field) {
+  return HIST_FIELD_LABELS[field] || field;
 }
 
 function openViewer(url) {
@@ -620,9 +835,138 @@ function exportGrid() {
 }
 
 // ---------------------------------------------------------------------------
-// Comparaison EKDI / EA09
+// Etape 3 : procedure de saisie SAP (EKDI / EPREIH)
+// ---------------------------------------------------------------------------
+// Apercu genere a la volee a partir des valeurs saisies a l'etape 2. La saisie
+// dans SAP est manuelle ; l'app n'ecrit jamais en base. Le telechargement (.txt)
+// est trace cote serveur. Chaque etape rappelle l'OT (recupere dans Ocas).
+async function loadScripts() {
+  const status = document.getElementById("scriptsStatus");
+  status.textContent = "Génération…";
+  // Pre-remplit le champ OT avec la valeur enregistree sur la campagne.
+  if (CAMPAIGN) document.getElementById("campOt").value = CAMPAIGN.sap_ot || "";
+  const resp = await apiFetch("../api/campaigns/" + CID + "/scripts");
+  const data = await resp.json();
+  if (!resp.ok) { status.textContent = data.error || "Erreur."; return; }
+  renderScript("scrEkdiSql", "scrEkdiCount", data.ekdi);
+  renderScript("scrEpreihSql", "scrEpreihCount", data.epreih);
+  status.textContent = (data.ot ? "OT " + data.ot + " · " : "OT non renseigné · ")
+    + "à jour avec la grille saisie · " + new Date().toLocaleTimeString("fr-FR");
+}
+
+function renderScript(preId, countId, block) {
+  document.getElementById(preId).textContent = block.text;
+  document.getElementById(countId).textContent =
+    block.n_rows + " ligne(s) · " + block.n_steps + " modif. SAP";
+}
+
+function downloadScript(kind) {
+  window.location.href = "../api/campaigns/" + CID + "/scripts/download?kind=" + kind;
+}
+
+// Enregistre l'OT de la campagne (saisi depuis Ocas) puis regenere les procedures.
+async function saveOt() {
+  const ot = document.getElementById("campOt").value.trim();
+  const status = document.getElementById("otStatus");
+  status.textContent = "Enregistrement…";
+  const resp = await apiFetch("../api/campaigns/" + CID + "/ot", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ot: ot }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { status.textContent = data.error || "Erreur."; return; }
+  if (CAMPAIGN) CAMPAIGN.sap_ot = data.sap_ot;
+  status.textContent = data.sap_ot ? "OT enregistré." : "OT effacé.";
+  loadScripts();
+}
+
+async function copyScript(targetId, btn) {
+  const txt = document.getElementById(targetId).textContent;
+  try {
+    await navigator.clipboard.writeText(txt);
+    const old = btn.textContent;
+    btn.textContent = "Copié ✓";
+    setTimeout(function () { btn.textContent = old; }, 1500);
+  } catch (e) {
+    alert("Copie impossible : sélectionnez le texte manuellement.");
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Ajout manuel d'une ligne
+// ---------------------------------------------------------------------------
+const ADD_ROW_FIELDS = {
+  arSection: "section", arTarif: "tarif_label", arTarifEkdi: "tarif_ekdi",
+  arGrp: "grp", arOperande: "operande", arCle: "cle",
+};
+
+function openAddRow() {
+  Object.keys(ADD_ROW_FIELDS).forEach(function (id) { document.getElementById(id).value = ""; });
+  document.getElementById("addRowStatus").textContent = "";
+  document.getElementById("addRowModal").style.display = "flex";
+  document.getElementById("arOperande").focus();
+}
+
+async function saveNewRow() {
+  const body = {};
+  Object.keys(ADD_ROW_FIELDS).forEach(function (id) {
+    body[ADD_ROW_FIELDS[id]] = document.getElementById(id).value.trim();
+  });
+  const status = document.getElementById("addRowStatus");
+  if (!body.operande) { status.textContent = "L'opérande est obligatoire."; return; }
+  status.textContent = "Ajout...";
+  const resp = await apiFetch("../api/campaigns/" + CID + "/rows", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { status.textContent = data.error || "Erreur."; return; }
+  document.getElementById("addRowModal").style.display = "none";
+  await loadGrid();
+}
+
+// ---------------------------------------------------------------------------
+// Comparaison EKDI / EPREIH
 // ---------------------------------------------------------------------------
 const CMP_LABELS = { ok: "Conforme", diff: "Écart", missing: "Absent extract", ambiguous: "Ambigu" };
+let CMP_RESULTS = [];   // dernier resultat de comparaison (pour la validation humaine)
+let CMP_KIND = "";
+
+// Cellule de validation humaine (chef de projet DSIT) d'une valeur en base.
+function cmpValCell(r) {
+  const allowed = canValidate("rte");
+  let meta = "";
+  if (r.validated && r.validated_by) {
+    meta = '<div class="valmeta">' + esc(r.validated_by) +
+      (r.validated_at ? " · " + esc(r.validated_at.replace("T", " ").slice(0, 16)) : "") + "</div>";
+    if (r.stale) {
+      meta += '<div class="valstale" title="La valeur en base a changé depuis la validation">' +
+        "⚠ revalider (validé : " + fmtNum(r.validated_found) + ")</div>";
+    }
+  }
+  return '<td class="valcol"><input type="checkbox" class="cmp-check" data-id="' + r.row_id + '"' +
+    (r.validated ? " checked" : "") + (allowed ? "" : " disabled") +
+    (allowed ? "" : ' title="Réservé au profil Chef de projet DSIT"') + ">" + meta + "</td>";
+}
+
+function cmpRowHtml(r) {
+  return '<td class="sec">' + r.section + "</td>" +
+    "<td>" + (r.tarif_label || "") + "</td>" +
+    "<td>" + esc(r.operande) + (r.cle ? ' <span class="cmp-cle">' + esc(r.cle) + "</span>" : "") + "</td>" +
+    '<td class="num">' + fmtNum(r.saisie) + "</td>" +
+    '<td class="num">' + (r.extract === null || r.extract === undefined ? "—" : fmtNum(r.extract)) + "</td>" +
+    "<td>" + r.match_on + "</td>" +
+    '<td><span class="badge badge-cmp-' + r.status + '">' + CMP_LABELS[r.status] + "</span></td>" +
+    cmpValCell(r);
+}
+
+function renderCmpCounts() {
+  const validated = CMP_RESULTS.filter(function (r) { return r.validated; }).length;
+  document.getElementById("cmpValidated").textContent = validated;
+  document.getElementById("cmpTotal").textContent = CMP_RESULTS.length;
+}
 
 async function runCompare(kind, inputId) {
   const input = document.getElementById(inputId);
@@ -638,31 +982,65 @@ async function runCompare(kind, inputId) {
   const resp = await apiFetch("../api/campaigns/" + CID + "/compare", { method: "POST", body: fd });
   const data = await resp.json();
   if (!resp.ok) { alert(data.error || "Erreur."); return; }
+  CMP_KIND = data.kind;
   document.getElementById("cmpSummary").style.display = "flex";
+  document.getElementById("cmpValHint").style.display = "block";
   document.getElementById("cmpOk").textContent = data.counts.ok;
   document.getElementById("cmpDiff").textContent = data.counts.diff;
   document.getElementById("cmpMissing").textContent = data.counts.missing;
   document.getElementById("cmpAmbig").textContent = data.counts.ambiguous;
-  const body = document.getElementById("cmpBody");
-  body.innerHTML = "";
   data.results.sort(function (a, b) {
     const order = { diff: 0, missing: 1, ambiguous: 2, ok: 3 };
     return order[a.status] - order[b.status];
   });
-  data.results.forEach(function (r) {
+  CMP_RESULTS = data.results;
+  const body = document.getElementById("cmpBody");
+  body.innerHTML = "";
+  CMP_RESULTS.forEach(function (r) {
     const tr = document.createElement("tr");
-    tr.className = "cmp-" + r.status;
-    tr.innerHTML =
-      '<td class="sec">' + r.section + "</td>" +
-      "<td>" + (r.tarif_label || "") + "</td>" +
-      "<td>" + r.operande + "</td>" +
-      "<td>" + (r.cle || "") + "</td>" +
-      '<td class="num">' + fmtNum(r.saisie) + "</td>" +
-      '<td class="num">' + (r.extract === null ? "—" : fmtNum(r.extract)) + "</td>" +
-      "<td>" + r.match_on + "</td>" +
-      '<td><span class="badge badge-cmp-' + r.status + '">' + CMP_LABELS[r.status] + "</span></td>";
+    tr.className = "cmp-" + r.status + (r.validated ? " cmp-validated" : "");
+    tr.setAttribute("data-row", r.row_id);
+    tr.innerHTML = cmpRowHtml(r);
     body.appendChild(tr);
   });
+  body.querySelectorAll(".cmp-check").forEach(function (chk) {
+    chk.addEventListener("change", function () { onCmpValidate(chk); });
+  });
+  renderCmpCounts();
+  loadCampaign();
+}
+
+async function onCmpValidate(chk) {
+  const rid = parseInt(chk.getAttribute("data-id"), 10);
+  const validated = chk.checked;
+  const r = CMP_RESULTS.find(function (x) { return x.row_id === rid; });
+  const resp = await apiFetch("../api/campaigns/" + CID + "/compare/validate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      row_id: rid, kind: CMP_KIND, validated: validated,
+      expected: r ? r.saisie : null, found: r ? r.extract : null,
+      status: r ? r.status : null,
+    }),
+  });
+  const data = await resp.json();
+  if (!resp.ok) { alert(data.error || "Erreur."); chk.checked = !validated; return; }
+  if (r) {
+    r.validated = validated;
+    r.validated_by = data.by || null;
+    r.validated_at = data.at || null;
+    r.validated_found = validated ? r.extract : undefined;
+    r.stale = false;
+  }
+  const tr = document.querySelector('#cmpBody tr[data-row="' + rid + '"]');
+  if (tr) {
+    tr.classList.toggle("cmp-validated", validated);
+    tr.innerHTML = cmpRowHtml(r);
+    tr.querySelector(".cmp-check").addEventListener("change", function () {
+      onCmpValidate(tr.querySelector(".cmp-check"));
+    });
+  }
+  renderCmpCounts();
   loadCampaign();
 }
 
@@ -748,9 +1126,30 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById("btnSaveGrid").addEventListener("click", saveGrid);
   document.getElementById("btnExportGrid").addEventListener("click", exportGrid);
+  document.getElementById("btnRefreshScripts").addEventListener("click", loadScripts);
+  document.getElementById("btnSaveOt").addEventListener("click", saveOt);
+  document.getElementById("campOt").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); saveOt(); }
+  });
+  document.querySelectorAll(".script-dl").forEach(function (b) {
+    b.addEventListener("click", function () { downloadScript(b.getAttribute("data-kind")); });
+  });
+  document.querySelectorAll(".script-copy").forEach(function (b) {
+    b.addEventListener("click", function () { copyScript(b.getAttribute("data-target"), b); });
+  });
+  document.getElementById("btnAddRow").addEventListener("click", openAddRow);
+  document.getElementById("addRowSave").addEventListener("click", saveNewRow);
+  document.getElementById("addRowClose").addEventListener("click", function () {
+    document.getElementById("addRowModal").style.display = "none";
+  });
+  document.getElementById("addRowModal").addEventListener("click", function (e) {
+    if (e.target.id === "addRowModal") e.target.style.display = "none";
+  });
   document.getElementById("gridFilter").addEventListener("input", function () { if (GRID) renderGrid(); });
   document.getElementById("gridOnlyEmpty").addEventListener("change", function () { if (GRID) renderGrid(); });
   document.getElementById("gridOnlyTodo").addEventListener("change", function () { if (GRID) renderGrid(); });
+  document.getElementById("gridOnlyAbsentExcel").addEventListener("change", function () { if (GRID) renderGrid(); });
+  document.getElementById("btnAddCampCmt").addEventListener("click", addCampComment);
   document.getElementById("btnYearsAll").addEventListener("click", function () { if (GRID) setAllYears(true); });
   document.getElementById("btnYearsNone").addEventListener("click", function () { if (GRID) setAllYears(false); });
 
@@ -761,6 +1160,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById("rowModalSave").addEventListener("click", saveRowValue);
   document.getElementById("rowModalEdit").addEventListener("click", function () { setModalEditable(true); });
+  MODAL_VAL_FIELDS.forEach(function (f) {
+    document.getElementById(f.chk).addEventListener("change", function () { onModalValidate(this); });
+  });
   document.getElementById("rowIdEdit").addEventListener("click", function () { setIdentityEditable(true); });
   document.getElementById("rowIdCancel").addEventListener("click", function () {
     setIdentityEditable(false);
@@ -786,7 +1188,9 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key !== "Escape") return;
     const viewer = document.getElementById("imgViewer");
     const modal = document.getElementById("rowModal");
+    const addModal = document.getElementById("addRowModal");
     if (viewer.style.display === "flex") { viewer.style.display = "none"; }
+    else if (addModal.style.display === "flex") { addModal.style.display = "none"; }
     else if (modal.style.display === "flex") { modal.style.display = "none"; }
   });
   // Ctrl-V : coller une capture d'ecran directement dans la modale detail ligne.

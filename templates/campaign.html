@@ -25,11 +25,12 @@
     <details class="help-box" open>
       <summary>Comment renseigner cette campagne</summary>
       <div class="help-body">
-        <p><strong>Le principe :</strong> une campagne reproduit la mise à jour tarifaire de bout en bout, en traçant chaque action. Suivez les 3 étapes ci-dessous (le bandeau numéroté permet de naviguer entre elles).</p>
+        <p><strong>Le principe :</strong> une campagne reproduit la mise à jour tarifaire de bout en bout, en traçant chaque action. Suivez les 4 étapes ci-dessous (le bandeau numéroté permet de naviguer entre elles).</p>
         <ol>
           <li><strong>Délibérations CRE</strong> &mdash; déposez les deux PDF de la CRE (HTA-BT et HTB). Ils restent stockés et retéléchargeables.</li>
           <li><strong>Saisie de la grille</strong> &mdash; reportez les nouveaux prix lus dans les PDF dans la colonne « nouvelle valeur ». L'outil affiche l'historique et le % d'évolution par clé, et <strong>alerte au-delà de &plusmn;20 %</strong>. Cochez <em>Validée</em> après contrôle ; cliquez une ligne pour y joindre les captures du tableau CRE et consulter son historique.</li>
-          <li><strong>Vérification post-injection</strong> &mdash; une fois les valeurs injectées dans SAP, déposez l'extract EKDI ou EA09 : l'outil le confronte automatiquement à votre grille et signale les écarts.</li>
+          <li><strong>Procédure de saisie SAP</strong> &mdash; l'outil génère automatiquement, à partir des valeurs saisies, deux procédures de saisie SAP (une pour EKDI, une pour EPREIH). Renseignez d'abord l'<strong>Ordre de Transport (OT)</strong> récupéré dans <em>Ocas</em> (SAP ChaRM) : SAP le réclame à chaque modification, la procédure le rappelle sur chaque étape. La saisie reste <em>manuelle</em> dans SAP ; l'application n'écrit rien.</li>
+          <li><strong>Vérification post-injection</strong> &mdash; une fois les valeurs injectées dans SAP, déposez les extracts EKDI (lignes sans clé de prix) et EPREIH (lignes avec clé de prix) : l'outil les confronte automatiquement à votre grille et signale les écarts.</li>
         </ol>
         <p><strong>Validations :</strong> la campagne est contrôlée par la TMA puis par le chef de projet DSIT (onglet <em>Journal &amp; vérifs</em>).</p>
         <p class="help-audit">Toutes vos actions (saisie, modification, validation, upload) sont horodatées et associées à votre nom et votre profil, pour la traçabilité d'audit.</p>
@@ -80,9 +81,11 @@
       <div class="card-head">
         <h2>2. Saisie de la grille tarifaire</h2>
         <div class="head-actions">
-          <input type="text" id="gridFilter" placeholder="Filtrer (opérande, clé, tarif...)">
+          <input type="text" id="gridFilter" placeholder="Filtrer (opérande, clé, tarif, ou une valeur ex. 11545,32)">
           <label class="inline-check"><input type="checkbox" id="gridOnlyEmpty"> À saisir uniquement</label>
           <label class="inline-check"><input type="checkbox" id="gridOnlyTodo"> Non validées</label>
+          <label class="inline-check"><input type="checkbox" id="gridOnlyAbsentExcel"> Absent Excel</label>
+          <button id="btnAddRow" class="secondary">+ Ajouter une ligne</button>
           <button id="btnSaveGrid">Enregistrer</button>
           <button id="btnExportGrid" class="secondary">Exporter .xlsx</button>
         </div>
@@ -100,26 +103,86 @@
           <tbody id="gridBody"></tbody>
         </table>
       </div>
+      <div class="grid-comments" id="gridComments">
+        <h4>&#128172; Commentaires</h4>
+        <p class="hint">Notes libres sur la campagne (tracées, nominatives et exportées dans le <code>.xlsx</code>).</p>
+        <div class="row-value-box">
+          <textarea id="campCmtInput" rows="2" placeholder="Note libre sur la campagne (ex: point de vigilance, contexte, décision)"></textarea>
+          <div>
+            <button id="btnAddCampCmt">Ajouter le commentaire</button>
+          </div>
+        </div>
+        <ul id="campCmtList" class="comment-list"></ul>
+      </div>
       <div class="step-foot">
         <span id="gridStatus" class="status"></span>
+        <button class="advance" data-next="scripts">Passer aux scripts &rarr;</button>
+      </div>
+    </section>
+
+    <!-- Etape 3 : procedure de saisie SAP (EKDI / EPREIH) -->
+    <section class="card step-panel wide" data-panel="scripts" style="display:none">
+      <div class="card-head">
+        <h2>3. Procédure de saisie SAP</h2>
+        <div class="head-actions">
+          <button id="btnRefreshScripts" class="secondary">Rafraîchir</button>
+        </div>
+      </div>
+      <p class="hint">Générée automatiquement à partir des valeurs <strong>saisies à l'étape 2</strong> : une procédure de saisie par table SAP. <strong>EKDI</strong> reprend les lignes <em>sans</em> clé de prix (clé Tarif / GrpValFix / Opérande), <strong>EPREIH</strong> celles <em>avec</em> clé de prix (clé = colonne <em>Prix</em>). La date d'effet est appliquée par ligne (décalage <em>_P</em> au 01.07).</p>
+      <div class="ot-bar">
+        <label for="campOt">Ordre de Transport (OT)</label>
+        <span class="hint-inline">— n° à récupérer dans <strong>Ocas</strong> (SAP ChaRM). SAP le réclame à chaque modification ; il est repris sur chaque étape.</span>
+        <div class="ot-input-row">
+          <input type="text" id="campOt" placeholder="ex: OT-2026-00123">
+          <button id="btnSaveOt">Enregistrer l'OT</button>
+          <span id="otStatus" class="hint"></span>
+        </div>
+      </div>
+      <p class="help-audit">Livrables de <strong>préparation</strong> : la mise à jour des tarifs se fait <strong>manuellement dans SAP</strong>. L'application ne se connecte à aucune base et n'écrit jamais dans SAP (hors périmètre).</p>
+      <div class="grid2">
+        <div class="script-slot">
+          <div class="script-head">
+            <h4>Procédure EKDI <span id="scrEkdiCount" class="pill"></span></h4>
+            <div>
+              <button class="script-copy" data-target="scrEkdiSql">Copier</button>
+              <button class="script-dl" data-kind="ekdi">Télécharger .txt</button>
+            </div>
+          </div>
+          <pre id="scrEkdiSql" class="sql-pre">Chargement…</pre>
+        </div>
+        <div class="script-slot">
+          <div class="script-head">
+            <h4>Procédure EPREIH <span id="scrEpreihCount" class="pill"></span></h4>
+            <div>
+              <button class="script-copy" data-target="scrEpreihSql">Copier</button>
+              <button class="script-dl" data-kind="epreih">Télécharger .txt</button>
+            </div>
+          </div>
+          <pre id="scrEpreihSql" class="sql-pre">Chargement…</pre>
+        </div>
+      </div>
+      <div class="step-foot">
+        <span id="scriptsStatus" class="status"></span>
         <button class="advance" data-next="verif">Passer à la vérification &rarr;</button>
       </div>
     </section>
 
-    <!-- Etape 3 : verification EKDI / EA09 -->
+    <!-- Etape 4 : verification EKDI / EPREIH -->
     <section class="card step-panel" data-panel="verif" style="display:none">
-      <h2>3. Vérification post-injection (EKDI / EA09)</h2>
-      <p class="hint">Après injection dans SAP, déposez un extract pour le confronter automatiquement aux valeurs saisies dans la grille. Appariement sur (GrpValFix, Opérande) sinon Opérande seul.</p>
+      <h2>4. Vérification post-injection (EKDI / EPREIH)</h2>
+      <p class="hint">Après injection dans SAP, déposez les extracts pour les confronter automatiquement aux valeurs saisies. <strong>EKDI</strong> vérifie les lignes <em>sans</em> clé de prix (appariement (GrpValFix, Opérande) sinon Opérande seul) ; <strong>EPREIH</strong> vérifie les lignes <em>avec</em> clé de prix (appariement sur la clé de prix).</p>
       <div class="grid2">
         <div class="upload-slot">
           <h4>Extract EKDI</h4>
+          <p class="hint">Lignes sans clé de prix.</p>
           <input type="file" id="cmpEkdi" accept=".xlsx">
           <button class="secondary cmp-btn" data-kind="ekdi" data-input="cmpEkdi">Comparer l'EKDI</button>
         </div>
         <div class="upload-slot">
-          <h4>Extract EA09</h4>
-          <input type="file" id="cmpEa09" accept=".xlsx">
-          <button class="secondary cmp-btn" data-kind="ea09" data-input="cmpEa09">Comparer l'EA09</button>
+          <h4>Extract EPREIH</h4>
+          <p class="hint">Lignes avec clé de prix.</p>
+          <input type="file" id="cmpEpreih" accept=".xlsx">
+          <button class="secondary cmp-btn" data-kind="epreih" data-input="cmpEpreih">Comparer l'EPREIH</button>
         </div>
       </div>
       <div id="cmpSummary" class="counts" style="display:none">
@@ -127,12 +190,15 @@
         <span class="chip chip-changed">Écarts : <b id="cmpDiff">0</b></span>
         <span class="chip chip-removed">Absents de l'extract : <b id="cmpMissing">0</b></span>
         <span class="chip">Ambigus : <b id="cmpAmbig">0</b></span>
+        <span class="chip chip-valid">Validées DSIT : <b id="cmpValidated">0</b> / <b id="cmpTotal">0</b></span>
       </div>
+      <p class="hint" id="cmpValHint" style="display:none">La base SAP fait foi. Le chef de projet DSIT confirme chaque valeur en base en cochant <em>Validée</em> ; chaque coche est horodatée et nominative (audit).</p>
       <div class="table-wrap">
         <table id="cmpTable">
           <thead><tr>
-            <th>Section</th><th>Tarif</th><th>Opérande</th><th>Clé</th>
-            <th class="num">Saisi</th><th class="num">Extract</th><th>Appariement</th><th>Statut</th>
+            <th>Section</th><th>Tarif</th><th>Opérande / Clé</th>
+            <th class="num">Attendue (étape 2)</th><th class="num">En base (SAP)</th>
+            <th>Appariement</th><th>Statut</th><th class="valcol">Validée DSIT</th>
           </tr></thead>
           <tbody id="cmpBody"></tbody>
         </table>
@@ -225,6 +291,13 @@
         <span id="rowModalSaveStatus" class="hint"></span>
       </div>
 
+      <div class="row-valid-box">
+        <span class="rv-label">Validations</span>
+        <label class="rv-check"><input type="checkbox" id="rowValTma" data-role="tma"> Validée TMA <span id="rowValTmaMeta" class="valmeta"></span></label>
+        <label class="rv-check"><input type="checkbox" id="rowValRte" data-role="rte"> Validée DSIT <span id="rowValRteMeta" class="valmeta"></span></label>
+      </div>
+      <p class="hint">Chaque niveau ne peut être coché que par le profil correspondant (TMA / Chef de projet DSIT).</p>
+
       <h4>Captures CRE (délibération)</h4>
       <p class="hint">Rattachez les captures du tableau CRE correspondant à cette clé de prix (comme l'onglet 1 du fichier de suivi).</p>
       <div class="row-upload">
@@ -247,6 +320,27 @@
         </div>
       </div>
       <ul id="rowComments" class="comment-list"></ul>
+    </div>
+  </div>
+
+  <!-- Modal ajout d'une ligne manuelle -->
+  <div id="addRowModal" class="modal" style="display:none">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>Ajouter une ligne</h3>
+        <button id="addRowClose" class="link">fermer</button>
+      </div>
+      <p class="hint">Crée une nouvelle clé de prix dans la grille de cette campagne. Seul l'opérande est obligatoire.</p>
+      <label class="ar-field">Section <input type="text" id="arSection" placeholder="ex: Composante de gestion"></label>
+      <label class="ar-field">Tarif <input type="text" id="arTarif" placeholder="ex: HTB1"></label>
+      <label class="ar-field">Tarif (EKDI) <input type="text" id="arTarifEkdi" placeholder="ex: 5CL_CAL01"></label>
+      <label class="ar-field">GrpValFix <input type="text" id="arGrp" placeholder="ex: ZHTB1_CU"></label>
+      <label class="ar-field">Opérande * <input type="text" id="arOperande" placeholder="ex: ZCOEF_B1"></label>
+      <label class="ar-field">Clé <input type="text" id="arCle" placeholder="ex: HTB_FRGST"></label>
+      <div class="modal-actions">
+        <span id="addRowStatus" class="hint"></span>
+        <button id="addRowSave">Ajouter la ligne</button>
+      </div>
     </div>
   </div>
 
