@@ -125,6 +125,16 @@ Deux ajouts à l'étape 2 (saisie grille) :
 
 **Migration v2.8 :** `init_db()` crée `campaign_comments` via `CREATE TABLE IF NOT EXISTS` (aucune autre migration).
 
+## Corbeille ligne par ligne de la grille (v2.9)
+
+À l'étape 2 (saisie grille), on peut **mettre une ligne à la corbeille** (soft-delete) — **jamais de suppression physique** (exigence audit), à l'image de la corbeille des campagnes (v2.3). Colonnes `grid_rows.deleted_at / deleted_by / deleted_profile` (qui, quel profil, quand).
+
+- **Masquage** — une ligne en corbeille est exclue **partout où elle compte** : grille (`api_get_grid`), export `.xlsx` (`api_export_grid`), procédure SAP étape 3 (`_generate_procedures`) et vérification étape 4 (`_compare_ekdi/_epreih`) ajoutent tous `AND deleted_at IS NULL`. Ses valeurs, validations, historique, captures et commentaires restent intacts.
+- **Routes** : `DELETE /api/campaigns/<cid>/rows/<rid>` (mise à la corbeille), `POST …/rows/<rid>/restore` (restauration), `GET …/rows/trash` (liste). `trash` étant une chaîne, aucune collision avec `<int:rid>`. Chaque action est tracée (`grid_row_history` champ `corbeille` + `audit_log` actions `mise_corbeille_ligne` / `restauration_ligne`). **Non restreint par profil** (cohérent avec l'ajout de ligne et la corbeille campagne) — seulement tracé.
+- **Front** : bouton *Mettre cette ligne à la corbeille* dans la **modale détail ligne** (avec confirmation) ; bouton *Corbeille* dans la barre d'actions de la grille ouvre `trashModal` listant les lignes corbeille (qui/quand) avec un bouton *Restaurer*. Code : `trashRow` / `openTrash` / `renderTrash` / `restoreRow` (`campaign.js`).
+
+**Migration v2.9 :** `init_db()` ajoute via `ALTER TABLE` les colonnes `deleted_at / deleted_by / deleted_profile` à `grid_rows` si absentes.
+
 ## Décisions techniques structurantes
 
 **L'écriture dans SAP est hors périmètre.** L'application travaille uniquement en lecture seule (extraction et vérification). Automatiser une écriture en prod sur des tarifs réglementaires représente un risque sans commune mesure avec le gain.

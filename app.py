@@ -307,6 +307,14 @@ def init_db():
     ):
         if col not in grid_cols:
             con.execute(f"ALTER TABLE grid_rows ADD COLUMN {col} {ddl}")
+    # Migration : corbeille ligne par ligne (soft-delete). Une ligne de grille
+    # n'est jamais supprimee physiquement (exigence audit) : elle est seulement
+    # marquee comme mise a la corbeille (qui, quel profil, quand) et peut etre
+    # restauree. Masquee partout sauf dans la vue corbeille.
+    grid_cols = {r[1] for r in con.execute("PRAGMA table_info(grid_rows)").fetchall()}
+    for col in ("deleted_at", "deleted_by", "deleted_profile"):
+        if col not in grid_cols:
+            con.execute(f"ALTER TABLE grid_rows ADD COLUMN {col} TEXT")
     # Migration : profil utilisateur (TMA | Chef de projet DSIT) trace sur les actions
     # (bases anterieures a la v2.2).
     for table, col in (
@@ -876,7 +884,8 @@ def api_get_grid(cid):
     row = get_campaign_or_404(cid)
     db = get_db()
     rows = db.execute(
-        "SELECT * FROM grid_rows WHERE campaign_id=? ORDER BY sort_order", (cid,)
+        "SELECT * FROM grid_rows WHERE campaign_id=? AND deleted_at IS NULL ORDER BY sort_order",
+        (cid,),
     ).fetchall()
     # Nombre de captures CRE par ligne (une seule requete groupee).
     img_counts = {
@@ -1004,6 +1013,80 @@ def api_add_row(cid):
     audit(cid, "ajout_ligne",
           f"Ligne #{rid} ajoutee ({fields['tarif_label'] or '-'} / {operande})")
     return jsonify({"id": rid, "sort_order": next_order}), 201
+
+
+def _row_to_trash_dict(r):
+    """Serialisation d'une ligne mise a la corbeille (vue corbeille / restauration)."""
+    return {
+        "id": r["id"], "sort_order": r["sort_order"],
+        "section": r["section"], "tarif_label": r["tarif_label"],
+        "tarif_ekdi": r["tarif_ekdi"], "grp": r["grp"], "operande": r["operande"],
+        "cle": r["cle"], "new_value": r["new_value"],
+        "deleted_at": r["deleted_at"], "deleted_by": r["deleted_by"],
+        "deleted_profile": r["deleted_profile"],
+    }
+
+
+@app.route("/api/campaigns/<int:cid>/rows/trash", methods=["GET"])
+def api_list_row_trash(cid):
+    """Liste les lignes de la grille mises a la corbeille (soft-delete)."""
+    get_campaign_or_404(cid)
+    db = get_db()
+    rows = db.execute(
+        "SELECT * FROM grid_rows WHERE campaign_id=? AND deleted_at IS NOT NULL "
+        "ORDER BY deleted_at DESC, id DESC", (cid,)
+    ).fetchall()
+    return jsonify({"rows": [_row_to_trash_dict(r) for r in rows]})
+
+
+@app.route("/api/campaigns/<int:cid>/rows/<int:rid>", methods=["DELETE"])
+def api_trash_row(cid, rid):
+    """Mise a la corbeille (soft-delete) d'une ligne de grille. La ligne n'est
+    jamais supprimee physiquement (exigence audit) : ses valeurs, validations,
+    historique, captures et commentaires restent intacts ; elle est seulement
+    masquee de la grille (et des etapes 3/4 et de l'export) et peut etre restauree."""
+    get_campaign_or_404(cid)
+    db = get_db()
+    row = db.execute(
+        "SELECT * FROM grid_rows WHERE id=? AND campaign_id=?", (rid, cid)
+    ).fetchone()
+    if row is None:
+        return jsonify({"error": "Ligne introuvable."}), 404
+    if row["deleted_at"] is not None:
+        return jsonify({"error": "Ligne deja dans la corbeille."}), 400
+    db.execute(
+        "UPDATE grid_rows SET deleted_at=?, deleted_by=?, deleted_profile=? WHERE id=? AND campaign_id=?",
+        (now_iso(), current_user(), current_profile(), rid, cid),
+    )
+    label = (row["cle"] or row["operande"] or "").strip()
+    record_row_history(db, cid, rid, "corbeille", label or None, "mise a la corbeille")
+    db.commit()
+    audit(cid, "mise_corbeille_ligne",
+          f"Ligne #{rid} ({row['tarif_label'] or '-'} / {row['operande'] or '-'})")
+    return jsonify({"id": rid, "deleted": True})
+
+
+@app.route("/api/campaigns/<int:cid>/rows/<int:rid>/restore", methods=["POST"])
+def api_restore_row(cid, rid):
+    """Restaure une ligne de grille depuis la corbeille."""
+    get_campaign_or_404(cid)
+    db = get_db()
+    row = db.execute(
+        "SELECT * FROM grid_rows WHERE id=? AND campaign_id=?", (rid, cid)
+    ).fetchone()
+    if row is None:
+        return jsonify({"error": "Ligne introuvable."}), 404
+    if row["deleted_at"] is None:
+        return jsonify({"error": "Ligne deja active."}), 400
+    db.execute(
+        "UPDATE grid_rows SET deleted_at=NULL, deleted_by=NULL, deleted_profile=NULL "
+        "WHERE id=? AND campaign_id=?", (rid, cid),
+    )
+    record_row_history(db, cid, rid, "corbeille", "mise a la corbeille", "restauree")
+    db.commit()
+    audit(cid, "restauration_ligne",
+          f"Ligne #{rid} ({row['tarif_label'] or '-'} / {row['operande'] or '-'})")
+    return jsonify({"id": rid, "restored": True})
 
 
 # Champs d'identite editables d'une ligne (Tarif / Operande / Cle). La cle SAP
@@ -1165,7 +1248,8 @@ def api_export_grid(cid):
     row = get_campaign_or_404(cid)
     db = get_db()
     rows = db.execute(
-        "SELECT * FROM grid_rows WHERE campaign_id=? ORDER BY sort_order", (cid,)
+        "SELECT * FROM grid_rows WHERE campaign_id=? AND deleted_at IS NULL ORDER BY sort_order",
+        (cid,),
     ).fetchall()
     period = row["period_label"]
     all_periods = set()
@@ -1479,7 +1563,7 @@ def _generate_procedures(cid):
     db = get_db()
     rows = db.execute(
         "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
-        "ORDER BY sort_order", (cid,)).fetchall()
+        "AND deleted_at IS NULL ORDER BY sort_order", (cid,)).fetchall()
     ekdi_rows = [r for r in rows if not (r["cle"] or "").strip()]
     epreih_rows = [r for r in rows if (r["cle"] or "").strip()]
     e_txt, e_nrows, e_nsteps = _build_ekdi_procedure(camp, ekdi_rows, ref_date, p_ref_date, ot)
@@ -1845,11 +1929,13 @@ def api_compare(cid):
     if kind == "epreih":
         rows = db.execute(
             "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
-            "AND cle IS NOT NULL AND cle!='' ORDER BY sort_order", (cid,)).fetchall()
+            "AND deleted_at IS NULL AND cle IS NOT NULL AND cle!='' ORDER BY sort_order",
+            (cid,)).fetchall()
     else:
         rows = db.execute(
             "SELECT * FROM grid_rows WHERE campaign_id=? AND new_value IS NOT NULL "
-            "AND (cle IS NULL OR cle='') ORDER BY sort_order", (cid,)).fetchall()
+            "AND deleted_at IS NULL AND (cle IS NULL OR cle='') ORDER BY sort_order",
+            (cid,)).fetchall()
 
     try:
         if kind == "epreih":

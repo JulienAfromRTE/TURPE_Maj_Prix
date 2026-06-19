@@ -263,6 +263,9 @@ tr.row-validated.row-aberrant { background: #f6f3ec; }
 .row-value-box input.bad { border-color: #c0392b; background: #fdecea; }
 .row-value-box textarea { flex: 1 1 100%; min-width: 0; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 14px; resize: vertical; }
 .row-value-box > div { flex: 1 1 100%; display: flex; gap: 10px; align-items: center; }
+.row-danger { display: flex; gap: 10px 14px; align-items: center; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+.row-danger #rowTrashBtn { border-color: #e3b4ad; color: #c0392b; }
+.row-danger #rowTrashBtn:hover { background: #fdecea; }
 .row-value-evol { color: var(--muted); font-size: 13px; }
 .row-value-evol.aberrant { color: #c0392b; font-weight: 600; }
 .row-upload { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }

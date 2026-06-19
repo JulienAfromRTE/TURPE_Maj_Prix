@@ -86,6 +86,7 @@
           <label class="inline-check"><input type="checkbox" id="gridOnlyTodo"> Non validées</label>
           <label class="inline-check"><input type="checkbox" id="gridOnlyAbsentExcel"> Absent Excel</label>
           <button id="btnAddRow" class="secondary">+ Ajouter une ligne</button>
+          <button id="btnTrash" class="secondary">&#128465;&#65039; Corbeille</button>
           <button id="btnSaveGrid">Enregistrer</button>
           <button id="btnExportGrid" class="secondary">Exporter .xlsx</button>
         </div>
@@ -320,6 +321,32 @@
         </div>
       </div>
       <ul id="rowComments" class="comment-list"></ul>
+
+      <div class="row-danger">
+        <button id="rowTrashBtn" class="secondary" type="button">&#128465;&#65039; Mettre cette ligne à la corbeille</button>
+        <span class="hint">La ligne est masquée de la grille mais conservée (audit) et restaurable depuis la corbeille.</span>
+        <span id="rowTrashStatus" class="hint"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal corbeille : lignes mises a la corbeille (restaurables) -->
+  <div id="trashModal" class="modal" style="display:none">
+    <div class="modal-box modal-wide">
+      <div class="modal-head">
+        <h3>&#128465;&#65039; Corbeille de la grille</h3>
+        <button id="trashClose" class="link">fermer</button>
+      </div>
+      <p class="hint">Lignes mises à la corbeille pour cette campagne. Elles sont exclues de la grille, des étapes 3/4 et de l'export, mais jamais supprimées (audit). Cliquez <b>Restaurer</b> pour les remettre dans la grille.</p>
+      <div class="table-wrap">
+        <table id="trashTable">
+          <thead><tr>
+            <th class="num">#</th><th>Section</th><th>Tarif</th><th>Opérande</th><th>Clé</th>
+            <th>Mise à la corbeille par</th><th></th>
+          </tr></thead>
+          <tbody id="trashBody"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 

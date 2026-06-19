@@ -928,6 +928,69 @@ async function saveNewRow() {
 }
 
 // ---------------------------------------------------------------------------
+// Corbeille de la grille (soft-delete ligne par ligne)
+// ---------------------------------------------------------------------------
+async function trashRow() {
+  const id = ROW_MODAL_ID;
+  const row = GRID.rows.find(function (r) { return r.id === id; });
+  if (!row) return;
+  const label = (row.tarif_label || "") + " · " + (row.operande || "") + (row.cle ? " · " + row.cle : "");
+  if (!confirm("Mettre cette ligne à la corbeille ?\n\n" + label +
+    "\n\nElle sera masquée de la grille (et des étapes 3/4 et de l'export) mais conservée et restaurable.")) return;
+  const status = document.getElementById("rowTrashStatus");
+  status.textContent = "Mise à la corbeille...";
+  const resp = await apiFetch("../api/campaigns/" + CID + "/rows/" + id, { method: "DELETE" });
+  const data = await resp.json();
+  if (!resp.ok) { status.textContent = data.error || "Erreur."; return; }
+  document.getElementById("rowModal").style.display = "none";
+  await loadGrid();
+}
+
+async function openTrash() {
+  document.getElementById("trashModal").style.display = "flex";
+  await renderTrash();
+}
+
+async function renderTrash() {
+  const body = document.getElementById("trashBody");
+  body.innerHTML = '<tr><td colspan="7" class="hint">Chargement…</td></tr>';
+  const resp = await apiFetch("../api/campaigns/" + CID + "/rows/trash");
+  const data = await resp.json();
+  const rows = (data && data.rows) || [];
+  body.innerHTML = "";
+  if (!rows.length) {
+    body.innerHTML = '<tr><td colspan="7" class="hint">La corbeille est vide.</td></tr>';
+    return;
+  }
+  rows.forEach(function (r) {
+    const tr = document.createElement("tr");
+    let who = esc(r.deleted_by || "—");
+    if (r.deleted_profile) who += " (" + esc(r.deleted_profile) + ")";
+    if (r.deleted_at) who += " · " + esc(r.deleted_at.replace("T", " ").slice(0, 16));
+    tr.innerHTML =
+      '<td class="num">' + (r.sort_order || "") + "</td>" +
+      "<td>" + esc(r.section || "") + "</td>" +
+      "<td>" + esc(r.tarif_label || "") + "</td>" +
+      "<td>" + esc(r.operande || "") + "</td>" +
+      "<td>" + esc(r.cle || "") + "</td>" +
+      "<td>" + who + "</td>" +
+      '<td><button class="secondary" data-restore="' + r.id + '">Restaurer</button></td>';
+    body.appendChild(tr);
+  });
+  body.querySelectorAll("[data-restore]").forEach(function (b) {
+    b.addEventListener("click", function () { restoreRow(parseInt(b.getAttribute("data-restore"), 10)); });
+  });
+}
+
+async function restoreRow(id) {
+  const resp = await apiFetch("../api/campaigns/" + CID + "/rows/" + id + "/restore", { method: "POST" });
+  const data = await resp.json();
+  if (!resp.ok) { alert(data.error || "Erreur."); return; }
+  await loadGrid();
+  await renderTrash();
+}
+
+// ---------------------------------------------------------------------------
 // Comparaison EKDI / EPREIH
 // ---------------------------------------------------------------------------
 const CMP_LABELS = { ok: "Conforme", diff: "Écart", missing: "Absent extract", ambiguous: "Ambigu" };
@@ -1149,6 +1212,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("gridOnlyEmpty").addEventListener("change", function () { if (GRID) renderGrid(); });
   document.getElementById("gridOnlyTodo").addEventListener("change", function () { if (GRID) renderGrid(); });
   document.getElementById("gridOnlyAbsentExcel").addEventListener("change", function () { if (GRID) renderGrid(); });
+  document.getElementById("btnTrash").addEventListener("click", openTrash);
+  document.getElementById("trashClose").addEventListener("click", function () {
+    document.getElementById("trashModal").style.display = "none";
+  });
+  document.getElementById("trashModal").addEventListener("click", function (e) {
+    if (e.target.id === "trashModal") e.target.style.display = "none";
+  });
+  document.getElementById("rowTrashBtn").addEventListener("click", trashRow);
   document.getElementById("btnAddCampCmt").addEventListener("click", addCampComment);
   document.getElementById("btnYearsAll").addEventListener("click", function () { if (GRID) setAllYears(true); });
   document.getElementById("btnYearsNone").addEventListener("click", function () { if (GRID) setAllYears(false); });
